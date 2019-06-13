@@ -62,7 +62,7 @@ void Map::newMap()
 		for (int j = 0; j < protoPlayers[i].size(); j++)
 		{
 			if (protoPlayers[i][j] == 1) test1 = std::make_pair(i, j);
-			if (protoPlayers[i][j] == 2) test2= std::make_pair(i, j);
+			if (protoPlayers[i][j] == 2) test2 = std::make_pair(i, j);
 		}
 	}
 	for (int i = 0; i < protoMap.size(); i++)
@@ -71,7 +71,7 @@ void Map::newMap()
 		{
 			if (protoMountains[i][j])
 			{
-				Tiles[i][j] = new Tile(Engine::getInstance().getData().getBiome("mountains"), sf::Vector2f(j * tileResolution, i * tileResolution));
+				Tiles[i][j] = new Tile(Engine::getInstance().getData().getBiome("mountains"), sf::Vector2f(i * tileResolution, j * tileResolution));
 				
 				if (protoRivers[i][j])
 				{
@@ -98,26 +98,26 @@ void Map::newMap()
 			{
 				if (mapInfo[i][j] == 2)
 				{
-					Tiles[i][j] = new Tile(Engine::getInstance().getData().getBiome("hills"), sf::Vector2f(j * 96, i * 96)); // tutaj mają być hillsy
+					Tiles[i][j] = new Tile(Engine::getInstance().getData().getBiome("hills"), sf::Vector2f(i * 96, j * 96)); // tutaj mają być hillsy
 				}
 				else if (mapInfo[i][j] == 0)
 				{
-					Tiles[i][j] = new Tile(Engine::getInstance().getData().getBiome("water"), sf::Vector2f(j * 96, i * 96));
+					Tiles[i][j] = new Tile(Engine::getInstance().getData().getBiome("water"), sf::Vector2f(i * 96, j * 96));
 				}
 				else if (protoBiomes[i][j] == 3)
 				{
 					mapInfo[i][j] = 3;
-					Tiles[i][j] = new Tile(Engine::getInstance().getData().getBiome("glade"), sf::Vector2f(j * 96, i * 96));
+					Tiles[i][j] = new Tile(Engine::getInstance().getData().getBiome("glade"), sf::Vector2f(i * 96, j * 96));
 				}
 				else if (protoBiomes[i][j] == 4)
 				{
 					mapInfo[i][j] = 4;
-					Tiles[i][j] = new Tile(Engine::getInstance().getData().getBiome("desert"), sf::Vector2f(j * 96, i * 96));
+					Tiles[i][j] = new Tile(Engine::getInstance().getData().getBiome("desert"), sf::Vector2f(i * 96, j * 96));
 				}
 				else if (protoBiomes[i][j] == 5)
 				{
 					mapInfo[i][j] = 5;
-					Tiles[i][j] = new Tile(Engine::getInstance().getData().getBiome("woods"), sf::Vector2f(j * 96, i * 96));
+					Tiles[i][j] = new Tile(Engine::getInstance().getData().getBiome("woods"), sf::Vector2f(i * 96, j * 96));
 				}
 				if (protoRivers[i][j])
 				{
@@ -150,26 +150,26 @@ char Map::getMapOverlayData(unsigned x, unsigned y, char level, char type)
 {
 	if (type == 0)
 	{
-		if (level) return Tiles[y][x]->getRand();
-		return Tiles[y][x]->getType()->getId();
+		if (level) return Tiles[x][y]->getRand();
+		return Tiles[x][y]->getType()->getId();
 	}
 	else if (type == 1)
 	{
-		if (level) return Tiles[y][x]->getRiverExtra();
-		return Tiles[y][x]->getRiver();
+		if (level) return Tiles[x][y]->getRiverExtra();
+		return Tiles[x][y]->getRiver();
 	}
 	else if (type == 2)
 	{
-		if (Tiles[y][x]->getArmy() == nullptr) return 0;
+		if (Tiles[x][y]->getArmy() == nullptr) return 0;
 		else
 		{
-			//if (level) return Tiles[y][x]->getArmy()->getArmyExtra();
-			//return Tiles[y][x]->getArmy()->getArmyType();
+			//if (level) return Tiles[x][y]->getArmy()->getArmyExtra();
+			//return Tiles[x][y]->getArmy()->getArmyType();
 		}
 	}
 	else if (type == 3)
 	{
-		if (Tiles[y][x]->getCity() == true)
+		if (Tiles[x][y]->getCity() == true)
 		{
 			if (level) return 0; // tymczasowo
 			return 0; // tymczasowo

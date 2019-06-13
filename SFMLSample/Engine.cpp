@@ -145,7 +145,7 @@ void Engine::startGame()
 
 	Map map(data.World().getMapSize());
 
-	Army* testArmy = new Army(sf::Vector2u(1, 0), map, data.Textures().getTexture("TokenBeatle"));
+	Army* testArmy = new Army(sf::Vector2u(map.test1.first, map.test1.second), map, data.Textures().getTexture("TokenBeatle"));
 	armies.push_back(testArmy);
 	Army* testArmy2 = new Army(sf::Vector2u(map.test2.first, map.test2.second), map, data.Textures().getTexture("TokenLion"));
 	armies.push_back(testArmy2);
@@ -251,9 +251,9 @@ void Engine::startGame()
 					if (x >= 0 && y >= 0 && x < getData().World().getMapSize() && y < getData().World().getMapSize())
 					{
 						std::cout << map.getTile(x, y)->getType()->getName() << '\n';
-						if (map.getTile(y, x)->getArmy() != nullptr) std::cout << "Natrafiono na klikalny obiekt!\n";
+						if (map.getTile(x, y)->getArmy() != nullptr) std::cout << "Natrafiono na klikalny obiekt!\n";
 						{
-							if (currentlySelectedObject == nullptr) currentlySelectedObject = map.getTile(y, x)->getArmy();
+							if (currentlySelectedObject == nullptr) currentlySelectedObject = map.getTile(x, y)->getArmy();
 						}
 						if (currentlySelectedObject != nullptr)
 						{
