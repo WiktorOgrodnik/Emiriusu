@@ -1,0 +1,8 @@
+TokenEagle
+textures/tokens/token.9.1.png
+TokenDeer
+textures/tokens/token.9.2.png
+TokenLion
+textures/tokens/token.9.3.png
+TokenBeatle
+textures/tokens/token.9.4.png
