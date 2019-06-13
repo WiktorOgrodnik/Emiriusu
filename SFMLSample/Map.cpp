@@ -76,10 +76,10 @@ void Map::newMap()
 				if (protoRivers[i][j])
 				{
 					char tempRiverType = 0;
-					if (i && (protoRivers[i - 1ll][j] || !mapInfo[i - 1ll][j])) tempRiverType |= (1 << 0); //wylot z góry
-					if (j != mapSize - 1 && (protoRivers[i][j + 1ll] || !mapInfo[i][j + 1ll])) tempRiverType |= (1 << 1); //wylot z prawej
-					if (i != mapSize - 1 && (protoRivers[i + 1ll][j] || !mapInfo[i + 1ll][j])) tempRiverType |= (1 << 2); //wylot z dołu
-					if (j && (protoRivers[i][j - 1ll] || !mapInfo[i][j - 1ll])) tempRiverType |= (1 << 3); //wylot z lewej
+					if (i && (protoRivers[i - 1ll][j] || !mapInfo[i - 1ll][j])) tempRiverType |= (1 << 3); //wylot z góry
+					if (j != mapSize - 1 && (protoRivers[i][j + 1ll] || !mapInfo[i][j + 1ll])) tempRiverType |= (1 << 2); //wylot z prawej
+					if (i != mapSize - 1 && (protoRivers[i + 1ll][j] || !mapInfo[i + 1ll][j])) tempRiverType |= (1 << 1); //wylot z dołu
+					if (j && (protoRivers[i][j - 1ll] || !mapInfo[i][j - 1ll])) tempRiverType |= (1 << 0); //wylot z lewej
 
 					///Losowanie niestandardowych wariantów
 					rng::uid = std::uniform_int_distribution<unsigned>(1, 20);
@@ -122,10 +122,10 @@ void Map::newMap()
 				if (protoRivers[i][j])
 				{
 					char tempRiverType = 0;
-					if (i && (protoRivers[i - 1ll][j] || !mapInfo[i - 1ll][j])) tempRiverType |= (1 << 0); //wylot z góry
-					if (j != mapSize - 1 && (protoRivers[i][j + 1ll] || !mapInfo[i][j + 1ll])) tempRiverType |= (1 << 1); //wylot z prawej
-					if (i != mapSize - 1 && (protoRivers[i + 1ll][j] || !mapInfo[i + 1ll][j])) tempRiverType |= (1 << 2); //wylot z dołu
-					if (j && (protoRivers[i][j - 1ll] || !mapInfo[i][j - 1ll])) tempRiverType |= (1 << 3); //wylot z lewej
+					if (i && (protoRivers[i - 1][j] || !mapInfo[i - 1][j])) tempRiverType |= (1 << 3); //wylot z góry
+					if (j != mapSize - 1 && (protoRivers[i][j + 1] || !mapInfo[i][j + 1])) tempRiverType |= (1 << 2); //wylot z prawej
+					if (i != mapSize - 1 && (protoRivers[i + 1][j] || !mapInfo[i + 1][j])) tempRiverType |= (1 << 1); //wylot z dołu
+					if (j && (protoRivers[i][j - 1] || !mapInfo[i][j - 1])) tempRiverType |= (1 << 0); //wylot z lewej
 
 					///Losowanie niestandardowych wariantów
 					rng::uid = std::uniform_int_distribution<unsigned>(1, 20);
