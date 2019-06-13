@@ -1,7 +1,7 @@
 # Emiriusu Engine
-The Emiriusu Engine is an old school Windows and Linux 2D game engine for strategic games written in C++ with SFML libraries. The Engine (and the example game we are making) will provides displaying graphics and animations, generating a random world, playing music and sounds, old school interface, many typical strategic mechanics, Artificial intelligence and online multiplayer.
+The Emiriusu Engine is an old school Windows and Linux 2D game engine for strategic games written in C++ with SFML libraries. The Engine (and the example game we are making) will provides displaying graphics and animations, generating a random world, playing music and sounds, old school interface, many typical strategic mechanics, artificial intelligence and online multiplayer.
 
-We are constantly adding new features to the engine and patching up bugs. The engine an the game will be available for free.
+We are constantly adding new features to the engine and patching up bugs. The engine and the game will be available for free.
 
 
   ![Emiriusu Screenshot](docs/images/gameSS.png)
@@ -14,7 +14,7 @@ We are constantly adding new features to the engine and patching up bugs. The en
 
 ## Getting started
 Prerequisites:
-- We suggest Windows 10, version 1803 or newer (we have tested on such systems).
+- We suggest using Windows 10, version 1803 or newer (we have tested on such systems).
 - Install the latest version of [Visual Studio](https://developer.microsoft.com/en-us/windows/downloads) (the free community edition is sufficient).
   - Install the "Desktop development with C++" workload.
   - Install the optional "C++ Universal Windows Platform tools" component.
@@ -47,6 +47,6 @@ Now the Emiriusu team is focused on:
 - Improve the sampling rates
 
 ## License
-Copyright (c) Wiktor Ogrodnik. All rights reserved.
+Copyright (c) Kisah Games. All rights reserved.
 
 Licensed under the [MIT License](./LICENSE).
