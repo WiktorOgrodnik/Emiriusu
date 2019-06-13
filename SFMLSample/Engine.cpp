@@ -145,9 +145,9 @@ void Engine::startGame()
 
 	Map map(data.World().getMapSize());
 
-	Army* testArmy = new Army(sf::Vector2u(map.test1.first, map.test1.second), map, data.Textures().getTexture("TokenBeatle"));
+	Army* testArmy = new Army(sf::Vector2i(map.test1.first, map.test1.second), map, data.Textures().getTexture("TokenBeatle"));
 	armies.push_back(testArmy);
-	Army* testArmy2 = new Army(sf::Vector2u(map.test2.first, map.test2.second), map, data.Textures().getTexture("TokenLion"));
+	Army* testArmy2 = new Army(sf::Vector2i(map.test2.first, map.test2.second), map, data.Textures().getTexture("TokenLion"));
 	armies.push_back(testArmy2);
 
 	mapOverlay world;
@@ -258,10 +258,10 @@ void Engine::startGame()
 						if (currentlySelectedObject != nullptr)
 						{
 							Army* temp = (Army*)currentlySelectedObject;
-							std::cout << temp->move(sf::Vector2u(x, y), map) << "\n";
-							if (temp->move(sf::Vector2u(x, y), map))
+							std::cout << temp->move(sf::Vector2i(x, y), map) << "\n";
+							if (temp->move(sf::Vector2i(x, y), map))
 							{
-								temp->setPosition(sf::Vector2u(x, y));
+								temp->setPosition(sf::Vector2i(x, y));
 							}
 						}
 					}

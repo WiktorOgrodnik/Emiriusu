@@ -27,6 +27,7 @@
 #include <conio.h>
 #include <queue>
 #include <stack>
+#include <string>
 
 /// pliki nagłówkowe
 /// najpierw klasy wirtulane

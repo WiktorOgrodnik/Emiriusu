@@ -1,6 +1,6 @@
 #include "pch.h"
 
-Army::Army(sf::Vector2u newPosition, Map& map, sf::Texture* newTexture)
+Army::Army(sf::Vector2i newPosition, Map& map, sf::Texture* newTexture)
 {
 	position = newPosition;
 	map.getTile(newPosition.x, newPosition.y)->setArmy(this);
@@ -53,17 +53,18 @@ unsigned Army::getNumberOfUnits()
 	return unitCount;
 }
 
-bool Army::move(sf::Vector2u targetPosition, Map & map)
+bool Army::move(sf::Vector2i targetPosition, Map & map)
 {
-	std::priority_queue<std::pair<float, std::pair<unsigned, unsigned>>> to_visit;
+	std::priority_queue<std::pair<float, std::pair<int, int>>> to_visit;
 	std::vector<std::vector<bool> > visited(2.0f * ceil(amountOfMovement) + 1.0f, std::vector<bool>(2ll * ceil(amountOfMovement) + 1ll));
 	const int N = 2 * ceil(amountOfMovement) + 1;
 	to_visit.push(std::make_pair(0, std::make_pair(position.x, position.y)));
 	while (!to_visit.empty())
 	{
-		float odl = to_visit.top().first;
-		std::pair<unsigned, unsigned> index = to_visit.top().second;
+		float odl = -to_visit.top().first;
+		std::pair<int, int> index = to_visit.top().second;
 		to_visit.pop();
+		//std::cout << index.first - position.x << " " << index.second - position.y << "\n";
 		//std::cout << odl << std::endl;
 		if (targetPosition.x == index.first && targetPosition.y == index.second)
 		{
@@ -83,7 +84,7 @@ bool Army::move(sf::Vector2u targetPosition, Map & map)
 			{
 				if (odl + to_check->getType()->getMoveCost() <= amountOfMovement)
 				{
-					to_visit.push(std::make_pair(odl + to_check->getType()->getMoveCost(), std::make_pair(index.first - 1, index.second)));
+					to_visit.push(std::make_pair(-(odl + to_check->getType()->getMoveCost()), std::make_pair(index.first - 1, index.second)));
 				}
 			}
 		}
@@ -95,7 +96,7 @@ bool Army::move(sf::Vector2u targetPosition, Map & map)
 			{
 				if (odl + to_check->getType()->getMoveCost() <= amountOfMovement)
 				{
-					to_visit.push(std::make_pair(odl + to_check->getType()->getMoveCost(), std::make_pair(index.first, index.second - 1)));
+					to_visit.push(std::make_pair(-(odl + to_check->getType()->getMoveCost()), std::make_pair(index.first, index.second - 1)));
 				}
 			}
 		}
@@ -108,7 +109,7 @@ bool Army::move(sf::Vector2u targetPosition, Map & map)
 			{
 				if (odl + to_check->getType()->getMoveCost() <= amountOfMovement)
 				{
-					to_visit.push(std::make_pair(odl + to_check->getType()->getMoveCost(), std::make_pair(index.first + 1, index.second)));
+					to_visit.push(std::make_pair(-(odl + to_check->getType()->getMoveCost()), std::make_pair(index.first + 1, index.second)));
 				}
 			}
 		}
@@ -133,7 +134,7 @@ Unit * Army::getUnit(unsigned index)
 	return units[index];
 }
 
-void Army::setPosition(sf::Vector2u newPosition)
+void Army::setPosition(sf::Vector2i newPosition)
 {
 	position = newPosition;
 	body.setPosition(sf::Vector2f(newPosition.x * tileResolution, newPosition.y * tileResolution));
