@@ -10,14 +10,14 @@ class Tile //: public Object
 	BiomeAddOn* biomeAddOn; /// dodatek do biomu (niepotrzebne)
 	Mineral* mineral; /// minera³ 
 	Selectable* army; /// armia
+	City* city; /// miasto
 
 	std::vector <Selectable*> clickableObjects; ///strumieñ obiektów klikalnych (armie, miasto, inne obiekty z którymi mo¿na wchodziæ w interakcje)
 
 	sf::Vector2f position; /// pozycja kafelka
-	std::vector <std::vector <BuildingInstance*>> buildings; /// Przechowuje budynki (do viktusa - no weŸ no to zrób ej)
+	//std::vector <std::vector <BuildingInstance*>> buildings; /// Przechowuje budynki (do viktusa - no weŸ no to zrób ej)
 	char riverType; /// typ rzeki (0 - brak)
 	char riverExtra; /// czy dodatkowy zawijas rzeki?
-	bool city; /// Przechowuje informacjê o tym czy pole jest miastem
 	int rand_; /// losowy pod typ biomu
 
 	void setPosition(sf::Vector2f newPosition); /// ustawia pozycjê (nie u¿ywaæ)
@@ -36,7 +36,7 @@ public:
 	Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Building*>> newBuildings, BiomeAddOn* newBiomeAddOn);
 	Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::vector <std::vector<Building*>> newBuildings, BiomeAddOn* newBiomeAddOn);
 
-	void setCity(bool city_); /// ustawia  (to te¿ ej)
+	void setCity(City* newCity); /// ustawia nowe miasto
 	void setType(Biome* newType); /// ustawia typ kafelka (przyjmuje nowy typ kafelka)
 	void setMineral(Mineral* newMineral); /// ustawia minera³
 	void setSetOfBuildings(std::vector <std::vector <Building*>> newBuildings); /// ustawia zestaw budynkó
@@ -60,10 +60,10 @@ public:
 	sf::Vector2f getPosition() { return position; } /// zwraca pozycjê kafelka
 	Biome* getType() { return type; } /// zwraca typ kafelka
 	int getRand() { return rand_; } /// zwraca losowy podtyp kafelka
-	bool getCity() { return city; } /// zwraca informacjê o tym czy pole jest miastem
-	BuildingInstance* getBuilding (sf::Vector2i index) { return buildings[index.y][index.x]; } /// funkcje zwracaj¹ konkretne budynki
-	BuildingInstance* getBuilding(std::pair <short, short> index) { return buildings[index.first][index.second]; }
-	BuildingInstance* getBuilding(short x, short y) { return buildings[y][x]; }
+	City* getCity() { return city; } /// zwraca miasto
+	BuildingInstance* getBuilding(sf::Vector2i index) { return city->getBuilding(index); } /// funkcje zwracaj¹ konkretne budynki
+	BuildingInstance* getBuilding(std::pair <short, short> index) { return city->getBuilding(index);}
+	BuildingInstance* getBuilding(short x, short y) { return city->getBuilding(x, y);}
 
 	//void draw(sf::RenderWindow & window) override; /// rysuje kafelek na ekranie (przyjmuje okno gry)
 	//void draw(sf::RenderWindow& window, sf::View& view, float zoom) override { draw(window); }  /// rysuje kafelek na ekranie

@@ -169,7 +169,7 @@ char Map::getMapOverlayData(unsigned x, unsigned y, char level, char type)
 	}
 	else if (type == 3)
 	{
-		if (Tiles[x][y]->getCity() == true)
+		if (Tiles[x][y]->getCity() != nullptr)
 		{
 			if (level) return 0; // tymczasowo
 			return 0; // tymczasowo

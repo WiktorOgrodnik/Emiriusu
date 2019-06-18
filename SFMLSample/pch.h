@@ -45,6 +45,8 @@
 #include "Data.h"
 #include "Selectable.h"
 
+#include "City.h"
+
 #include "Tile.h"
 #include "Map.h"
 
