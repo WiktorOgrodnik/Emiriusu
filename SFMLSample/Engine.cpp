@@ -225,6 +225,30 @@ void Engine::startGame()
 		{
 			gameScreen.move(1000.0f * deltaTime * data.Settings().getZoom(), 0);
 		}
+		/* test sterowania
+		if (event.type == sf::Event::MouseButtonReleased)
+		{
+			sf::Vector2f position = theGame.mapPixelToCoords(sf::Mouse::getPosition(theGame));
+			x = int(position.x) / tileResolution;
+			y = int(position.y) / tileResolution;
+			if (event.mouseButton.button == sf::Mouse::Left)
+			{
+				if (currentlySelectedObject != nullptr)
+				{
+					Army* temp = (Army*)currentlySelectedObject;
+					if (temp->move(sf::Vector2i(x, y), map))
+					{
+						temp->setPosition(sf::Vector2i(x, y));
+						map.getTile(x, y)->setArmy(temp);
+					}
+				}
+			}
+			else if (event.mouseButton.button == sf::Mouse::Right)
+			{
+				currentlySelectedObject = map.getTile(x, y)->getArmy();
+			}
+		}*/
+
 		if (event.type == sf::Event::MouseButtonPressed)
 		{
 			if (!mouseClick)
@@ -262,6 +286,7 @@ void Engine::startGame()
 							if (temp->move(sf::Vector2i(x, y), map))
 							{
 								temp->setPosition(sf::Vector2i(x, y));
+								map.getTile(x, y)->setArmy(temp);
 							}
 						}
 					}
