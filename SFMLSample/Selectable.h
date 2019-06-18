@@ -5,8 +5,8 @@
 class Selectable
 {
 protected:
-	Function onClickFunction;
-	Function onReleaseFunction;
+	Function* onClickFunction;
+	Function* onReleaseFunction;
 public:
 	Selectable();
 	~Selectable();

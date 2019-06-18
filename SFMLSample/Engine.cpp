@@ -225,13 +225,13 @@ void Engine::startGame()
 		{
 			gameScreen.move(1000.0f * deltaTime * data.Settings().getZoom(), 0);
 		}
-		/* test sterowania
+		//test sterowania
 		if (event.type == sf::Event::MouseButtonReleased)
 		{
 			sf::Vector2f position = theGame.mapPixelToCoords(sf::Mouse::getPosition(theGame));
 			x = int(position.x) / tileResolution;
 			y = int(position.y) / tileResolution;
-			if (event.mouseButton.button == sf::Mouse::Left)
+			if (event.mouseButton.button == sf::Mouse::Right)
 			{
 				if (currentlySelectedObject != nullptr)
 				{
@@ -243,12 +243,12 @@ void Engine::startGame()
 					}
 				}
 			}
-			else if (event.mouseButton.button == sf::Mouse::Right)
+			else if (event.mouseButton.button == sf::Mouse::Left)
 			{
 				currentlySelectedObject = map.getTile(x, y)->getArmy();
 			}
-		}*/
-
+		}
+		/*
 		if (event.type == sf::Event::MouseButtonPressed)
 		{
 			if (!mouseClick)
@@ -293,7 +293,7 @@ void Engine::startGame()
 					mouseClick = false;
 				}
 			}
-		}
+		}*/
 		theGame.clear();
 		theGame.setView(getGameScreen());
 		draw();

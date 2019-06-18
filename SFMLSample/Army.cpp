@@ -68,8 +68,15 @@ bool Army::move(sf::Vector2i targetPosition, Map & map)
 		//std::cout << odl << std::endl;
 		if (targetPosition.x == index.first && targetPosition.y == index.second)
 		{
+			//std::cerr << "Target pos: (" << targetPosition.x << ", " << targetPosition.y << ")\nIndex: (" << index.first << ", " << index.second << ")\n";
+
 			position = targetPosition;
 			return true;
+		}
+		else
+		{
+			//std::cerr << "Target pos: (" << targetPosition.x << ", " << targetPosition.y << ")\nIndex: (" << index.first << ", " << index.second << ")\n";
+
 		}
 
 		if (visited[(N + (index.first - position.x)) % N][(N + (index.second - position.y)) % N] == 1)
@@ -78,7 +85,6 @@ bool Army::move(sf::Vector2i targetPosition, Map & map)
 		Tile *to_check = nullptr;
 		if (index.first != 0)
 		{
-
 			to_check = map.getTile(index.first - 1, index.second);
 			if (to_check->getType()->getCanWalkThru())
 			{
@@ -120,7 +126,7 @@ bool Army::move(sf::Vector2i targetPosition, Map & map)
 			{
 				if (odl + to_check->getType()->getMoveCost() <= amountOfMovement)
 				{
-					to_visit.push(std::make_pair(odl + to_check->getType()->getMoveCost(), std::make_pair(index.first, index.second + 1)));
+					to_visit.push(std::make_pair(-(odl + to_check->getType()->getMoveCost()), std::make_pair(index.first, index.second + 1)));
 				}
 			}
 		}
@@ -150,3 +156,15 @@ void Army::setTexture(sf::Texture* newTexture)
 	body.setTexture(newTexture);
 	body.setSize(sf::Vector2f(tileResolution, tileResolution));
 }
+
+Function* Army::onClick()
+{
+	return nullptr;
+}
+
+Function* Army::onRelease()
+{
+	return nullptr;
+}
+
+
