@@ -30,9 +30,6 @@ public:
 	Unit* getUnit(unsigned index);
 	void setTexture(sf::Texture* newTexture);
 
-	Function* onClick() override;
-	Function* onRelease() override;
-
 	void setPosition(sf::Vector2i newPosition);
 
 	void setArmyType(char newArmyType);

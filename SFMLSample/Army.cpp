@@ -157,14 +157,3 @@ void Army::setTexture(sf::Texture* newTexture)
 	body.setSize(sf::Vector2f(tileResolution, tileResolution));
 }
 
-Function* Army::onClick()
-{
-	return nullptr;
-}
-
-Function* Army::onRelease()
-{
-	return nullptr;
-}
-
-
