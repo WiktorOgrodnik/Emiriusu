@@ -234,10 +234,11 @@ void Engine::startGame()
 			if (event.mouseButton.button == sf::Mouse::Right)
 			{
 				if (currentlySelectedObject != nullptr)
-				{
+				{	
 					Army* temp = (Army*)currentlySelectedObject;
 					if (temp->move(sf::Vector2i(x, y), map))
 					{
+						map.getTile(temp->getPosition())->setArmy(nullptr);
 						temp->setPosition(sf::Vector2i(x, y));
 						map.getTile(x, y)->setArmy(temp);
 					}
@@ -245,9 +246,17 @@ void Engine::startGame()
 			}
 			else if (event.mouseButton.button == sf::Mouse::Left)
 			{
-				currentlySelectedObject = map.getTile(x, y)->getArmy();
+				if (currentlySelectedObject != map.getTile(x, y)->getArmy())
+				{
+					if (currentlySelectedObject != nullptr)
+						currentlySelectedObject->onDeselect();
+					currentlySelectedObject = map.getTile(x, y)->getArmy();
+					if (currentlySelectedObject != nullptr)
+						currentlySelectedObject->onSelect();
+				}
 			}
 		}
+		//std::cout << currentlySelectedObject << std::endl;
 		/*
 		if (event.type == sf::Event::MouseButtonPressed)
 		{

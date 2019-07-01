@@ -37,5 +37,10 @@ public:
 
 	char getArmyType() { return armyType; }
 	char getArmyExtra() { return armyExtra; }
+	sf::Vector2i getPosition() { return position; }
+
+	Function* onSelect() override;
+	Function* onClick() override;
+	Function* onDeselect() override;
 };
 

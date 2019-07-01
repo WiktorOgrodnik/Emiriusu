@@ -14,6 +14,6 @@ public:
 
 class Dijkstra : public Function
 {
-	void* Activate(std::vector<void*> data) override;
+	void* Activate(std::vector<void*> data) override; /// pozycja armi(sf::Vector2i), iloœæ ruchu armii(float), tablica do danych(vector<vector<float>>), mapa(Map*)
 };
 

@@ -15,7 +15,7 @@ Army::Army(sf::Vector2i newPosition, Map& map, sf::Texture* newTexture)
 	amountOfMovement = 10;
 	unitCount = 0;
 
-	onReleaseFunction = new Dijkstra;
+	onSelectFunction = new Dijkstra; /// powinno zostaæ zast¹piona globalnym wskaŸnikiem
 }
 
 Army::~Army()
@@ -72,7 +72,7 @@ bool Army::move(sf::Vector2i targetPosition, Map & map)
 		{
 			//std::cerr << "Target pos: (" << targetPosition.x << ", " << targetPosition.y << ")\nIndex: (" << index.first << ", " << index.second << ")\n";
 
-			position = targetPosition;
+			//position = targetPosition;
 			return true;
 		}
 		else
@@ -151,6 +151,30 @@ void Army::setPosition(sf::Vector2i newPosition)
 void Army::setArmyType(char newArmyType)
 {
 	armyType = newArmyType;
+}
+
+Function* Army::onSelect()
+{
+	std::vector<void*> data;
+	data.push_back((void*) &position);
+	data.push_back((void*) &amountOfMovement);
+	data.push_back((void*) &movesData);
+	data.push_back((void*) Engine::getInstance().mapPointer);
+	onSelectFunction->Activate(data); /// pozycja armi(sf::Vector2i), iloœæ ruchu armii(float), tablica do danych(vector<vector<float>>), mapa(Map*)
+	return onSelectFunction;
+}
+
+Function* Army::onClick()
+{
+	/// do stuff
+	this->onSelect();
+	return nullptr;
+}
+
+Function* Army::onDeselect()
+{
+	movesData.clear();
+	return nullptr;
 }
 
 void Army::setTexture(sf::Texture* newTexture)
