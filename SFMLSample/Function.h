@@ -12,7 +12,7 @@ public:
 	void setReturnedType(Types newReturnedType) { retunedType = newReturnedType; }
 };
 
-class Dijkstra : Function
+class Dijkstra : public Function
 {
 	void* Activate(std::vector<void*> data) override;
 };

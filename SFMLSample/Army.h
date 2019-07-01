@@ -12,6 +12,7 @@ private:
 	sf::Texture* texture;
 	sf::RectangleShape body;
 	sf::Vector2i position; /// pierwsza wartoœæ to indeks x, a druga to index y
+	std::vector<std::vector<float>> movesData;
 	char armyType;
 	char armyExtra;
 

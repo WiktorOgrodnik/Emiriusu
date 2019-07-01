@@ -14,6 +14,8 @@ Army::Army(sf::Vector2i newPosition, Map& map, sf::Texture* newTexture)
 	armyExtra = 0;
 	amountOfMovement = 10;
 	unitCount = 0;
+
+	onReleaseFunction = new Dijkstra;
 }
 
 Army::~Army()
