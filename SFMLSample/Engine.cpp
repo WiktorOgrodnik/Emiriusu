@@ -238,19 +238,19 @@ void Engine::startGame()
 					Army* temp = (Army*)currentlySelectedObject;
 					if (temp->move(sf::Vector2i(x, y), map))
 					{
-						map.getTile(temp->getPosition())->setArmy(nullptr);
+						map.getTile(temp->getPosition())->ereaseSelectable();
 						temp->setPosition(sf::Vector2i(x, y));
-						map.getTile(x, y)->setArmy(temp);
+						map.getTile(x, y)->addSelectable(temp);
 					}
 				}
 			}
 			else if (event.mouseButton.button == sf::Mouse::Left)
 			{
-				if (currentlySelectedObject != map.getTile(x, y)->getArmy())
+				if (currentlySelectedObject != map.getTile(x, y)->getSelectable())
 				{
 					if (currentlySelectedObject != nullptr)
 						currentlySelectedObject->onDeselect();
-					currentlySelectedObject = map.getTile(x, y)->getArmy();
+					currentlySelectedObject = map.getTile(x, y)->getSelectable();
 					if (currentlySelectedObject != nullptr)
 						currentlySelectedObject->onSelect();
 				}

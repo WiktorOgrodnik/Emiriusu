@@ -160,7 +160,7 @@ char Map::getMapOverlayData(unsigned x, unsigned y, char level, char type)
 	}
 	else if (type == 2)
 	{
-		if (Tiles[x][y]->getArmy() == nullptr) return 0;
+		if (Tiles[x][y]->getSelectable() == nullptr) return 0;
 		else
 		{
 			//if (level) return Tiles[x][y]->getArmy()->getArmyExtra();

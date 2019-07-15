@@ -3,7 +3,7 @@
 Army::Army(sf::Vector2i newPosition, Map& map, sf::Texture* newTexture)
 {
 	position = newPosition;
-	map.getTile(newPosition.x, newPosition.y)->setArmy(this);
+	map.getTile(newPosition.x, newPosition.y)->addSelectable(this);
 
 	texture = newTexture;
 	body.setTexture(newTexture);

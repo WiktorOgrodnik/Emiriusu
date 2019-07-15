@@ -9,7 +9,7 @@ class Tile //: public Object
 	Biome* type; /// typ biomu
 	BiomeAddOn* biomeAddOn; /// dodatek do biomu (niepotrzebne)
 	Mineral* mineral; /// minera³ 
-	Selectable* army; /// armia
+	int selectable; /// armia
 	City* city; /// miasto
 
 	std::vector <Selectable*> clickableObjects; ///strumieñ obiektów klikalnych (armie, miasto, inne obiekty z którymi mo¿na wchodziæ w interakcje)
@@ -46,8 +46,10 @@ public:
 	char getRiver() { return riverType; } /// pobierz typ rzeki
 	char getRiverExtra() { return riverExtra; } /// zwraca info o dodatkowym zawijasie rzeki
 
-	void setArmy(Selectable* newArmy); /// ustawia na kafelku obiekt klasy army
-	Selectable* getArmy() { return army; } /// zwraca obiekt klasy army
+	void addSelectable(Selectable* newArmy); /// ustawia na kafelku obiekt klasy selectable
+	Selectable* getSelectable(); /// zwraca obiekt klasy selectable
+	void ereaseSelectable(); /// usuwa obecnie wynrany selectable
+	void skipSelectable(); /// przechodzi do nastêpnego obiektu klikalnego
 
 	void setSpecificBuilding(Building* newBuilding, sf::Vector2i index); /// ustaw nowy budynek na konkretnym polu
 	void setSpecificBuilding(Building* newBuilding, std::pair <short, short> index);

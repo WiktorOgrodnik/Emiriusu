@@ -27,7 +27,7 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition)
 	riverType = 0;
 	mineral = nullptr;
 	biomeAddOn = nullptr;
-	army = nullptr;
+	selectable = -1;
 	riverExtra = 0;
 	city = nullptr;
 }
@@ -42,7 +42,7 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, char riverType_)
 	riverType = riverType_;
 	mineral = nullptr;
 	biomeAddOn = nullptr;
-	army = nullptr;
+	selectable = -1;
 	riverExtra = 0;
 	city = nullptr;
 }
@@ -57,7 +57,7 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral)
 	mineral = newMineral;
 	riverType = 0;
 	biomeAddOn = nullptr;
-	army = nullptr;
+	selectable = -1;
 	riverExtra = 0;
 	city = nullptr;
 }
@@ -72,7 +72,7 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Bu
 	mineral = nullptr;
 	riverType = 0;
 	biomeAddOn = nullptr;
-	army = nullptr;
+	selectable = -1;
 	riverExtra = 0;
 	city = new City(newBuildings);
 }
@@ -87,7 +87,7 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::v
 	mineral = newMineral;
 	riverType = 0;
 	biomeAddOn = nullptr;
-	army = nullptr;
+	selectable = -1;
 	riverExtra = 0;
 	city = new City(newBuildings);
 }
@@ -102,7 +102,7 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, BiomeAddOn* newBiomeAddOn)
 	mineral = nullptr;
 	riverType = 0;
 	biomeAddOn = newBiomeAddOn;
-	army = nullptr;
+	selectable = -1;
 	riverExtra = 0;
 	city = nullptr;
 }
@@ -117,7 +117,7 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, BiomeA
 	mineral = newMineral;
 	riverType = 0;
 	biomeAddOn = newBiomeAddOn;
-	army = nullptr;
+	selectable = -1;
 	riverExtra = 0;
 	city = nullptr;
 }
@@ -132,7 +132,7 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Bu
 	mineral = nullptr;
 	riverType = 0;
 	biomeAddOn = newBiomeAddOn;
-	army = nullptr;
+	selectable = -1;
 	riverExtra = 0;
 	city = new City(newBuildings);
 }
@@ -147,7 +147,7 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::v
 	mineral = newMineral;
 	riverType = 0;
 	biomeAddOn = newBiomeAddOn;
-	army = nullptr;
+	selectable = -1;
 	riverExtra = 0;
 	city = new City(newBuildings);
 }
@@ -170,9 +170,31 @@ void Tile::setRiver(char riverType_)
 	else riverExtra = 0;
 }
 
-void Tile::setArmy(Selectable* newArmy)
+void Tile::addSelectable(Selectable* newSelectable)
 {
-	army = newArmy;
+	clickableObjects.push_back(newSelectable);
+	selectable = clickableObjects.size() - 1;
+}
+
+Selectable* Tile::getSelectable()
+{
+	if (selectable == -1) return nullptr;
+	Selectable* temp = clickableObjects.at(selectable);
+	selectable--;
+	if (selectable == -1) selectable = clickableObjects.size() - 1;
+	return temp;
+}
+
+void Tile::ereaseSelectable()
+{
+	clickableObjects[selectable] = nullptr;
+	clickableObjects.erase(clickableObjects.begin() + selectable);
+}
+
+void Tile::skipSelectable()
+{
+	selectable--;
+	if (selectable == -1) selectable = clickableObjects.size() - 1;
 }
 
 void Tile::setType(Biome* newType)
