@@ -1,10 +1,24 @@
 #include "pch.h"
 #include "City.h"
 
-City::City()
+City::City(sf::Vector2f newPosition, sf::Texture* newTexture)
 {
+	position = newPosition;
+	Engine::getInstance().getGlobalMap()->getTile(newPosition.x, newPosition.y)->addSelectable(this);
+
+	texture = newTexture;
+	body.setTexture(newTexture);
+	body.setSize(sf::Vector2f(tileResolution, tileResolution));
+	body.setPosition(float(position.x) * tileResolution, float(position.y) * tileResolution);
+
+	cityType = 0;
+	cityExtra = 0;
+
+	buildings.resize(3);
+
 	for (int i = 0; i < 3; i++)
 	{
+		buildings[i].resize(3);
 		for (int j = 0; j < 3; j++)
 		{
 			buildings[i][j] = nullptr;
@@ -12,10 +26,24 @@ City::City()
 	}
 }
 
-City::City(std::vector <std::vector <Building*>> setOfBuildings)
+City::City(sf::Vector2f newPosition, sf::Texture* newTexture, std::vector <std::vector <Building*>> setOfBuildings)
 {
+	position = newPosition;
+	Engine::getInstance().getGlobalMap()->getTile(newPosition.x, newPosition.y)->addSelectable(this);
+
+	texture = newTexture;
+	body.setTexture(newTexture);
+	body.setSize(sf::Vector2f(tileResolution, tileResolution));
+	body.setPosition(float(position.x) * tileResolution, float(position.y) * tileResolution);
+
+	cityType = 0;
+	cityExtra = 0;
+
+	buildings.resize(3);
+
 	for (int i = 0; i < 3; i++)
 	{
+		buildings[i].resize(3);
 		for (int j = 0; j < 3; j++)
 		{
 			buildings[i][j] = new BuildingInstance(setOfBuildings[i][j]);
@@ -23,18 +51,51 @@ City::City(std::vector <std::vector <Building*>> setOfBuildings)
 	}
 }
 
-City::City(Building* building, sf::Vector2i index)
+City::City(sf::Vector2f newPosition, sf::Texture* newTexture, Building* building, sf::Vector2i index)
 {
+	position = newPosition;
+	Engine::getInstance().getGlobalMap()->getTile(newPosition.x, newPosition.y)->addSelectable(this);
+
+	texture = newTexture;
+	body.setTexture(newTexture);
+	body.setSize(sf::Vector2f(tileResolution, tileResolution));
+	body.setPosition(float(position.x) * tileResolution, float(position.y) * tileResolution);
+
+	cityType = 0;
+	cityExtra = 0;
+
 	buildings[index.x][index.y] = new BuildingInstance(building);
 }
 
-City::City(Building* building, std::pair<short, short> index)
+City::City(sf::Vector2f newPosition, sf::Texture* newTexture, Building* building, std::pair<short, short> index)
 {
+	position = newPosition;
+	Engine::getInstance().getGlobalMap()->getTile(newPosition.x, newPosition.y)->addSelectable(this);
+
+	texture = newTexture;
+	body.setTexture(newTexture);
+	body.setSize(sf::Vector2f(tileResolution, tileResolution));
+	body.setPosition(float(position.x) * tileResolution, float(position.y) * tileResolution);
+
+	cityType = 0;
+	cityExtra = 0;
+
 	buildings[index.first][index.second] = new BuildingInstance(building);
 }
 
-City::City(Building* building, short x, short y)
+City::City(sf::Vector2f newPosition, sf::Texture* newTexture, Building* building, short x, short y)
 {
+	position = newPosition;
+	Engine::getInstance().getGlobalMap()->getTile(newPosition.x, newPosition.y)->addSelectable(this);
+
+	texture = newTexture;
+	body.setTexture(newTexture);
+	body.setSize(sf::Vector2f(tileResolution, tileResolution));
+	body.setPosition(float(position.x) * tileResolution, float(position.y) * tileResolution);
+
+	cityType = 0;
+	cityExtra = 0;
+
 	buildings[x][y] = new BuildingInstance(building);
 }
 
@@ -92,4 +153,34 @@ void City::deleteBuilding(short x, short y)
 		buildings[x][y] = nullptr;
 	}
 	else std::cerr << "Tu nie ma budynku\n";
+}
+
+void City::draw(sf::RenderWindow& window)
+{
+	window.draw(body);
+}
+
+void City::draw(sf::RenderWindow& window, sf::View& view, float zoom)
+{
+	window.draw(body);
+}
+
+void City::draw(sf::RenderTexture& texture)
+{
+	texture.draw(body);
+}
+
+Function* City::onSelect()
+{
+	return nullptr;
+}
+
+Function* City::onClick()
+{
+	return nullptr;
+}
+
+Function* City::onDeselect()
+{
+	return nullptr;
 }

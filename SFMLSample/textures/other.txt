@@ -6,3 +6,5 @@ TokenLion
 textures/tokens/token.9.3.png
 TokenBeatle
 textures/tokens/token.9.4.png
+CityTest1
+textures/cities/citytest1.png

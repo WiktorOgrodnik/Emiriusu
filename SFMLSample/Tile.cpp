@@ -74,7 +74,7 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Bu
 	biomeAddOn = nullptr;
 	selectable = -1;
 	riverExtra = 0;
-	city = new City(newBuildings);
+	city = new City(newPosition, Engine::getInstance().getData().Textures().getTexture("CityTest1"), newBuildings);
 }
 
 Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::vector <std::vector<Building*>> newBuildings)
@@ -89,7 +89,7 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::v
 	biomeAddOn = nullptr;
 	selectable = -1;
 	riverExtra = 0;
-	city = new City(newBuildings);
+	city = new City(newPosition, Engine::getInstance().getData().Textures().getTexture("CityTest1"), newBuildings);
 }
 
 Tile::Tile(Biome* newType, sf::Vector2f newPosition, BiomeAddOn* newBiomeAddOn)
@@ -134,7 +134,7 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Bu
 	biomeAddOn = newBiomeAddOn;
 	selectable = -1;
 	riverExtra = 0;
-	city = new City(newBuildings);
+	city = new City(newPosition, Engine::getInstance().getData().Textures().getTexture("CityTest1"), newBuildings);
 }
 
 Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::vector <std::vector<Building*>> newBuildings, BiomeAddOn* newBiomeAddOn)
@@ -149,7 +149,7 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::v
 	biomeAddOn = newBiomeAddOn;
 	selectable = -1;
 	riverExtra = 0;
-	city = new City(newBuildings);
+	city = new City(newPosition, Engine::getInstance().getData().Textures().getTexture("CityTest1"), newBuildings);
 }
 
 void Tile::setCity(City* newCity)
@@ -209,7 +209,7 @@ void Tile::setMineral(Mineral* newMineral)
 
 void Tile::setSetOfBuildings(std::vector <std::vector<Building*>> newBuildings)
 {
-	if (city == nullptr) city = new City(newBuildings);
+	if (city == nullptr) city = new City(position, Engine::getInstance().getData().Textures().getTexture("CityTest1"), newBuildings);
 	else city->setSetOfBuildings(newBuildings);
 }
 
@@ -220,19 +220,19 @@ void Tile::setAddOn(BiomeAddOn* newBiomeAddOn)
 
 void Tile::setSpecificBuilding(Building* newBuilding, sf::Vector2i index)
 {
-	if (city == nullptr) city = new City(newBuilding, index);
+	if (city == nullptr) city = new City(position, Engine::getInstance().getData().Textures().getTexture("CityTest1"), newBuilding, index);
 	else city->setSpecificBuilding(newBuilding, index);
 }
 
 void Tile::setSpecificBuilding(Building* newBuilding, std::pair <short, short> index)
 {
-	if (city == nullptr) city = new City(newBuilding, index);
+	if (city == nullptr) city = new City(position, Engine::getInstance().getData().Textures().getTexture("CityTest1"), newBuilding, index);
 	else city->setSpecificBuilding(newBuilding, index);
 }
 
 void Tile::setSpecificBuilding(Building* newBuilding, short x, short y)
 {
-	if (city == nullptr) city = new City(newBuilding, x, y);
+	if (city == nullptr) city = new City(position, Engine::getInstance().getData().Textures().getTexture("CityTest1"), newBuilding, x, y);
 	else city->setSpecificBuilding(newBuilding, x, y);
 }
 

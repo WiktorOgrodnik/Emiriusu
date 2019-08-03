@@ -45,6 +45,8 @@ private:
 	std::vector<Layer*> Layers; /// wszystkie warstwy
 	sf::Event event; /// event okna
 
+	Map* globalMap; /// Mapa globalna
+
 	std::vector <Army*> armies; /// Armie;
 
 	Data data; /// wiêkszoœæ danych, u¿ywanych przez program
@@ -54,6 +56,7 @@ private:
 	float deltaTime; /// czas który up³yn¹³ od poprzedniej klatki
 
 	void refreshWindow(); /// funkcja odœwie¿aj¹ca ekran 
+	void setGlobalMap(Map* newGlobalMap); /// setter mapy globalnej
 
 public:
 
@@ -75,6 +78,7 @@ public:
 	unsigned getNumberOfLayers() const; /// zwraca iloœæ warstw
 
 	Data& getData(); /// zwraca referencjê na klasê data
+	Map* getGlobalMap(); /// zwraca mapê globaln¹
 
 	///Engine Experimental Functions:
 	/*void addToLayerTest(Object* newObject, unsigned index);*/

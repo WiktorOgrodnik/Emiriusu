@@ -131,6 +131,16 @@ Data& Engine::getData()
 	return data;
 }
 
+Map* Engine::getGlobalMap()
+{
+	return globalMap;
+}
+
+void Engine::setGlobalMap(Map* newGlobalMap)
+{
+	globalMap = newGlobalMap;
+}
+
 void Engine::startGame()
 {
 	bool mouseClick = false;
@@ -144,6 +154,9 @@ void Engine::startGame()
 	theGame.setVerticalSyncEnabled(true);
 
 	Map map(data.World().getMapSize());
+	setGlobalMap(&map);
+
+	City* testCity = new City(sf::Vector2f(2, 2), data.Textures().getTexture("CityTest1"));
 
 	Army* testArmy = new Army(sf::Vector2i(map.test1.first, map.test1.second), map, data.Textures().getTexture("TokenBeatle"));
 	armies.push_back(testArmy);
@@ -161,6 +174,7 @@ void Engine::startGame()
 	riverOverlay.setType(1);
 	addToLayer(riverOverlay, 1);
 
+
 	increaseNumberOfLayers();
 
 	for (int i = 0; i < armies.size(); i++)
@@ -168,6 +182,10 @@ void Engine::startGame()
 		std::cerr << "¯uku hop\n";
 		addToLayer(armies[i], 2);
 	}
+
+	increaseNumberOfLayers();
+
+	addToLayer(testCity, 3);
 
 	/*increaseNumberOfLayers();
 	mapOverlay citiesOverlay;
