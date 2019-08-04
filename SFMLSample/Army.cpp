@@ -2,6 +2,8 @@
 
 Army::Army(sf::Vector2i newPosition, Map& map, sf::Texture* newTexture)
 {
+	Log::newLog("tworzê now¹ armiê na pozycji: " + std::to_string(newPosition.x) + " " + std::to_string(newPosition.y));
+
 	position = newPosition;
 	map.getTile(newPosition.x, newPosition.y)->addSelectable(this);
 
@@ -16,6 +18,8 @@ Army::Army(sf::Vector2i newPosition, Map& map, sf::Texture* newTexture)
 	unitCount = 0;
 
 	onSelectFunction = new Dijkstra; /// powinno zostaæ zast¹piona globalnym wskaŸnikiem
+
+	Engine::getInstance().addToRenderSelectables(this);
 }
 
 Army::~Army()

@@ -189,7 +189,7 @@ int Map::getSize()
 
 Tile* Map::getTile(unsigned x, unsigned y)
 {
-	Log::newLog("Map::getTile: przekazuje dostęp do Tile x = " + std::to_string(x) + " y = " + std::to_string(y));
+	//Log::newLog("Map::getTile: przekazuje dostęp do Tile x = " + std::to_string(x) + " y = " + std::to_string(y));
 
 	if (x > mapSize || y > mapSize)
 	{
@@ -202,7 +202,7 @@ Tile* Map::getTile(unsigned x, unsigned y)
 
 Tile* Map::getTile(sf::Vector2i position) 
 { 
-	Log::newLog("Map::getTile: przekazuje dostęp do Tile x = " + std::to_string(position.x) + " y = " + std::to_string(position.y));
+	//Log::newLog("Map::getTile: przekazuje dostęp do Tile x = " + std::to_string(position.x) + " y = " + std::to_string(position.y));
 
 	if (position.x > mapSize || position.y > mapSize)
 	{

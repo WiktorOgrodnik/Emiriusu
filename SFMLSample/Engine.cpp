@@ -163,11 +163,10 @@ void Engine::startGame()
 	Map map(data.World().getMapSize());
 	setGlobalMap(&map);
 
+	///testowe obiekty
 	map.getTile(2, 2)->createCity(data.Textures().getTexture("CityTest1"));
 	Army* testArmy = new Army(sf::Vector2i(map.test1.first, map.test1.second), map, data.Textures().getTexture("TokenBeatle"));
-	renderSelectables.push_back(testArmy);
 	Army* testArmy2 = new Army(sf::Vector2i(map.test2.first, map.test2.second), map, data.Textures().getTexture("TokenLion"));
-	renderSelectables.push_back(testArmy2);
 
 	mapOverlay world;
 	world.setTileSet(data.Textures().getTileSet("biomes"));
