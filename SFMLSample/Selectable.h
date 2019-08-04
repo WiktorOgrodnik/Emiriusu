@@ -2,7 +2,7 @@
 
 #include "pch.h"
 
-class Selectable : public Object
+class Selectable
 {
 protected:
 	Function* onClickFunction;

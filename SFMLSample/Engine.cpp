@@ -142,10 +142,10 @@ void Engine::setGlobalMap(Map* newGlobalMap)
 	globalMap = newGlobalMap;
 }
 
-void Engine::addToRenderSelectables(Selectable* selToRen)
+void Engine::addToRenderObjects(Object* objToRen)
 {
 	Log::newLog("Dodaje nowy obiekt do strumienia wyœwietlania");
-	renderSelectables.push_back(selToRen);
+	renderObjects.push_back(objToRen);
 }
 
 void Engine::startGame()
@@ -182,10 +182,10 @@ void Engine::startGame()
 
 	increaseNumberOfLayers();
 
-	for (int i = 0; i < renderSelectables.size(); i++)
+	for (int i = 0; i < renderObjects.size(); i++)
 	{
 		Log::newLog("renderowanie obiektu Selectable");
-		addToLayer(renderSelectables[i], 2);
+		addToLayer(renderObjects[i], 2);
 	}
 
 	int x = 0, y = 0;
