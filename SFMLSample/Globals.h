@@ -5,6 +5,7 @@
 #include "pch.h"
 
 extern const char tileResolution = 96;
+extern const char miniTileResolution = 32;
 
 unsigned convertXAndYToIndex(const unsigned x, const unsigned y); /// konwertuje X i Y na index (dla miniTile) (funkcja nieu¿ywana)
 

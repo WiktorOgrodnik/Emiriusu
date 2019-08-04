@@ -54,13 +54,21 @@ class Data
 	World world; /// Przechowuje informacje dotycz¹ce œwiata
 	Textures textures; /// Przechowuje tekstury
 	Settings settings; /// Przechowuje ustawienia gry
-	std::map <std::string, std::string> biomeDatas; /// Przechowuje informacje o biomach
-	std::map <std::string, Biome*> biomes; /// Przechowuje biomy
 
+	std::map<std::string, std::map <std::string, std::string>> datas; /// Przechowuje informacje o typach
+	std::map <std::string, Biome*> biomes; /// Przechowuje gotowe biomy
+	std::map <std::string, Building*> buildings; /// Przechowuje gotowe budynki (pierwowzory)
+
+	void loadData(); /// ³aduje informacje o lokalizacji plików info
+	void loadSelectData(std::string type); /// ³aduje informacje o wskazanej treœci
+	void createTypes(); ///tworzy typy danych na podstawie informacji
+
+	//Funkcje przestarza³e lub nieu¿ywane
+	std::map <std::string, std::string> biomeDatas; /// Przechowuje informacje o biomach
 	Building* riverPlaceholder; /// Placeholder rzeka
 	BuildingInstance* riverPlaceholderInstance; /// Placeholder rzeka - instancja
 
-	void loadBiomeData(); /// ³aduje informacje o biomach
+	void loadBiomeData(); /// ³aduje informacje o biomach (depracted)
 	void loadRiverPlaceholder(); ///³aduje budynek-rzeka (tymczasowe)
 
 public:
@@ -71,8 +79,12 @@ public:
 	World& World() { return world; } /// zwraca referencjê na World_
 	Textures& Textures() { return textures; } /// zwraca referencjê na Textures_
 	Settings& Settings() { return settings; } /// zwraca referencjê na Settings_
+
+	Biome* getBiome(std::string type); /// zwraca dostêp do wskazamego biomu
+	Building* getBuilding(std::string type); /// zwraca dostep do wskazanego budynku
+
+
 	BuildingInstance* getRiverPlaceholderInstance() { return riverPlaceholderInstance; } /// zwraca wskaŸnik na bloker budynków
-	Biome* getBiome(std::string biome); /// zwraca dostep do wkazanego biomu
 };
 
 #endif /* DATA_H */

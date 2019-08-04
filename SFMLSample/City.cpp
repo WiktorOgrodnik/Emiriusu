@@ -56,7 +56,7 @@ City::City(sf::Vector2f newPosition, sf::Texture* newTexture, std::vector <std::
 		buildings[i].resize(3);
 		for (int j = 0; j < 3; j++)
 		{
-			buildings[i][j] = new BuildingInstance(setOfBuildings[i][j]);
+			buildings[i][j] = new BuildingInstance(setOfBuildings[i][j], position, std::make_pair(i * miniTileResolution, j * miniTileResolution));
 		}
 	}
 
@@ -80,7 +80,7 @@ City::City(sf::Vector2f newPosition, sf::Texture* newTexture, Building* building
 	cityType = 0;
 	cityExtra = 0;
 
-	buildings[index.x][index.y] = new BuildingInstance(building);
+	buildings[index.x][index.y] = new BuildingInstance(building, position, std::make_pair(index.x * miniTileResolution, index.y * miniTileResolution));
 
 	Engine::getInstance().addToRenderObjects(this, 1);
 }
@@ -102,7 +102,7 @@ City::City(sf::Vector2f newPosition, sf::Texture* newTexture, Building* building
 	cityType = 0;
 	cityExtra = 0;
 
-	buildings[index.first][index.second] = new BuildingInstance(building);
+	buildings[index.first][index.second] = new BuildingInstance(building, position, std::make_pair(index.first * miniTileResolution, index.second * miniTileResolution));
 
 	Engine::getInstance().addToRenderObjects(this, 1);
 }
@@ -124,7 +124,7 @@ City::City(sf::Vector2f newPosition, sf::Texture* newTexture, Building* building
 	cityType = 0;
 	cityExtra = 0;
 
-	buildings[x][y] = new BuildingInstance(building);
+	buildings[x][y] = new BuildingInstance(building, position, std::make_pair(x * miniTileResolution, y * miniTileResolution));
 
 	Engine::getInstance().addToRenderObjects(this, 1);
 }
@@ -135,24 +135,24 @@ void City::setSetOfBuildings(std::vector <std::vector <Building*>> setOfBuilding
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			buildings[i][j] = new BuildingInstance(setOfBuildings[i][j]);
+			buildings[i][j] = new BuildingInstance(setOfBuildings[i][j], position, std::make_pair(i * miniTileResolution, j * miniTileResolution));
 		}
 	}
 }
 
 void City::setSpecificBuilding(Building* building, sf::Vector2i index)
 {
-	buildings[index.x][index.y] = new BuildingInstance(building);
+	buildings[index.x][index.y] = new BuildingInstance(building, position, std::make_pair(index.x * miniTileResolution, index.y * miniTileResolution));
 }
 
 void City::setSpecificBuilding(Building* building, std::pair<short, short> index)
 {
-	buildings[index.first][index.second] = new BuildingInstance(building);
+	buildings[index.first][index.second] = new BuildingInstance(building, position, std::make_pair(index.first * miniTileResolution, index.second * miniTileResolution));
 }
 
 void City::setSpecificBuilding(Building* building, short x, short y)
 {
-	buildings[x][y] = new BuildingInstance(building);
+	buildings[x][y] = new BuildingInstance(building, position, std::make_pair(x * miniTileResolution, y * miniTileResolution));
 }
 
 void City::deleteBuilding(sf::Vector2i index)
@@ -188,6 +188,14 @@ void City::deleteBuilding(short x, short y)
 void City::draw(sf::RenderWindow& window)
 {
 	window.draw(body);
+
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			buildings[i][j]->draw(window);
+		}
+	}
 }
 
 void City::draw(sf::RenderWindow& window, sf::View& view, float zoom)

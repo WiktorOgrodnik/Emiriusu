@@ -8,3 +8,7 @@ TokenBeatle
 textures/tokens/token.9.4.png
 CityTest1
 textures/cities/citytest1.png
+ChurchTest
+textures/buildings/church.png
+ShopTest
+textures/buildings/shop.png

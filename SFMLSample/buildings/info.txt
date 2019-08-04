@@ -1,0 +1,4 @@
+Church
+buildings/church.txt
+Shop
+buildings/shop.txt

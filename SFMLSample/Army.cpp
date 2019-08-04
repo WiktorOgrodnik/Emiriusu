@@ -19,7 +19,7 @@ Army::Army(sf::Vector2i newPosition, Map& map, sf::Texture* newTexture)
 
 	onSelectFunction = new Dijkstra; /// powinno zostaæ zast¹piona globalnym wskaŸnikiem
 
-	Engine::getInstance().addToRenderObjects(this, 2);
+	Engine::getInstance().addToRenderObjects(this, 3);
 }
 
 Army::~Army()

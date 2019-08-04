@@ -159,15 +159,107 @@ Data::Data()
 {
 	riverPlaceholder = nullptr;
 	riverPlaceholderInstance = nullptr;
-	loadRiverPlaceholder();
-	loadBiomeData();
-	std::map <std::string, std::string>::iterator itend = biomeDatas.end();
-	for (std::map <std::string, std::string>::iterator it = biomeDatas.begin(); it != itend; it++)
-	{
-		Biome* tempBiome = new Biome(it->second);
 
-		biomes.emplace(std::make_pair(it->first, tempBiome));
+	loadRiverPlaceholder();
+	
+	loadData();
+	createTypes();
+}
+
+void Data::loadData()
+{
+	Log::newLog("Rozpoczynam tworzenie typów - pobieranie danych");
+
+	std::fstream data;
+	std::string temp;
+
+	data.open("info.txt", std::ios::in);
+
+	if (!data.good()) Log::newLog("Nie uda³o siê za³adowaæ pliku info.txt");
+	else
+	{
+		while (!data.eof())
+		{
+			std::getline(data, temp);
+
+			loadSelectData(temp);
+		}
+
+		data.close();
 	}
+}
+
+void Data::loadSelectData(std::string type)
+{
+	Log::newLog("Rozpoczynam tworzenie typów - pobieranie danych " + type);
+
+	std::fstream fileData;
+	std::string tempName, tempDirectory;
+
+	std::map<std::string, std::string>* mapForType = new std::map<std::string, std::string>;
+
+
+	fileData.open(type + "/info.txt", std::ios::in);
+
+	if (!fileData.good()) Log::newLog("Nie uda³o siê za³adowaæ pliku " + type + "/info.txt");
+	else 
+	{
+		while (!fileData.eof())
+		{
+			std::getline(fileData, tempName);
+			std::getline(fileData, tempDirectory);
+
+			mapForType->emplace(std::make_pair(tempName, tempDirectory));
+		}
+
+		datas.emplace(type, *mapForType);
+		delete mapForType;
+		fileData.close();
+	}
+}
+
+void Data::createTypes()
+{
+	Log::newLog("Tworzê typy");
+	std::map <std::string, std::map<std::string, std::string>>::iterator itend = datas.end();
+	for (std::map <std::string, std::map<std::string, std::string>>::iterator it = datas.begin(); it != itend; it++)
+	{
+		std::string type = it->first;
+		std::map <std::string, std::string>* singleTypeMap = &it->second;
+
+		Log::newLog("Tworzenie typ " + type);
+
+		std::map <std::string, std::string>::iterator jtend = singleTypeMap->end();
+		for (std::map <std::string, std::string>::iterator jt = singleTypeMap->begin(); jt != jtend; jt++)
+		{
+			std::string typeName = jt->first;
+			std::string path = jt->second;
+
+			if (type == "biomes")
+			{
+				Biome* tempType = new Biome(path);
+				biomes.emplace(std::make_pair(typeName, tempType));
+			}
+			else if (type == "buildings")
+			{
+				Building* tempType = new Building(path);
+				buildings.emplace(std::make_pair(typeName, tempType));
+			}
+		}
+	}
+}
+
+
+Biome* Data::getBiome(std::string type)
+{
+	auto it = biomes.find(type);
+	return it->second;
+}
+
+Building* Data::getBuilding(std::string type)
+{
+	auto it = buildings.find(type);
+	return it->second;
 }
 
 void Data::loadBiomeData()
@@ -191,16 +283,10 @@ void Data::loadBiomeData()
 	biomeData.close();
 }
 
-Biome* Data::getBiome(std::string biome)
-{
-	auto it = biomes.find(biome);
-	return it->second;
-}
-
 void Data::loadRiverPlaceholder()
 {
 	riverPlaceholder = new Building("Rzeka");
 	riverPlaceholder->setCanEdit(false);
 
-	riverPlaceholderInstance = new BuildingInstance(riverPlaceholder);
+	//riverPlaceholderInstance = new BuildingInstance(riverPlaceholder);
 }

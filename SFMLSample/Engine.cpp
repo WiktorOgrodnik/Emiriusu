@@ -191,6 +191,7 @@ void Engine::startGame()
 
 	///testowe obiekty
 	map.getTile(2, 2)->createCity(data.Textures().getTexture("CityTest1"));
+	map.getTile(2, 2)->getCity()->setSpecificBuilding(data.getBuilding("Church"), std::make_pair(0, 0));
 	Army* testArmy = new Army(sf::Vector2i(map.test1.first, map.test1.second), map, data.Textures().getTexture("TokenBeatle"));
 	Army* testArmy2 = new Army(sf::Vector2i(map.test2.first, map.test2.second), map, data.Textures().getTexture("TokenLion"));
 

@@ -4,7 +4,13 @@
 
 #include "pch.h"
 
-class Biome
+class Type
+{
+private:
+	std::string name;
+};
+
+class Biome : public Type 
 {
 	int id; /// id kafelka
 	std::string name; 
@@ -37,7 +43,7 @@ public:
 	sf::Color* getBiomeColor() { return &biomeColor; }
 };
 
-class BiomeAddOn
+class BiomeAddOn : public Type
 {
 public:
 };
@@ -45,30 +51,40 @@ public:
 class Building
 {
 	std::string name;
+	std::string texture;
 	bool canEdit;
 
 public:
 
-	Building(std::string name_);
+	Building(std::string fileName);
 	void setCanEdit(bool canEdit_);
 
 	std::string getName() { return name; }
+	std::string getTextureId() { return texture; }
 	bool getCanEdit() { return canEdit; }
 
 };
 
-class BuildingInstance
+class BuildingInstance : public Object
 {
 	Building* type;
+	sf::Texture* texture;
+	sf::RectangleShape body;
+	sf::Vector2f position; /// pierwsza wartoœæ to indeks x, a druga to index y
+
 public:
 
-	BuildingInstance(Building* newType);
+	void draw(sf::RenderWindow& window) override; /// witualna funkcja rysowania
+	void draw(sf::RenderWindow& window, sf::View& view, float zoom) override; /// wirtualna funkcja rysowania (tylko mapa u¿ywa tej funkcji!)
+	void draw(sf::RenderTexture& texture) override;
+
+	BuildingInstance(Building* newType, sf::Vector2f rootPos, std::pair<unsigned, unsigned> additionalPos);
 
 	void setType(Building* newType);
 	Building* getType() { return type; }
 };
 
-class Mineral
+class Mineral : public Type
 {
 public:
 };
