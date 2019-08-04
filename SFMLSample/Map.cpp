@@ -199,3 +199,16 @@ Tile* Map::getTile(unsigned x, unsigned y)
 
 	return Tiles[x][y];
 }
+
+Tile* Map::getTile(sf::Vector2i position) 
+{ 
+	Log::newLog("Map::getTile: przekazuje dostęp do Tile x = " + std::to_string(position.x) + " y = " + std::to_string(position.y));
+
+	if (position.x > mapSize || position.y > mapSize)
+	{
+		Log::newLog("Map::getTile: x i y wykroczyły poza dostęp. Błąd krytyczny.");
+		return false;
+	}
+
+	return Tiles[position.x][position.y]; 
+}

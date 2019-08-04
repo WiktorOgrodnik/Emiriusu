@@ -156,7 +156,7 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::v
 
 bool Tile::createCity(sf::Texture* newTexture)
 {
-	if (!(city == nullptr || city == NULL)) return false;
+	if (city != nullptr) return false;
 
 	city = new City(position, newTexture);
 }

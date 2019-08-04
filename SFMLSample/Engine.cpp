@@ -39,6 +39,7 @@ unsigned Layer::getSize() const
 Engine::Engine()
 {
 	currentlySelectedObject = nullptr;
+	globalMap = nullptr;
 	deltaTime = 0;
 	mapPointer = nullptr;
 	event.type = sf::Event::Count;
@@ -187,16 +188,6 @@ void Engine::startGame()
 		Log::newLog("renderowanie obiektu Selectable");
 		addToLayer(renderSelectables[i], 2);
 	}
-
-	increaseNumberOfLayers();
-
-	//addToLayer(map, 3);
-
-	/*increaseNumberOfLayers();
-	mapOverlay citiesOverlay;
-	citiesOverlay.setTileSet(data.Textures().getTileSet("cities"));
-	citiesOverlay.setType(3);
-	addToLayer(citiesOverlay, 3);*/
 
 	int x = 0, y = 0;
 
