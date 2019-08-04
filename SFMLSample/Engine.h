@@ -47,7 +47,8 @@ private:
 
 	Map* globalMap; /// Mapa globalna
 
-	std::vector <Army*> armies; /// Armie;
+	std::vector <Selectable*> renderSelectables; /// Armie;
+	
 
 	Data data; /// wiêkszoœæ danych, u¿ywanych przez program
 	Selectable* currentlySelectedObject; /// obecnie wybrana jednostka
@@ -79,6 +80,8 @@ public:
 
 	Data& getData(); /// zwraca referencjê na klasê data
 	Map* getGlobalMap(); /// zwraca mapê globaln¹
+
+	void addToRenderSelectables(Selectable* selToRen); /// dodaj obiekt klasy Selectable do klasy wyœwietlania
 
 	///Engine Experimental Functions:
 	/*void addToLayerTest(Object* newObject, unsigned index);*/

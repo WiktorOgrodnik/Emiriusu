@@ -186,3 +186,16 @@ int Map::getSize()
 {
 	return mapSize;
 }
+
+Tile* Map::getTile(unsigned x, unsigned y)
+{
+	Log::newLog("Map::getTile: przekazuje dostęp do Tile x = " + std::to_string(x) + " y = " + std::to_string(y));
+
+	if (x > mapSize || y > mapSize)
+	{
+		Log::newLog("Map::getTile: x i y wykroczyły poza dostęp. Błąd krytyczny.");
+		return false;
+	}
+
+	return Tiles[x][y];
+}

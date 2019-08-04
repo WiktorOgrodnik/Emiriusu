@@ -3,8 +3,12 @@
 
 City::City(sf::Vector2f newPosition, sf::Texture* newTexture)
 {
-	position = newPosition;
-	Engine::getInstance().getGlobalMap()->getTile(newPosition.x, newPosition.y)->addSelectable(this);
+	position.x = newPosition.x / tileResolution;
+	position.y = newPosition.y / tileResolution;
+	
+	Log::newLog("Tworzê miasto na pozycji: " + std::to_string(newPosition.x / tileResolution) + " " + std::to_string(newPosition.y / tileResolution));
+
+	Engine::getInstance().getGlobalMap()->getTile(int(newPosition.x / tileResolution), int(newPosition.y / tileResolution))->addSelectable(this);
 
 	texture = newTexture;
 	body.setTexture(newTexture);
@@ -24,12 +28,18 @@ City::City(sf::Vector2f newPosition, sf::Texture* newTexture)
 			buildings[i][j] = nullptr;
 		}
 	}
+
+	Engine::getInstance().addToRenderSelectables(this);
 }
 
 City::City(sf::Vector2f newPosition, sf::Texture* newTexture, std::vector <std::vector <Building*>> setOfBuildings)
 {
-	position = newPosition;
-	Engine::getInstance().getGlobalMap()->getTile(newPosition.x, newPosition.y)->addSelectable(this);
+	position.x = newPosition.x / tileResolution;
+	position.y = newPosition.y / tileResolution;
+
+	Log::newLog("Tworzê miasto na pozycji: " + std::to_string(newPosition.x / tileResolution) + " " + std::to_string(newPosition.y / tileResolution));
+
+	Engine::getInstance().getGlobalMap()->getTile(int(newPosition.x / tileResolution), int(newPosition.y / tileResolution))->addSelectable(this);
 
 	texture = newTexture;
 	body.setTexture(newTexture);
@@ -49,12 +59,18 @@ City::City(sf::Vector2f newPosition, sf::Texture* newTexture, std::vector <std::
 			buildings[i][j] = new BuildingInstance(setOfBuildings[i][j]);
 		}
 	}
+
+	Engine::getInstance().addToRenderSelectables(this);
 }
 
 City::City(sf::Vector2f newPosition, sf::Texture* newTexture, Building* building, sf::Vector2i index)
 {
-	position = newPosition;
-	Engine::getInstance().getGlobalMap()->getTile(newPosition.x, newPosition.y)->addSelectable(this);
+	position.x = newPosition.x / tileResolution;
+	position.y = newPosition.y / tileResolution;
+
+	Log::newLog("Tworzê miasto na pozycji: " + std::to_string(newPosition.x / tileResolution) + " " + std::to_string(newPosition.y / tileResolution));
+
+	Engine::getInstance().getGlobalMap()->getTile(int(newPosition.x / tileResolution), int(newPosition.y / tileResolution))->addSelectable(this);
 
 	texture = newTexture;
 	body.setTexture(newTexture);
@@ -65,12 +81,18 @@ City::City(sf::Vector2f newPosition, sf::Texture* newTexture, Building* building
 	cityExtra = 0;
 
 	buildings[index.x][index.y] = new BuildingInstance(building);
+
+	Engine::getInstance().addToRenderSelectables(this);
 }
 
 City::City(sf::Vector2f newPosition, sf::Texture* newTexture, Building* building, std::pair<short, short> index)
 {
-	position = newPosition;
-	Engine::getInstance().getGlobalMap()->getTile(newPosition.x, newPosition.y)->addSelectable(this);
+	position.x = newPosition.x / tileResolution;
+	position.y = newPosition.y / tileResolution;
+
+	Log::newLog("Tworzê miasto na pozycji: " + std::to_string(newPosition.x / tileResolution) + " " + std::to_string(newPosition.y / tileResolution));
+
+	Engine::getInstance().getGlobalMap()->getTile(int(newPosition.x / tileResolution), int(newPosition.y / tileResolution))->addSelectable(this);
 
 	texture = newTexture;
 	body.setTexture(newTexture);
@@ -81,12 +103,18 @@ City::City(sf::Vector2f newPosition, sf::Texture* newTexture, Building* building
 	cityExtra = 0;
 
 	buildings[index.first][index.second] = new BuildingInstance(building);
+
+	Engine::getInstance().addToRenderSelectables(this);
 }
 
 City::City(sf::Vector2f newPosition, sf::Texture* newTexture, Building* building, short x, short y)
 {
-	position = newPosition;
-	Engine::getInstance().getGlobalMap()->getTile(newPosition.x, newPosition.y)->addSelectable(this);
+	position.x = newPosition.x / tileResolution;
+	position.y = newPosition.y / tileResolution;
+
+	Log::newLog("Tworzê miasto na pozycji: " + std::to_string(newPosition.x / tileResolution) + " " + std::to_string(newPosition.y / tileResolution));
+
+	Engine::getInstance().getGlobalMap()->getTile(int(newPosition.x / tileResolution), int(newPosition.y / tileResolution))->addSelectable(this);
 
 	texture = newTexture;
 	body.setTexture(newTexture);
@@ -97,6 +125,8 @@ City::City(sf::Vector2f newPosition, sf::Texture* newTexture, Building* building
 	cityExtra = 0;
 
 	buildings[x][y] = new BuildingInstance(building);
+
+	Engine::getInstance().addToRenderSelectables(this);
 }
 
 void City::setSetOfBuildings(std::vector <std::vector <Building*>> setOfBuildings)

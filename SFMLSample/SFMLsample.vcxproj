@@ -172,6 +172,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="City.h" />
     <ClInclude Include="Function.h" />
+    <ClInclude Include="Log.h" />
     <ClInclude Include="mapOverlay.h" />
     <ClInclude Include="Selectable.h" />
     <ClInclude Include="Types.h" />
@@ -191,6 +192,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="City.cpp" />
     <ClCompile Include="Function.cpp" />
+    <ClCompile Include="Log.cpp" />
     <ClCompile Include="mapOverlay.cpp" />
     <ClCompile Include="Selectable.cpp" />
     <ClCompile Include="Types.cpp" />

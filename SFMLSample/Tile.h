@@ -29,12 +29,12 @@ public:
 	Tile(Biome* newType, sf::Vector2f newPosition); /// Konstruktory rzeki (przyjmuj¹ ró¿ne wartoœci - opisane wy¿ej)
 	Tile(Biome* newType, sf::Vector2f newPosition, char riverType_);
 	Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral);
-	Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Building*>> newBuildings);
-	Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::vector <std::vector<Building*>> newBuildings);
+	Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Building*>> newBuildings, sf::Texture* newTexture);
+	Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::vector <std::vector<Building*>> newBuildings, sf::Texture* newTexture);
 	Tile(Biome* newType, sf::Vector2f newPosition, BiomeAddOn* newBiomeAddOn);
 	Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, BiomeAddOn* newBiomeAddOn);
-	Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Building*>> newBuildings, BiomeAddOn* newBiomeAddOn);
-	Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::vector <std::vector<Building*>> newBuildings, BiomeAddOn* newBiomeAddOn);
+	Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Building*>> newBuildings, BiomeAddOn* newBiomeAddOn, sf::Texture* newTexture);
+	Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::vector <std::vector<Building*>> newBuildings, BiomeAddOn* newBiomeAddOn, sf::Texture* newTexture);
 
 	void setCity(City* newCity); /// ustawia nowe miasto
 	void setType(Biome* newType); /// ustawia typ kafelka (przyjmuje nowy typ kafelka)
@@ -63,6 +63,7 @@ public:
 	Biome* getType() { return type; } /// zwraca typ kafelka
 	int getRand() { return rand_; } /// zwraca losowy podtyp kafelka
 	City* getCity() { return city; } /// zwraca miasto
+	bool createCity(sf::Texture* newTexture); /// tworzy nowe miasto
 	BuildingInstance* getBuilding(sf::Vector2i index) { return city->getBuilding(index); } /// funkcje zwracaj¹ konkretne budynki
 	BuildingInstance* getBuilding(std::pair <short, short> index) { return city->getBuilding(index);}
 	BuildingInstance* getBuilding(short x, short y) { return city->getBuilding(x, y);}

@@ -22,6 +22,8 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition)
 	rand_ = 0;
 	setRand();
 
+	//Log::newLog("Tworzê Tile typu " + newType->getName() + " na pozycji: " + std::to_string(newPosition.x) + " " + std::to_string(newPosition.y));
+
 	type = newType;
 	position = newPosition;
 	riverType = 0;
@@ -62,7 +64,7 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral)
 	city = nullptr;
 }
 
-Tile::Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Building*>> newBuildings)
+Tile::Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Building*>> newBuildings, sf::Texture* newTexture)
 {
 	rand_ = 0;
 	setRand();
@@ -74,10 +76,10 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Bu
 	biomeAddOn = nullptr;
 	selectable = -1;
 	riverExtra = 0;
-	city = new City(newPosition, Engine::getInstance().getData().Textures().getTexture("CityTest1"), newBuildings);
+	createCity(newTexture);
 }
 
-Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::vector <std::vector<Building*>> newBuildings)
+Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::vector <std::vector<Building*>> newBuildings, sf::Texture* newTexture)
 {
 	rand_ = 0;
 	setRand();
@@ -89,7 +91,7 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::v
 	biomeAddOn = nullptr;
 	selectable = -1;
 	riverExtra = 0;
-	city = new City(newPosition, Engine::getInstance().getData().Textures().getTexture("CityTest1"), newBuildings);
+	createCity(newTexture);
 }
 
 Tile::Tile(Biome* newType, sf::Vector2f newPosition, BiomeAddOn* newBiomeAddOn)
@@ -122,7 +124,7 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, BiomeA
 	city = nullptr;
 }
 
-Tile::Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Building*>> newBuildings, BiomeAddOn* newBiomeAddOn)
+Tile::Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Building*>> newBuildings, BiomeAddOn* newBiomeAddOn, sf::Texture* newTexture)
 {
 	rand_ = 0;
 	setRand();
@@ -134,10 +136,10 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Bu
 	biomeAddOn = newBiomeAddOn;
 	selectable = -1;
 	riverExtra = 0;
-	city = new City(newPosition, Engine::getInstance().getData().Textures().getTexture("CityTest1"), newBuildings);
+	createCity(newTexture);
 }
 
-Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::vector <std::vector<Building*>> newBuildings, BiomeAddOn* newBiomeAddOn)
+Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::vector <std::vector<Building*>> newBuildings, BiomeAddOn* newBiomeAddOn, sf::Texture* newTexture)
 {
 	rand_ = 0;
 	setRand();
@@ -149,7 +151,14 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::v
 	biomeAddOn = newBiomeAddOn;
 	selectable = -1;
 	riverExtra = 0;
-	city = new City(newPosition, Engine::getInstance().getData().Textures().getTexture("CityTest1"), newBuildings);
+	createCity(newTexture);
+}
+
+bool Tile::createCity(sf::Texture* newTexture)
+{
+	if (!(city == nullptr || city == NULL)) return false;
+
+	city = new City(position, newTexture);
 }
 
 void Tile::setCity(City* newCity)

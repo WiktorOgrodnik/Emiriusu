@@ -34,6 +34,8 @@
 
 #include "Globals.h"
 
+#include "Log.h"
+
 #include "Object.h"
 #include "Function.h"
 #include "Types.h"

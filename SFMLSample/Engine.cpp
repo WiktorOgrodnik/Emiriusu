@@ -141,6 +141,12 @@ void Engine::setGlobalMap(Map* newGlobalMap)
 	globalMap = newGlobalMap;
 }
 
+void Engine::addToRenderSelectables(Selectable* selToRen)
+{
+	Log::newLog("Dodaje nowy obiekt do strumienia wyœwietlania");
+	renderSelectables.push_back(selToRen);
+}
+
 void Engine::startGame()
 {
 	bool mouseClick = false;
@@ -156,12 +162,11 @@ void Engine::startGame()
 	Map map(data.World().getMapSize());
 	setGlobalMap(&map);
 
-	City* testCity = new City(sf::Vector2f(2, 2), data.Textures().getTexture("CityTest1"));
-
+	map.getTile(2, 2)->createCity(data.Textures().getTexture("CityTest1"));
 	Army* testArmy = new Army(sf::Vector2i(map.test1.first, map.test1.second), map, data.Textures().getTexture("TokenBeatle"));
-	armies.push_back(testArmy);
+	renderSelectables.push_back(testArmy);
 	Army* testArmy2 = new Army(sf::Vector2i(map.test2.first, map.test2.second), map, data.Textures().getTexture("TokenLion"));
-	armies.push_back(testArmy2);
+	renderSelectables.push_back(testArmy2);
 
 	mapOverlay world;
 	world.setTileSet(data.Textures().getTileSet("biomes"));
@@ -177,15 +182,15 @@ void Engine::startGame()
 
 	increaseNumberOfLayers();
 
-	for (int i = 0; i < armies.size(); i++)
+	for (int i = 0; i < renderSelectables.size(); i++)
 	{
-		std::cerr << "¯uku hop\n";
-		addToLayer(armies[i], 2);
+		Log::newLog("renderowanie obiektu Selectable");
+		addToLayer(renderSelectables[i], 2);
 	}
 
 	increaseNumberOfLayers();
 
-	addToLayer(testCity, 3);
+	//addToLayer(map, 3);
 
 	/*increaseNumberOfLayers();
 	mapOverlay citiesOverlay;
