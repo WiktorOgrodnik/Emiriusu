@@ -44,6 +44,8 @@ Engine::Engine()
 	mapPointer = nullptr;
 	event.type = sf::Event::Count;
 
+	renderObjects.resize(100);
+
 	exitGame = false;
 	logFile.open("Engine.log", std::ios::out);
 	theGame.create(sf::VideoMode(1280, 720), "Emiriusu", sf::Style::Close | sf::Style::Titlebar | sf::Style::Resize);
@@ -111,6 +113,16 @@ void Engine::addToLayer(Object* newObject, unsigned index)
 	Layers[index]->addObject(newObject);
 }
 
+void Engine::addToTopLayer(Object& newObject)
+{
+	if(!Layers.empty()) Layers.back()->addObject(newObject);
+}
+
+void Engine::addToTopLayer(Object* newObject)
+{
+	if (!Layers.empty()) Layers.back()->addObject(newObject);
+}
+
 void Engine::increaseNumberOfLayers()
 {
 	Layers.push_back(new Layer);
@@ -142,10 +154,24 @@ void Engine::setGlobalMap(Map* newGlobalMap)
 	globalMap = newGlobalMap;
 }
 
-void Engine::addToRenderObjects(Object* objToRen)
+void Engine::renderRenderObjects()
 {
-	Log::newLog("Dodaje nowy obiekt do strumienia wyœwietlania");
-	renderObjects.push_back(objToRen);
+	Log::newLog("Rozpoczynam renderowania strumienia ma³ych obiektów");
+
+	for (int i = 0; i < renderObjects.size(); i++)
+	{
+		if (renderObjects[i].empty()) continue;
+
+		increaseNumberOfLayers();
+
+		for (int j = 0; j < renderObjects[i].size(); j++) addToTopLayer(renderObjects[i][j]);
+	}
+}
+
+void Engine::addToRenderObjects(Object* objToRen, unsigned selectLayer)
+{
+	Log::newLog("Dodaje nowy obiekt do strumienia wyœwietlania ma³ych obiektów, warstwa: " + std::to_string(selectLayer));
+	renderObjects[selectLayer - 1].push_back(objToRen);
 }
 
 void Engine::startGame()
@@ -179,14 +205,7 @@ void Engine::startGame()
 	riverOverlay.setType(1);
 	addToLayer(riverOverlay, 1);
 
-
-	increaseNumberOfLayers();
-
-	for (int i = 0; i < renderObjects.size(); i++)
-	{
-		Log::newLog("renderowanie obiektu Selectable");
-		addToLayer(renderObjects[i], 2);
-	}
+	renderRenderObjects();
 
 	int x = 0, y = 0;
 

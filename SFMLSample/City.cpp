@@ -29,7 +29,7 @@ City::City(sf::Vector2f newPosition, sf::Texture* newTexture)
 		}
 	}
 
-	Engine::getInstance().addToRenderObjects(this);
+	Engine::getInstance().addToRenderObjects(this, 1);
 }
 
 City::City(sf::Vector2f newPosition, sf::Texture* newTexture, std::vector <std::vector <Building*>> setOfBuildings)
@@ -60,7 +60,7 @@ City::City(sf::Vector2f newPosition, sf::Texture* newTexture, std::vector <std::
 		}
 	}
 
-	Engine::getInstance().addToRenderObjects(this);
+	Engine::getInstance().addToRenderObjects(this, 1);
 }
 
 City::City(sf::Vector2f newPosition, sf::Texture* newTexture, Building* building, sf::Vector2i index)
@@ -82,7 +82,7 @@ City::City(sf::Vector2f newPosition, sf::Texture* newTexture, Building* building
 
 	buildings[index.x][index.y] = new BuildingInstance(building);
 
-	Engine::getInstance().addToRenderObjects(this);
+	Engine::getInstance().addToRenderObjects(this, 1);
 }
 
 City::City(sf::Vector2f newPosition, sf::Texture* newTexture, Building* building, std::pair<short, short> index)
@@ -104,7 +104,7 @@ City::City(sf::Vector2f newPosition, sf::Texture* newTexture, Building* building
 
 	buildings[index.first][index.second] = new BuildingInstance(building);
 
-	Engine::getInstance().addToRenderObjects(this);
+	Engine::getInstance().addToRenderObjects(this, 1);
 }
 
 City::City(sf::Vector2f newPosition, sf::Texture* newTexture, Building* building, short x, short y)
@@ -126,7 +126,7 @@ City::City(sf::Vector2f newPosition, sf::Texture* newTexture, Building* building
 
 	buildings[x][y] = new BuildingInstance(building);
 
-	Engine::getInstance().addToRenderObjects(this);
+	Engine::getInstance().addToRenderObjects(this, 1);
 }
 
 void City::setSetOfBuildings(std::vector <std::vector <Building*>> setOfBuildings)

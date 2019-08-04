@@ -47,7 +47,8 @@ private:
 
 	Map* globalMap; /// Mapa globalna
 
-	std::vector <Object*> renderObjects; /// Armie;
+	std::vector <std::vector <Object*>> renderObjects; /// strumieñ ma³ych obiektów do renderowania
+	void renderRenderObjects(); /// funkcja renderuje strumieñ ma³e obiekty
 	
 
 	Data data; /// wiêkszoœæ danych, u¿ywanych przez program
@@ -69,6 +70,8 @@ public:
 	void addLayer(std::vector<Object*> & newLayer); /// dodaje warstwê (przyjmuje referncjê na wektor obiektów)
 	void addToLayer(Object& newObject, unsigned index); /// dodaje obiekt do wybranej warstwy
 	void addToLayer(Object* newObject, unsigned index); /// dodaje obiekt do wybranej warstwy
+	void addToTopLayer(Object& newObject); /// dodaje obiekt do najwy¿szej warstwy
+	void addToTopLayer(Object* newObject); /// dodaje obiekt do najwy¿szej warstwy
 	void increaseNumberOfLayers(); /// zwiêksza liczbê warst o jedn¹
 	void startGame(); /// uruchamia silnik
 
@@ -81,7 +84,7 @@ public:
 	Data& getData(); /// zwraca referencjê na klasê data
 	Map* getGlobalMap(); /// zwraca mapê globaln¹
 
-	void addToRenderObjects(Object* selToObj); /// dodaj obiekt klasy Selectable do klasy wyœwietlania
+	void addToRenderObjects(Object* selToObj, unsigned selectLayer); /// dodaj obiekt klasy Object do strumienia ma³ych obiektów do renderowania
 
 	///Engine Experimental Functions:
 	/*void addToLayerTest(Object* newObject, unsigned index);*/
