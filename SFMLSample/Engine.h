@@ -19,8 +19,8 @@ public:
 	Layer(std::vector <Object*> * objectsPreview); /// konstruktor (przyjmuje wskaŸnik na wektor obiektów)
 	Layer() {}
 
-	void draw(sf::RenderWindow & window) override; /// funkcja rysuje  warstwê na erkanie
-	void draw(sf::RenderWindow& window, sf::View& view, float zoom) override; /// funkcja rysuje  warstwê na erkanie (tylko mapa u¿ywa tej funkcji!)
+	void draw(sf::RenderWindow & window) override; /// funkcja rysuje warstwê na erkanie
+	void draw(sf::RenderWindow& window, sf::View& view, float zoom) override; /// funkcja rysuje warstwê na erkanie (tylko mapa u¿ywa tej funkcji!)
 	void draw(sf::RenderTexture& texture) override {}
 	void addObject(Object* newObject); /// dodaj obiekt do warstwy (przyjmuje wskaŸnik na obiekt)
 	void addObject(Object& newObject); /// dodaj obieket do wartwy (przyjmuje refernecjê na obiekt)

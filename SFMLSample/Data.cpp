@@ -39,17 +39,19 @@ void Textures::loadOtherTextures()
 	const std::string textureInfoFileName = "textures/other.txt";
 	std::string tempText, tempText2;
 
-	textureInfoFile.open(textureInfoFileName, std::ios::in | std::ios::out);
-	if (!textureInfoFile.good()) std::cerr << "Nie uda³o siê odczytaæ pliku: " << textureInfoFileName << '\n';
-
-	while (!textureInfoFile.eof())
+	textureInfoFile.open(textureInfoFileName, std::ios::in);
+	if (!textureInfoFile.good()) Log::newLog("Nie uda³o siê odczytaæ pliku: " + textureInfoFileName);
+	else
 	{
-		std::getline(textureInfoFile, tempText);
-		std::getline(textureInfoFile, tempText2);
+		while (!textureInfoFile.eof())
+		{
+			std::getline(textureInfoFile, tempText);
+			std::getline(textureInfoFile, tempText2);
 
-		sf::Texture* tempTexture = new sf::Texture;
-		tempTexture->loadFromFile(tempText2);
-		textures.insert(std::make_pair(tempText, tempTexture));
+			sf::Texture* tempTexture = new sf::Texture;
+			tempTexture->loadFromFile(tempText2);
+			textures.insert(std::make_pair(tempText, tempTexture));
+		}
 	}
 }
 
@@ -60,80 +62,84 @@ void Textures::loadTileSets()
 	std::string tempText, tempText2;
 	std::queue <std::string> fileQueue;
 
-	textureInfoFile.open(textureInfoFileName, std::ios::in | std::ios::out);
+	textureInfoFile.open(textureInfoFileName, std::ios::in);
 
-	if (!textureInfoFile.good()) std::cerr << "Nie uda³o siê odczytaæ pliku: " << textureInfoFileName << '\n';
-
-	while (!textureInfoFile.eof())
+	if (!textureInfoFile.good()) Log::newLog("Nie uda³o siê odczytaæ pliku: " + textureInfoFileName);
+	else
 	{
-		std::getline(textureInfoFile, tempText);
-		std::getline(textureInfoFile, tempText2);
-
-		fileQueue.push(tempText2);
-
-		tileSets[tempText] = new sf::Texture;
-	}
-
-	textureInfoFile.close();
-
-	std::map <std::string, sf::Texture*>::iterator it = tileSets.begin();
-
-	while (!fileQueue.empty())
-	{
-		int x, y, vcount = 2, numberOfTextures = 0;
-		bool varaints = false;
-		sf::Texture tempTexture;
-
-		tempText2 = fileQueue.front();
-		fileQueue.pop();
-
-		textureInfoFile.open(tempText2, std::ios::in | std::ios::out);
-
-		if (!textureInfoFile.good()) std::cerr << "Nie uda³o siê za³adowaæ pliku " << tempText2 << '\n';
-
-		sf::Texture* tileSet = it->second;
-
-		std::getline(textureInfoFile, tempText);
-		x = stringToInt(tempText);
-		std::getline(textureInfoFile, tempText);
-		y = stringToInt(tempText);
-
-		tileSet->create(x * tileResolution, y * tileResolution);
-
-		for(int i = 0; i < x * y + 1; i++)
+		while (!textureInfoFile.eof())
 		{
 			std::getline(textureInfoFile, tempText);
+			std::getline(textureInfoFile, tempText2);
 
-			if (tempText == "variants")
+			fileQueue.push(tempText2);
+
+			tileSets[tempText] = new sf::Texture;
+		}
+
+		textureInfoFile.close();
+
+		std::map <std::string, sf::Texture*>::iterator it = tileSets.begin();
+
+		while (!fileQueue.empty())
+		{
+			int x, y, vcount = 2, numberOfTextures = 0;
+			bool varaints = false;
+			sf::Texture tempTexture;
+
+			tempText2 = fileQueue.front();
+			fileQueue.pop();
+
+			textureInfoFile.open(tempText2, std::ios::in);
+
+			if (!textureInfoFile.good()) Log::newLog("Nie uda³o siê za³adowaæ pliku " + tempText2);
+			else
 			{
-				varaints = true;
-				numberOfTextures = 0;
-			}
+				Log::newLog("Uda³o siê za³adowaæ pliku " + tempText2);
+				sf::Texture* tileSet = it->second;
 
-			if (!varaints)
-			{
-				if (!tempTexture.loadFromFile(tempText)) std::cerr << "Nie uda³o siê za³adowaæ tekstury " << tempText << '\n';
+				std::getline(textureInfoFile, tempText);
+				x = stringToInt(tempText);
+				std::getline(textureInfoFile, tempText);
+				y = stringToInt(tempText);
 
-				tileSet->update(tempTexture, tileResolution * numberOfTextures, 0);
+				tileSet->create(x * tileResolution, y * tileResolution);
 
-				numberOfTextures++;
-			}
-			else if (tempText != "variants")
-			{
-				if (!tempTexture.loadFromFile(tempText))std::cerr << "Nie uda³o siê za³adowaæ tekstury " << tempText << '\n';
-			
-				tileSet->update(tempTexture, tileResolution * numberOfTextures, tileResolution * (vcount - 1));
-
-				if (vcount == y)
+				for (int i = 0; i < x * y + 1; i++)
 				{
-					vcount = 2;
-					numberOfTextures++;
+					std::getline(textureInfoFile, tempText);
+
+					if (tempText == "variants")
+					{
+						varaints = true;
+						numberOfTextures = 0;
+					}
+
+					if (!varaints)
+					{
+						if (!tempTexture.loadFromFile(tempText)) Log::newLog("Nie uda³o siê za³adowaæ tekstury " + tempText);
+						
+						tileSet->update(tempTexture, tileResolution * numberOfTextures, 0);
+						numberOfTextures++;
+					}
+					else if (tempText != "variants")
+					{
+						if (!tempTexture.loadFromFile(tempText)) Log::newLog ("Nie uda³o siê za³adowaæ tekstury " + tempText);
+						
+						tileSet->update(tempTexture, tileResolution * numberOfTextures, tileResolution * (vcount - 1));
+
+						if (vcount == y)
+						{
+							vcount = 2;
+							numberOfTextures++;
+						}
+						else vcount++;
+					}
 				}
-				else vcount++;
+				it++;
+				textureInfoFile.close();
 			}
 		}
-		it++;
-		textureInfoFile.close();
 	}
 }
 

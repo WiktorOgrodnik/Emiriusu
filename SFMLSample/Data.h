@@ -14,7 +14,7 @@ public:
 	Settings(); /// konstruktor
 	void setZoom(float newZoom); /// ustawia nowe przybli¿enie mapy (przyjmuje nowe przybli¿enie)
 	float getZoom() { return zoom; } /// zwraca obecne przybli¿enie mapy
-	void increaseZoom(float val); ///zmienia przybli¿enie mapyo podan¹ wartoœæ
+	void increaseZoom(float val); ///zmienia przybli¿enie mapy o podan¹ wartoœæ
 };
 
 class World
