@@ -1,0 +1,6 @@
+1
+textures/cities/jenoty/1.png
+church
+textures/buildings/jenoty/church.png
+shop
+textures/buildings/jenoty/shop.png

@@ -51,9 +51,13 @@ public:
 	void ereaseSelectable(); /// usuwa obecnie wynrany selectable
 	void skipSelectable(); /// przechodzi do nastêpnego obiektu klikalnego
 
-	void setSpecificBuilding(Building* newBuilding, sf::Vector2i index); /// ustaw nowy budynek na konkretnym polu
+	void setSpecificBuilding(Building* newBuilding, sf::Vector2i index); ///NIE U¯YWAÆ ustaw nowy budynek na konkretnym polu
 	void setSpecificBuilding(Building* newBuilding, std::pair <short, short> index);
 	void setSpecificBuilding(Building* newBuilding, short x, short y);
+
+	void setSpecificBuildingForPlayer(Player* player, Building* newBuilding, sf::Vector2i index); /// ustaw nowy budynek na konkretnym polu z uwzglednieniem gracza
+	void setSpecificBuildingForPlayer(Player* player, Building* newBuilding, std::pair <short, short> index);
+	void setSpecificBuildingForPlayer(Player* player, Building* newBuilding, short x, short y);
 
 	void deleteBuilding(sf::Vector2i index); /// usuñ konkretny budynek
 	void deleteBuilding(std::pair <short, short>);
@@ -62,8 +66,10 @@ public:
 	sf::Vector2f getPosition() { return position; } /// zwraca pozycjê kafelka
 	Biome* getType() { return type; } /// zwraca typ kafelka
 	int getRand() { return rand_; } /// zwraca losowy podtyp kafelka
-	City* getCity() { return city; } /// zwraca miasto
-	bool createCity(sf::Texture* newTexture); /// tworzy nowe miasto
+	City* getCity(); /// zwraca miasto
+	bool createCity(sf::Texture* newTexture); /// tworzy nowe miasto (Nie u¿ywaæ)
+	void createCityForPlayer(Player* setPlayer); /// tworzy nowe miasto dla gracza
+
 	BuildingInstance* getBuilding(sf::Vector2i index) { return city->getBuilding(index); } /// funkcje zwracaj¹ konkretne budynki
 	BuildingInstance* getBuilding(std::pair <short, short> index) { return city->getBuilding(index);}
 	BuildingInstance* getBuilding(short x, short y) { return city->getBuilding(x, y);}

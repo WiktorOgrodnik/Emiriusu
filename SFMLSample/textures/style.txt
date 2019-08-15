@@ -1,0 +1,6 @@
+kuny
+textures/styles/kuny.txt
+jenoty
+textures/styles/jenoty.txt
+borsuki
+textures/styles/borsuki.txt

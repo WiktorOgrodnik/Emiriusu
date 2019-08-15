@@ -1,0 +1,6 @@
+1
+textures/cities/borsuki/1.png
+ChurchTest
+textures/buildings/borsuki/church.png
+ShopTest
+textures/buildings/borsuki/shop.png

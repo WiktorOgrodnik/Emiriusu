@@ -74,6 +74,22 @@ BuildingInstance::BuildingInstance(Building* newBuilding, sf::Vector2f newPos, s
 	Engine::getInstance().addToRenderObjects(this, 2);
 }
 
+BuildingInstance::BuildingInstance(Building* newBuilding, sf::Vector2f newPos, std::pair<unsigned, unsigned> additionalPos, Player* player)
+{
+	type = newBuilding;
+	position.x = newPos.x;
+	position.y = newPos.y;
+
+	Log::newLog("Tworzê budynek na pozycji (w pikselach): " + std::to_string(float(newPos.x) * tileResolution + additionalPos.first) + " " + std::to_string(float(newPos.y) * tileResolution + additionalPos.second) + " dla gracza: " + player->getNickName());
+
+	texture = Engine::getInstance().getData().Textures().getFractionTexture(player->getFraction(), newBuilding->getTextureId());
+	body.setTexture(texture);
+	body.setSize(sf::Vector2f(miniTileResolution, miniTileResolution));
+	body.setPosition(float(newPos.x) * tileResolution + additionalPos.first, float(newPos.y) * tileResolution + additionalPos.second);
+
+	Engine::getInstance().addToRenderObjects(this, 2);
+}
+
 void BuildingInstance::setType(Building* newType)
 {
 	type = newType;

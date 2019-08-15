@@ -79,6 +79,7 @@ public:
 	void draw(sf::RenderTexture& texture) override;
 
 	BuildingInstance(Building* newType, sf::Vector2f rootPos, std::pair<unsigned, unsigned> additionalPos);
+	BuildingInstance(Building* newType, sf::Vector2f rootPos, std::pair<unsigned, unsigned> additionalPos, Player* player);
 
 	void setType(Building* newType);
 	Building* getType() { return type; }

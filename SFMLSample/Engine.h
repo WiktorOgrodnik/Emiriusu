@@ -60,6 +60,8 @@ private:
 	void refreshWindow(); /// funkcja odœwie¿aj¹ca ekran 
 	void setGlobalMap(Map* newGlobalMap); /// setter mapy globalnej
 
+	void createNewPlayer(std::string nickName, int AIType); /// tworzy nowego gracza
+
 public:
 
 	static Engine & getInstance(); /// funkcja przekazuj¹ca referencjê na instancjê silnika

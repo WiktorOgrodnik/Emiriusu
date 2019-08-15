@@ -28,6 +28,7 @@
 #include <queue>
 #include <stack>
 #include <string>
+#include <queue>
 
 /// pliki nagłówkowe
 /// najpierw klasy wirtulane
@@ -38,8 +39,12 @@
 
 #include "Object.h"
 #include "Function.h"
-#include "Types.h"
 #include "Generator.h"
+
+#include "Fraction.h"
+#include "Player.h"
+
+#include "Types.h"
 
 #include "mapOverlay.h"
 #include "Button.h"

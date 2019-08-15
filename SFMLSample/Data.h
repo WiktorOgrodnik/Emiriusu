@@ -36,15 +36,18 @@ class Textures
 {
 	std::map <std::string, sf::Texture*> textures; /// wszystkie tekstury
 	std::map <std::string, sf::Texture*> tileSets; /// wszystkie zestawy tekstur
+	std::map <std::string, std::map <std::string, sf::Texture*>> fractionTextures; /// wszystkie tekstury dla stylów frakcji
 
 	void loadTileSets(); /// ³aduje zestawy tekstur do pamiêci
 	void loadOtherTextures(); /// ³aduje tekstury do pamiêci
+	void loadFractionTextures(); /// ³aduje tekstury dla stylów frakcji do pamiêci
 
 public:
 
 	Textures(); /// konstruktor
 	sf::Texture* getTileSet (std::string name); /// zwraca wskaŸnik na tileSet 
 	sf::Texture* getTexture (std::string name); /// zwraca wskaŸnik na teksturê
+	sf::Texture* getFractionTexture(Fraction* fraction, std::string name); /// zwraca wskaŸnik na tekturê stylów frakcji
 	void clearTextures(); /// usuwa wszystkie tekstury z pamiêci
 };
 
@@ -58,6 +61,9 @@ class Data
 	std::map<std::string, std::map <std::string, std::string>> datas; /// Przechowuje informacje o typach
 	std::map <std::string, Biome*> biomes; /// Przechowuje gotowe biomy
 	std::map <std::string, Building*> buildings; /// Przechowuje gotowe budynki (pierwowzory)
+	std::map <std::string, Fraction*> fractions; /// Przechowuje frakcje
+	std::map <std::string, Player*> playersMap; /// Przechowuje graczy w mapie
+	std::queue <Player*> players; ///Przechowuje graczy w kolejce gry
 
 	void loadData(); /// ³aduje informacje o lokalizacji plików info
 	void loadSelectData(std::string type); /// ³aduje informacje o wskazanej treœci
@@ -68,8 +74,8 @@ class Data
 	Building* riverPlaceholder; /// Placeholder rzeka
 	BuildingInstance* riverPlaceholderInstance; /// Placeholder rzeka - instancja
 
-	void loadBiomeData(); /// ³aduje informacje o biomach (depracted)
-	void loadRiverPlaceholder(); ///³aduje budynek-rzeka (tymczasowe)
+	void loadBiomeData(); /// ³aduje informacje o biomach NIE U¯YWAÆ!
+	void loadRiverPlaceholder(); ///³aduje budynek-rzeka NIE U¯YWAÆ!
 
 public:
 
@@ -82,9 +88,13 @@ public:
 
 	Biome* getBiome(std::string type); /// zwraca dostêp do wskazamego biomu
 	Building* getBuilding(std::string type); /// zwraca dostep do wskazanego budynku
+	Fraction* getFraction(std::string type); /// zwraca dostêp do wskazanej frakcji
 
+	BuildingInstance* getRiverPlaceholderInstance() { return riverPlaceholderInstance; } /// zwraca wskaŸnik na bloker budynków NIE U¯YWAÆ!
 
-	BuildingInstance* getRiverPlaceholderInstance() { return riverPlaceholderInstance; } /// zwraca wskaŸnik na bloker budynków
+	Player* getPlayer(std::string name); /// Pozwala u¿yskaæ dostêp do konkretnego gracza
+	void addPlayer(Player* newPlayer); /// Dodaje nowego gracza (nie mo¿na tu stworztæ gracza, trzeba go stworzyæ wczesniej)
+	bool checkIfPlayer(std::string name); /// Sprawdza, czy gracz o nicku ju¿ istnieje
 };
 
 #endif /* DATA_H */

@@ -161,6 +161,20 @@ bool Tile::createCity(sf::Texture* newTexture)
 	city = new City(position, newTexture);
 }
 
+void Tile::createCityForPlayer(Player* player)
+{
+	if (city != nullptr)
+	{
+		std::string exception = "miasto na kafelku ju¿ istnieje";
+		throw exception;
+	}
+
+	Log::newLog("Tworzê miasto dla gracza " + player->getNickName());
+	Log::newLog(player->getFraction()->getFractionStyle());
+
+	city = new City(position, Engine::getInstance().getData().Textures().getFractionTexture(player->getFraction(), std::to_string(player->getPlayerAdvanceLevel())));
+}
+
 void Tile::setCity(City* newCity)
 {
 	city = newCity;
@@ -245,6 +259,24 @@ void Tile::setSpecificBuilding(Building* newBuilding, short x, short y)
 	else city->setSpecificBuilding(newBuilding, x, y);
 }
 
+void Tile::setSpecificBuildingForPlayer(Player* player, Building* newBuilding, sf::Vector2i index)
+{
+	if (city == nullptr) city = new City(position, Engine::getInstance().getData().Textures().getTexture("CityTest1"), newBuilding, index);
+	else city->setSpecificBuildingForPlayer(player, newBuilding, index);
+}
+
+void Tile::setSpecificBuildingForPlayer(Player* player, Building* newBuilding, std::pair <short, short> index)
+{
+	if (city == nullptr) city = new City(position, Engine::getInstance().getData().Textures().getTexture("CityTest1"), newBuilding, index);
+	else city->setSpecificBuildingForPlayer(player, newBuilding, index);
+}
+
+void Tile::setSpecificBuildingForPlayer(Player* player, Building* newBuilding, short x, short y)
+{
+	if (city == nullptr) city = new City(position, Engine::getInstance().getData().Textures().getTexture("CityTest1"), newBuilding, x, y);
+	else city->setSpecificBuildingForPlayer(player, newBuilding, x, y);
+}
+
 void Tile::deleteBuilding(sf::Vector2i index)
 {
 	if (city == nullptr) std::cerr << "Nie ma nic do usuniêcia!\n";
@@ -261,6 +293,16 @@ void Tile::deleteBuilding(short x, short y)
 {
 	if (city == nullptr) std::cerr << "Nie ma nic do usuniêcia!\n";
 	else city->deleteBuilding(x, y);
+}
+
+City* Tile::getCity()
+{
+	if (city == nullptr)
+	{
+		std::string exception = "miasto nie istnieje";
+		throw exception;
+	}
+	return city;
 }
 /*
 void Tile::draw(sf::RenderWindow& window) //override

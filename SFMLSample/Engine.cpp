@@ -174,6 +174,16 @@ void Engine::addToRenderObjects(Object* objToRen, unsigned selectLayer)
 	renderObjects[selectLayer - 1].push_back(objToRen);
 }
 
+void Engine::createNewPlayer(std::string nickName, int AIType)
+{
+	Player* tempPlayer = new Player;
+	
+	tempPlayer->setNickName(nickName);
+	tempPlayer->setAIType(AIType);
+
+	data.addPlayer(tempPlayer);
+}
+
 void Engine::startGame()
 {
 	bool mouseClick = false;
@@ -189,9 +199,22 @@ void Engine::startGame()
 	Map map(data.World().getMapSize());
 	setGlobalMap(&map);
 
+	///testowi gracze
+
+	createNewPlayer("Player1", 0);
+	try { data.getPlayer("Player1")->setFraction(data.getFraction("Borsuki")); }
+	catch (std::string exception) { Log::newLog("Problem z przypisaniem frakcji: " + exception); }
+
 	///testowe obiekty
-	map.getTile(2, 2)->createCity(data.Textures().getTexture("CityTest1"));
-	map.getTile(2, 2)->getCity()->setSpecificBuilding(data.getBuilding("Church"), std::make_pair(1, 1));
+	//map.getTile(2, 2)->createCity(data.Textures().getTexture("CityTest1"));
+	try
+	{
+		map.getTile(2, 2)->createCityForPlayer(data.getPlayer("Player1"));
+		map.getTile(2, 2)->getCity()->setSpecificBuildingForPlayer(data.getPlayer("Player1"), data.getBuilding("Shop"), std::make_pair(1, 1));
+		//map.getTile(2, 2)->getCity()->setSpecificBuilding(data.getBuilding("Church"), std::make_pair(2, 2));
+	}
+	catch (std::string exception) { Log::newLog("Napotkano wyj¹tek: " + exception); }
+	
 	Army* testArmy = new Army(sf::Vector2i(map.test1.first, map.test1.second), map, data.Textures().getTexture("TokenBeatle"));
 	Army* testArmy2 = new Army(sf::Vector2i(map.test2.first, map.test2.second), map, data.Textures().getTexture("TokenLion"));
 

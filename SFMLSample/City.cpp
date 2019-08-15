@@ -155,6 +155,21 @@ void City::setSpecificBuilding(Building* building, short x, short y)
 	buildings[x][y] = new BuildingInstance(building, position, std::make_pair(x * miniTileResolution, y * miniTileResolution));
 }
 
+void City::setSpecificBuildingForPlayer(Player* player, Building* building, sf::Vector2i index)
+{
+	buildings[index.x][index.y] = new BuildingInstance(building, position, std::make_pair(index.x * miniTileResolution, index.y * miniTileResolution), player);
+}
+
+void City::setSpecificBuildingForPlayer(Player* player, Building* building, std::pair<short, short> index)
+{
+	buildings[index.first][index.second] = new BuildingInstance(building, position, std::make_pair(index.first * miniTileResolution, index.second * miniTileResolution), player);
+}
+
+void City::setSpecificBuildingForPlayer(Player* player, Building* building, short x, short y)
+{
+	buildings[x][y] = new BuildingInstance(building, position, std::make_pair(x * miniTileResolution, y * miniTileResolution), player);
+}
+
 void City::deleteBuilding(sf::Vector2i index)
 {
 	if (buildings[index.x][index.y] != nullptr)
