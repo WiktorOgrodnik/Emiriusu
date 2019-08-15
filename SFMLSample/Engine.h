@@ -11,7 +11,6 @@ class Layer : public Object
 private:
 
 	std::vector <Object*> objects; /// obiekty na warstwie
-	std::string name;
 
 public:
 
@@ -50,11 +49,9 @@ private:
 	std::vector <std::vector <Object*>> renderObjects; /// strumieñ ma³ych obiektów do renderowania
 	void renderRenderObjects(); /// funkcja renderuje strumieñ ma³e obiekty
 	
-
 	Data data; /// wiêkszoœæ danych, u¿ywanych przez program
 	Selectable* currentlySelectedObject; /// obecnie wybrana jednostka
 
-	bool exitGame; /// zmienna która przechowuje informacjê o tym czy gra jest w³¹czona (nieu¿ywana)
 	float deltaTime; /// czas który up³yn¹³ od poprzedniej klatki
 
 	void refreshWindow(); /// funkcja odœwie¿aj¹ca ekran 
@@ -87,12 +84,6 @@ public:
 	Map* getGlobalMap(); /// zwraca mapê globaln¹
 
 	void addToRenderObjects(Object* selToObj, unsigned selectLayer); /// dodaj obiekt klasy Object do strumienia ma³ych obiektów do renderowania
-
-	///Engine Experimental Functions:
-	/*void addToLayerTest(Object* newObject, unsigned index);*/
-
-	///Engine Depracted Functions:
-	/*void viktusTestuje (std::vector <Object*> newLayer); //work in progress*/
 };
 
 #endif /* ENGINE_H */

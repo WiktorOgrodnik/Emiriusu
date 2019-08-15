@@ -91,7 +91,6 @@ void Map::newMap()
 					//else if (r == 17) tempRiverType |= (1 << 7);
 
 					Tiles[i][j]->setRiver(tempRiverType);
-					//std::cerr << "Kafelek: " << i << ", " << j << " ma river type: " << tempRiverType << "\n";
 				}
 			}
 			else
@@ -143,7 +142,7 @@ void Map::newMap()
 		}
 	}
 
-	QuadTree quadTree(mapSize, mapInfo, c + 1);
+	//QuadTree quadTree(mapSize, mapInfo, c + 1);
 }
 
 char Map::getMapOverlayData(unsigned x, unsigned y, char level, char type)
@@ -157,23 +156,6 @@ char Map::getMapOverlayData(unsigned x, unsigned y, char level, char type)
 	{
 		if (level) return Tiles[x][y]->getRiverExtra();
 		return Tiles[x][y]->getRiver();
-	}
-	else if (type == 2)
-	{
-		if (Tiles[x][y]->getSelectable() == nullptr) return 0;
-		else
-		{
-			//if (level) return Tiles[x][y]->getArmy()->getArmyExtra();
-			//return Tiles[x][y]->getArmy()->getArmyType();
-		}
-	}
-	else if (type == 3)
-	{
-		if (Tiles[x][y]->getCity() != nullptr)
-		{
-			if (level) return 0; // tymczasowo
-			return 0; // tymczasowo
-		}
 	}
 }
 
@@ -189,8 +171,6 @@ int Map::getSize()
 
 Tile* Map::getTile(unsigned x, unsigned y)
 {
-	//Log::newLog("Map::getTile: przekazuje dostęp do Tile x = " + std::to_string(x) + " y = " + std::to_string(y));
-
 	if (x > mapSize || y > mapSize)
 	{
 		Log::newLog("Map::getTile: x i y wykroczyły poza dostęp. Błąd krytyczny.");
@@ -202,8 +182,6 @@ Tile* Map::getTile(unsigned x, unsigned y)
 
 Tile* Map::getTile(sf::Vector2i position) 
 { 
-	//Log::newLog("Map::getTile: przekazuje dostęp do Tile x = " + std::to_string(position.x) + " y = " + std::to_string(position.y));
-
 	if (position.x > mapSize || position.y > mapSize)
 	{
 		Log::newLog("Map::getTile: x i y wykroczyły poza dostęp. Błąd krytyczny.");

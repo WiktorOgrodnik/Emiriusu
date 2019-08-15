@@ -79,8 +79,6 @@ void Textures::loadFractionTextures()
 
 			std::map<std::string, sf::Texture*> tempMap;
 
-			Log::newLog("£aduje tekstury dla stylu: " + tempText);
-
 			styleInfoFile.open(styleInfoFileName, std::ios::in);
 			if (!styleInfoFile.good()) Log::newLog("Nie uda³o siê otworzyæ pliku: " + styleInfoFileName);
 			else
@@ -92,7 +90,6 @@ void Textures::loadFractionTextures()
 
 					sf::Texture* tempTexture = new sf::Texture;
 					tempTexture->loadFromFile(tempText4);
-					Log::newLog("£aduje teksturê o nazwie: " + tempText3);
 					tempMap.emplace(std::make_pair(tempText3, tempTexture));
 				}
 
@@ -225,11 +222,6 @@ void Textures::clearTextures()
 
 Data::Data()
 {
-	riverPlaceholder = nullptr;
-	riverPlaceholderInstance = nullptr;
-
-	loadRiverPlaceholder();
-	
 	loadData();
 	createTypes();
 }
@@ -341,35 +333,6 @@ Fraction* Data::getFraction(std::string type)
 	auto it = fractions.find(type);
 	if (it == fractions.end()) throw "Nie znaleziono frakcji o nazwie " + type;
 	return it->second;
-}
-
-void Data::loadBiomeData() ///Funkcja przestarza³a, nie u¿ywaæ!
-{
-	std::fstream biomeData;
-	std::string tempName, tempDirectory;
-
-	biomeData.open("biomes/info.txt", std::ios::in | std::ios::out);
-
-	if (!biomeData.good()) std::cerr << "Nie uda³o siê za³adowaæ pliku biomes / info.txt\n";
-
-
-	while (!biomeData.eof())
-	{
-		std::getline(biomeData, tempName);
-		std::getline(biomeData, tempDirectory);
-
-		biomeDatas.emplace(std::make_pair(tempName, tempDirectory));
-	}
-
-	biomeData.close();
-}
-
-void Data::loadRiverPlaceholder() ///Funkcja przestarza³a, nie u¿ywaæ!
-{
-	//riverPlaceholder = new Building("Rzeka");
-	//riverPlaceholder->setCanEdit(false);
-
-	//riverPlaceholderInstance = new BuildingInstance(riverPlaceholder);
 }
 
 void Data::addPlayer(Player* newPlayer)

@@ -69,14 +69,6 @@ class Data
 	void loadSelectData(std::string type); /// ³aduje informacje o wskazanej treœci
 	void createTypes(); ///tworzy typy danych na podstawie informacji
 
-	//Funkcje przestarza³e lub nieu¿ywane
-	std::map <std::string, std::string> biomeDatas; /// Przechowuje informacje o biomach
-	Building* riverPlaceholder; /// Placeholder rzeka
-	BuildingInstance* riverPlaceholderInstance; /// Placeholder rzeka - instancja
-
-	void loadBiomeData(); /// ³aduje informacje o biomach NIE U¯YWAÆ!
-	void loadRiverPlaceholder(); ///³aduje budynek-rzeka NIE U¯YWAÆ!
-
 public:
 
 	Data(); /// konstruktor
@@ -89,8 +81,6 @@ public:
 	Biome* getBiome(std::string type); /// zwraca dostêp do wskazamego biomu
 	Building* getBuilding(std::string type); /// zwraca dostep do wskazanego budynku
 	Fraction* getFraction(std::string type); /// zwraca dostêp do wskazanej frakcji
-
-	BuildingInstance* getRiverPlaceholderInstance() { return riverPlaceholderInstance; } /// zwraca wskaŸnik na bloker budynków NIE U¯YWAÆ!
 
 	Player* getPlayer(std::string name); /// Pozwala u¿yskaæ dostêp do konkretnego gracza
 	void addPlayer(Player* newPlayer); /// Dodaje nowego gracza (nie mo¿na tu stworztæ gracza, trzeba go stworzyæ wczesniej)

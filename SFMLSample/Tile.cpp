@@ -22,8 +22,6 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition)
 	rand_ = 0;
 	setRand();
 
-	//Log::newLog("Tworzê Tile typu " + newType->getName() + " na pozycji: " + std::to_string(newPosition.x) + " " + std::to_string(newPosition.y));
-
 	type = newType;
 	position = newPosition;
 	riverType = 0;
@@ -64,36 +62,6 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral)
 	city = nullptr;
 }
 
-Tile::Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Building*>> newBuildings, sf::Texture* newTexture)
-{
-	rand_ = 0;
-	setRand();
-
-	type = newType;
-	position = newPosition;
-	mineral = nullptr;
-	riverType = 0;
-	biomeAddOn = nullptr;
-	selectable = -1;
-	riverExtra = 0;
-	createCity(newTexture);
-}
-
-Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::vector <std::vector<Building*>> newBuildings, sf::Texture* newTexture)
-{
-	rand_ = 0;
-	setRand();
-
-	type = newType;
-	position = newPosition;
-	mineral = newMineral;
-	riverType = 0;
-	biomeAddOn = nullptr;
-	selectable = -1;
-	riverExtra = 0;
-	createCity(newTexture);
-}
-
 Tile::Tile(Biome* newType, sf::Vector2f newPosition, BiomeAddOn* newBiomeAddOn)
 {
 	rand_ = 0;
@@ -124,7 +92,37 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, BiomeA
 	city = nullptr;
 }
 
-Tile::Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Building*>> newBuildings, BiomeAddOn* newBiomeAddOn, sf::Texture* newTexture)
+Tile::Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Building*>> newBuildings, Player* player)
+{
+	rand_ = 0;
+	setRand();
+
+	type = newType;
+	position = newPosition;
+	mineral = nullptr;
+	riverType = 0;
+	biomeAddOn = nullptr;
+	selectable = -1;
+	riverExtra = 0;
+	createCity(player);
+}
+
+Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::vector <std::vector<Building*>> newBuildings, Player* player)
+{
+	rand_ = 0;
+	setRand();
+
+	type = newType;
+	position = newPosition;
+	mineral = newMineral;
+	riverType = 0;
+	biomeAddOn = nullptr;
+	selectable = -1;
+	riverExtra = 0;
+	createCity(player);
+}
+
+Tile::Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Building*>> newBuildings, BiomeAddOn* newBiomeAddOn, Player* player)
 {
 	rand_ = 0;
 	setRand();
@@ -136,10 +134,10 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Bu
 	biomeAddOn = newBiomeAddOn;
 	selectable = -1;
 	riverExtra = 0;
-	createCity(newTexture);
+	createCity(player);
 }
 
-Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::vector <std::vector<Building*>> newBuildings, BiomeAddOn* newBiomeAddOn, sf::Texture* newTexture)
+Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::vector <std::vector<Building*>> newBuildings, BiomeAddOn* newBiomeAddOn, Player* player)
 {
 	rand_ = 0;
 	setRand();
@@ -151,17 +149,10 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::v
 	biomeAddOn = newBiomeAddOn;
 	selectable = -1;
 	riverExtra = 0;
-	createCity(newTexture);
+	createCity(player);
 }
 
-bool Tile::createCity(sf::Texture* newTexture)
-{
-	if (city != nullptr) return false;
-
-	city = new City(position, newTexture);
-}
-
-void Tile::createCityForPlayer(Player* player)
+void Tile::createCity(Player* player)
 {
 	if (city != nullptr)
 	{
@@ -170,9 +161,8 @@ void Tile::createCityForPlayer(Player* player)
 	}
 
 	Log::newLog("Tworzê miasto dla gracza " + player->getNickName());
-	Log::newLog(player->getFraction()->getFractionStyle());
 
-	city = new City(position, Engine::getInstance().getData().Textures().getFractionTexture(player->getFraction(), std::to_string(player->getPlayerAdvanceLevel())));
+	city = new City(position, player);
 }
 
 void Tile::setCity(City* newCity)
@@ -230,9 +220,9 @@ void Tile::setMineral(Mineral* newMineral)
 	mineral = newMineral;
 }
 
-void Tile::setSetOfBuildings(std::vector <std::vector<Building*>> newBuildings)
+void Tile::setSetOfBuildings(Player* player, std::vector <std::vector<Building*>> newBuildings)
 {
-	if (city == nullptr) city = new City(position, Engine::getInstance().getData().Textures().getTexture("CityTest1"), newBuildings);
+	if (city == nullptr) city = new City(position, player, newBuildings);
 	else city->setSetOfBuildings(newBuildings);
 }
 
@@ -241,57 +231,39 @@ void Tile::setAddOn(BiomeAddOn* newBiomeAddOn)
 	biomeAddOn = newBiomeAddOn;
 }
 
-void Tile::setSpecificBuilding(Building* newBuilding, sf::Vector2i index)
+void Tile::setSpecificBuilding(Player* player, Building* newBuilding, sf::Vector2i index)
 {
-	if (city == nullptr) city = new City(position, Engine::getInstance().getData().Textures().getTexture("CityTest1"), newBuilding, index);
-	else city->setSpecificBuilding(newBuilding, index);
+	if (city == nullptr) city = new City(position, player, newBuilding, index);
+	else city->setSpecificBuilding(player, newBuilding, index);
 }
 
-void Tile::setSpecificBuilding(Building* newBuilding, std::pair <short, short> index)
+void Tile::setSpecificBuilding(Player* player, Building* newBuilding, std::pair <short, short> index)
 {
-	if (city == nullptr) city = new City(position, Engine::getInstance().getData().Textures().getTexture("CityTest1"), newBuilding, index);
-	else city->setSpecificBuilding(newBuilding, index);
+	if (city == nullptr) city = new City(position, player, newBuilding, index);
+	else city->setSpecificBuilding(player, newBuilding, index);
 }
 
-void Tile::setSpecificBuilding(Building* newBuilding, short x, short y)
+void Tile::setSpecificBuilding(Player* player, Building* newBuilding, short x, short y)
 {
-	if (city == nullptr) city = new City(position, Engine::getInstance().getData().Textures().getTexture("CityTest1"), newBuilding, x, y);
-	else city->setSpecificBuilding(newBuilding, x, y);
-}
-
-void Tile::setSpecificBuildingForPlayer(Player* player, Building* newBuilding, sf::Vector2i index)
-{
-	if (city == nullptr) city = new City(position, Engine::getInstance().getData().Textures().getTexture("CityTest1"), newBuilding, index);
-	else city->setSpecificBuildingForPlayer(player, newBuilding, index);
-}
-
-void Tile::setSpecificBuildingForPlayer(Player* player, Building* newBuilding, std::pair <short, short> index)
-{
-	if (city == nullptr) city = new City(position, Engine::getInstance().getData().Textures().getTexture("CityTest1"), newBuilding, index);
-	else city->setSpecificBuildingForPlayer(player, newBuilding, index);
-}
-
-void Tile::setSpecificBuildingForPlayer(Player* player, Building* newBuilding, short x, short y)
-{
-	if (city == nullptr) city = new City(position, Engine::getInstance().getData().Textures().getTexture("CityTest1"), newBuilding, x, y);
-	else city->setSpecificBuildingForPlayer(player, newBuilding, x, y);
+	if (city == nullptr) city = new City(position, player, newBuilding, x, y);
+	else city->setSpecificBuilding(player, newBuilding, x, y);
 }
 
 void Tile::deleteBuilding(sf::Vector2i index)
 {
-	if (city == nullptr) std::cerr << "Nie ma nic do usuniêcia!\n";
+	if (city == nullptr) Log::newLog("Nie ma nic do usuniêcia!");
 	else city->deleteBuilding(index);
 }
 
 void Tile::deleteBuilding(std::pair <short, short> index)
 {
-	if (city == nullptr) std::cerr << "Nie ma nic do usuniêcia!\n";
+	if (city == nullptr) Log::newLog("Nie ma nic do usuniêcia!");
 	else city->deleteBuilding(index);
 }
 
 void Tile::deleteBuilding(short x, short y)
 {
-	if (city == nullptr) std::cerr << "Nie ma nic do usuniêcia!\n";
+	if (city == nullptr) Log::newLog("Nie ma nic do usuniêcia!");
 	else city->deleteBuilding(x, y);
 }
 
@@ -304,13 +276,3 @@ City* Tile::getCity()
 	}
 	return city;
 }
-/*
-void Tile::draw(sf::RenderWindow& window) //override
-{
-	type->draw(window, position);
-}
-
-void Tile::draw(sf::RenderTexture& texture)
-{
-	type->draw(texture, position);
-}*/

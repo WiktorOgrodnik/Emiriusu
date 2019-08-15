@@ -1,22 +1,21 @@
 #include "pch.h"
 #include "City.h"
 
-City::City(sf::Vector2f newPosition, sf::Texture* newTexture)
+City::City(sf::Vector2f newPosition, Player* player)
 {
+	owner = player;
+
 	position.x = newPosition.x / tileResolution;
 	position.y = newPosition.y / tileResolution;
-	
+
 	Log::newLog("Tworzê miasto na pozycji: " + std::to_string(newPosition.x / tileResolution) + " " + std::to_string(newPosition.y / tileResolution));
 
 	Engine::getInstance().getGlobalMap()->getTile(int(newPosition.x / tileResolution), int(newPosition.y / tileResolution))->addSelectable(this);
 
-	texture = newTexture;
-	body.setTexture(newTexture);
+	texture = Engine::getInstance().getData().Textures().getFractionTexture(player->getFraction(), std::to_string(player->getPlayerAdvanceLevel()));
+	body.setTexture(texture);
 	body.setSize(sf::Vector2f(tileResolution, tileResolution));
 	body.setPosition(float(position.x) * tileResolution, float(position.y) * tileResolution);
-
-	cityType = 0;
-	cityExtra = 0;
 
 	buildings.resize(3);
 
@@ -32,8 +31,10 @@ City::City(sf::Vector2f newPosition, sf::Texture* newTexture)
 	Engine::getInstance().addToRenderObjects(this, 1);
 }
 
-City::City(sf::Vector2f newPosition, sf::Texture* newTexture, std::vector <std::vector <Building*>> setOfBuildings)
+City::City(sf::Vector2f newPosition, Player* player, std::vector <std::vector <Building*>> setOfBuildings)
 {
+	owner = player;
+
 	position.x = newPosition.x / tileResolution;
 	position.y = newPosition.y / tileResolution;
 
@@ -41,13 +42,10 @@ City::City(sf::Vector2f newPosition, sf::Texture* newTexture, std::vector <std::
 
 	Engine::getInstance().getGlobalMap()->getTile(int(newPosition.x / tileResolution), int(newPosition.y / tileResolution))->addSelectable(this);
 
-	texture = newTexture;
-	body.setTexture(newTexture);
+	texture = Engine::getInstance().getData().Textures().getFractionTexture(player->getFraction(), std::to_string(player->getPlayerAdvanceLevel()));
+	body.setTexture(texture);
 	body.setSize(sf::Vector2f(tileResolution, tileResolution));
 	body.setPosition(float(position.x) * tileResolution, float(position.y) * tileResolution);
-
-	cityType = 0;
-	cityExtra = 0;
 
 	buildings.resize(3);
 
@@ -63,8 +61,10 @@ City::City(sf::Vector2f newPosition, sf::Texture* newTexture, std::vector <std::
 	Engine::getInstance().addToRenderObjects(this, 1);
 }
 
-City::City(sf::Vector2f newPosition, sf::Texture* newTexture, Building* building, sf::Vector2i index)
+City::City(sf::Vector2f newPosition, Player* player, Building* building, sf::Vector2i index)
 {
+	owner = player;
+
 	position.x = newPosition.x / tileResolution;
 	position.y = newPosition.y / tileResolution;
 
@@ -72,21 +72,20 @@ City::City(sf::Vector2f newPosition, sf::Texture* newTexture, Building* building
 
 	Engine::getInstance().getGlobalMap()->getTile(int(newPosition.x / tileResolution), int(newPosition.y / tileResolution))->addSelectable(this);
 
-	texture = newTexture;
-	body.setTexture(newTexture);
+	texture = Engine::getInstance().getData().Textures().getFractionTexture(player->getFraction(), std::to_string(player->getPlayerAdvanceLevel()));
+	body.setTexture(texture);
 	body.setSize(sf::Vector2f(tileResolution, tileResolution));
 	body.setPosition(float(position.x) * tileResolution, float(position.y) * tileResolution);
-
-	cityType = 0;
-	cityExtra = 0;
 
 	buildings[index.x][index.y] = new BuildingInstance(building, position, std::make_pair(index.x * miniTileResolution, index.y * miniTileResolution));
 
 	Engine::getInstance().addToRenderObjects(this, 1);
 }
 
-City::City(sf::Vector2f newPosition, sf::Texture* newTexture, Building* building, std::pair<short, short> index)
+City::City(sf::Vector2f newPosition, Player* player, Building* building, std::pair<short, short> index)
 {
+	owner = player;
+
 	position.x = newPosition.x / tileResolution;
 	position.y = newPosition.y / tileResolution;
 
@@ -94,21 +93,20 @@ City::City(sf::Vector2f newPosition, sf::Texture* newTexture, Building* building
 
 	Engine::getInstance().getGlobalMap()->getTile(int(newPosition.x / tileResolution), int(newPosition.y / tileResolution))->addSelectable(this);
 
-	texture = newTexture;
-	body.setTexture(newTexture);
+	texture = Engine::getInstance().getData().Textures().getFractionTexture(player->getFraction(), std::to_string(player->getPlayerAdvanceLevel()));
+	body.setTexture(texture);
 	body.setSize(sf::Vector2f(tileResolution, tileResolution));
 	body.setPosition(float(position.x) * tileResolution, float(position.y) * tileResolution);
-
-	cityType = 0;
-	cityExtra = 0;
 
 	buildings[index.first][index.second] = new BuildingInstance(building, position, std::make_pair(index.first * miniTileResolution, index.second * miniTileResolution));
 
 	Engine::getInstance().addToRenderObjects(this, 1);
 }
 
-City::City(sf::Vector2f newPosition, sf::Texture* newTexture, Building* building, short x, short y)
+City::City(sf::Vector2f newPosition, Player* player, Building* building, short x, short y)
 {
+	owner = player;
+
 	position.x = newPosition.x / tileResolution;
 	position.y = newPosition.y / tileResolution;
 
@@ -116,13 +114,10 @@ City::City(sf::Vector2f newPosition, sf::Texture* newTexture, Building* building
 
 	Engine::getInstance().getGlobalMap()->getTile(int(newPosition.x / tileResolution), int(newPosition.y / tileResolution))->addSelectable(this);
 
-	texture = newTexture;
-	body.setTexture(newTexture);
+	texture = Engine::getInstance().getData().Textures().getFractionTexture(player->getFraction(), std::to_string(player->getPlayerAdvanceLevel()));
+	body.setTexture(texture);
 	body.setSize(sf::Vector2f(tileResolution, tileResolution));
 	body.setPosition(float(position.x) * tileResolution, float(position.y) * tileResolution);
-
-	cityType = 0;
-	cityExtra = 0;
 
 	buildings[x][y] = new BuildingInstance(building, position, std::make_pair(x * miniTileResolution, y * miniTileResolution));
 
@@ -140,32 +135,17 @@ void City::setSetOfBuildings(std::vector <std::vector <Building*>> setOfBuilding
 	}
 }
 
-void City::setSpecificBuilding(Building* building, sf::Vector2i index)
-{
-	buildings[index.x][index.y] = new BuildingInstance(building, position, std::make_pair(index.x * miniTileResolution, index.y * miniTileResolution));
-}
-
-void City::setSpecificBuilding(Building* building, std::pair<short, short> index)
-{
-	buildings[index.first][index.second] = new BuildingInstance(building, position, std::make_pair(index.first * miniTileResolution, index.second * miniTileResolution));
-}
-
-void City::setSpecificBuilding(Building* building, short x, short y)
-{
-	buildings[x][y] = new BuildingInstance(building, position, std::make_pair(x * miniTileResolution, y * miniTileResolution));
-}
-
-void City::setSpecificBuildingForPlayer(Player* player, Building* building, sf::Vector2i index)
+void City::setSpecificBuilding(Player* player, Building* building, sf::Vector2i index)
 {
 	buildings[index.x][index.y] = new BuildingInstance(building, position, std::make_pair(index.x * miniTileResolution, index.y * miniTileResolution), player);
 }
 
-void City::setSpecificBuildingForPlayer(Player* player, Building* building, std::pair<short, short> index)
+void City::setSpecificBuilding(Player* player, Building* building, std::pair<short, short> index)
 {
 	buildings[index.first][index.second] = new BuildingInstance(building, position, std::make_pair(index.first * miniTileResolution, index.second * miniTileResolution), player);
 }
 
-void City::setSpecificBuildingForPlayer(Player* player, Building* building, short x, short y)
+void City::setSpecificBuilding(Player* player, Building* building, short x, short y)
 {
 	buildings[x][y] = new BuildingInstance(building, position, std::make_pair(x * miniTileResolution, y * miniTileResolution), player);
 }
@@ -177,7 +157,7 @@ void City::deleteBuilding(sf::Vector2i index)
 		delete buildings[index.x][index.y];
 		buildings[index.x][index.y] = nullptr;
 	}
-	else std::cerr << "Tu nie ma budynku\n";
+	else Log::newLog("Tu nie ma budynku");
 }
 
 void City::deleteBuilding(std::pair <short, short> index)
@@ -187,7 +167,7 @@ void City::deleteBuilding(std::pair <short, short> index)
 		delete buildings[index.first][index.second];
 		buildings[index.first][index.second] = nullptr;
 	}
-	else std::cerr << "Tu nie ma budynku\n";
+	else Log::newLog("Tu nie ma budynku");
 }
 
 void City::deleteBuilding(short x, short y)
@@ -197,7 +177,7 @@ void City::deleteBuilding(short x, short y)
 		delete buildings[x][y];
 		buildings[x][y] = nullptr;
 	}
-	else std::cerr << "Tu nie ma budynku\n";
+	else Log::newLog("Tu nie ma budynku");
 }
 
 void City::draw(sf::RenderWindow& window)

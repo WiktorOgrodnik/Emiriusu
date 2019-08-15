@@ -2,35 +2,51 @@
 
 Biome::Biome(std::string fileName)
 {
+
+
 	std::fstream biomeData;
 	std::string tempText;
 	biomeData.open(fileName, std::ios::in | std::ios::out);
 
-	if (!biomeData.good()) std::cerr << "Nie uda³o siê za³adowaæ pliku " << fileName << '\n';
+	if (!biomeData.good())
+	{
+		Log::newLog("Nie uda³o siê za³adowaæ pliku " + fileName);
+		id = 0;
+		name = "";
+		moveCost = 0.0;
+		opacity = 0.0;
+		food = 0;
+		stone = 0;
+		wood = 0;
+		canBuildACity = false;
+		canWalkThru = false;
+		specialStuff = "";
+	}
+	else
+	{
+		std::getline(biomeData, tempText);
+		id = stringToInt(tempText);
+		std::getline(biomeData, tempText);
+		name = tempText;
+		std::getline(biomeData, tempText);
+		moveCost = stringToFloat(tempText);
+		std::getline(biomeData, tempText);
+		opacity = stringToFloat(tempText);
+		std::getline(biomeData, tempText);
+		food = stringToShort(tempText);
+		std::getline(biomeData, tempText);
+		stone = stringToShort(tempText);
+		std::getline(biomeData, tempText);
+		wood = stringToShort(tempText);
+		std::getline(biomeData, tempText);
+		canBuildACity = stringToBool(tempText);
+		std::getline(biomeData, tempText);
+		canWalkThru = stringToBool(tempText);
+		std::getline(biomeData, tempText);
+		specialStuff = tempText;
 
-
-	std::getline(biomeData, tempText);
-	id = stringToInt(tempText);
-	std::getline(biomeData, tempText);
-	name = tempText;
-	std::getline(biomeData, tempText);
-	moveCost = stringToFloat(tempText);
-	std::getline(biomeData, tempText);
-	opacity = stringToFloat(tempText);
-	std::getline(biomeData, tempText);
-	food = stringToShort(tempText);
-	std::getline(biomeData, tempText);
-	stone = stringToShort(tempText);
-	std::getline(biomeData, tempText);
-	wood = stringToShort(tempText);
-	std::getline(biomeData, tempText);
-	canBuildACity = stringToBool(tempText);
-	std::getline(biomeData, tempText);
-	canWalkThru = stringToBool(tempText);
-	std::getline(biomeData, tempText);
-	specialStuff = tempText;
-
-	biomeData.close();
+		biomeData.close();
+	}
 }
 
 Building::Building(std::string fileName)
@@ -39,7 +55,14 @@ Building::Building(std::string fileName)
 	std::string tempText;
 	buildingData.open(fileName, std::ios::in);
 
-	if (!buildingData.good()) Log::newLog("Nie uda³o siê za³adowaæ pliku " + fileName);
+	if (!buildingData.good())
+	{
+		Log::newLog("Nie uda³o siê za³adowaæ pliku " + fileName);
+
+		name = "";
+		texture = "default";
+		canEdit = false;
+	}
 	else
 	{
 		std::getline(buildingData, tempText);

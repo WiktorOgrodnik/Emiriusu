@@ -16,18 +16,17 @@ public:
 
 ///Engine Depracted Functions
 
-class miniTile : public Object ///Przeznaczone do usuniêcia
+class DebugObject : public Object 
 {
-	sf::Texture *texture;
+	sf::Texture* texture;
 	sf::RectangleShape body;
-	short type;
 
 public:
 	void draw(sf::RenderWindow& window) override;
 	void draw(sf::RenderWindow& window, sf::View& view, float zoom) override { draw(window); }
 	void draw(sf::RenderTexture& texture) override { texture.draw(body); }
 	
-	miniTile(sf::Texture* newTexture, int x, int y);
+	DebugObject(sf::Texture* newTexture, int x, int y);
 };
 
 #endif /* OBJECT_H */

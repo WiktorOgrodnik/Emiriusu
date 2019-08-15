@@ -6,8 +6,6 @@
 
 class Type
 {
-private:
-	std::string name;
 };
 
 class Biome : public Type 

@@ -4,18 +4,17 @@
 
 #include "pch.h"
 
-class Tile //: public Object
+class Tile
 {
 	Biome* type; /// typ biomu
 	BiomeAddOn* biomeAddOn; /// dodatek do biomu (niepotrzebne)
 	Mineral* mineral; /// minera³ 
-	int selectable; /// armia
+	int selectable; /// obiekt klikalny 
 	City* city; /// miasto
 
 	std::vector <Selectable*> clickableObjects; ///strumieñ obiektów klikalnych (armie, miasto, inne obiekty z którymi mo¿na wchodziæ w interakcje)
 
 	sf::Vector2f position; /// pozycja kafelka
-	//std::vector <std::vector <BuildingInstance*>> buildings; /// Przechowuje budynki (do viktusa - no weŸ no to zrób ej)
 	char riverType; /// typ rzeki (0 - brak)
 	char riverExtra; /// czy dodatkowy zawijas rzeki?
 	int rand_; /// losowy pod typ biomu
@@ -29,17 +28,17 @@ public:
 	Tile(Biome* newType, sf::Vector2f newPosition); /// Konstruktory rzeki (przyjmuj¹ ró¿ne wartoœci - opisane wy¿ej)
 	Tile(Biome* newType, sf::Vector2f newPosition, char riverType_);
 	Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral);
-	Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Building*>> newBuildings, sf::Texture* newTexture);
-	Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::vector <std::vector<Building*>> newBuildings, sf::Texture* newTexture);
 	Tile(Biome* newType, sf::Vector2f newPosition, BiomeAddOn* newBiomeAddOn);
 	Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, BiomeAddOn* newBiomeAddOn);
-	Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Building*>> newBuildings, BiomeAddOn* newBiomeAddOn, sf::Texture* newTexture);
-	Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::vector <std::vector<Building*>> newBuildings, BiomeAddOn* newBiomeAddOn, sf::Texture* newTexture);
+	Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Building*>> newBuildings, Player* player);
+	Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::vector <std::vector<Building*>> newBuildings, Player* player);
+	Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Building*>> newBuildings, BiomeAddOn* newBiomeAddOn, Player* player);
+	Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::vector <std::vector<Building*>> newBuildings, BiomeAddOn* newBiomeAddOn, Player* player);
 
 	void setCity(City* newCity); /// ustawia nowe miasto
 	void setType(Biome* newType); /// ustawia typ kafelka (przyjmuje nowy typ kafelka)
 	void setMineral(Mineral* newMineral); /// ustawia minera³
-	void setSetOfBuildings(std::vector <std::vector <Building*>> newBuildings); /// ustawia zestaw budynkó
+	void setSetOfBuildings(Player* player, std::vector <std::vector <Building*>> newBuildings); /// ustawia zestaw budynków
 	void setAddOn(BiomeAddOn* newBiomeAddOn); /// ustawia biomeaddon
 
 	void setRiver(char riverType_); /// ustaw typ rzeki (instrukcja u¿ycia -> map.cpp)
@@ -51,13 +50,9 @@ public:
 	void ereaseSelectable(); /// usuwa obecnie wynrany selectable
 	void skipSelectable(); /// przechodzi do nastêpnego obiektu klikalnego
 
-	void setSpecificBuilding(Building* newBuilding, sf::Vector2i index); ///NIE U¯YWAÆ ustaw nowy budynek na konkretnym polu
-	void setSpecificBuilding(Building* newBuilding, std::pair <short, short> index);
-	void setSpecificBuilding(Building* newBuilding, short x, short y);
-
-	void setSpecificBuildingForPlayer(Player* player, Building* newBuilding, sf::Vector2i index); /// ustaw nowy budynek na konkretnym polu z uwzglednieniem gracza
-	void setSpecificBuildingForPlayer(Player* player, Building* newBuilding, std::pair <short, short> index);
-	void setSpecificBuildingForPlayer(Player* player, Building* newBuilding, short x, short y);
+	void setSpecificBuilding(Player* player, Building* newBuilding, sf::Vector2i index); /// ustaw nowy budynek na konkretnym polu z uwzglednieniem gracza
+	void setSpecificBuilding(Player* player, Building* newBuilding, std::pair <short, short> index);
+	void setSpecificBuilding(Player* player, Building* newBuilding, short x, short y);
 
 	void deleteBuilding(sf::Vector2i index); /// usuñ konkretny budynek
 	void deleteBuilding(std::pair <short, short>);
@@ -67,16 +62,11 @@ public:
 	Biome* getType() { return type; } /// zwraca typ kafelka
 	int getRand() { return rand_; } /// zwraca losowy podtyp kafelka
 	City* getCity(); /// zwraca miasto
-	bool createCity(sf::Texture* newTexture); /// tworzy nowe miasto (Nie u¿ywaæ)
-	void createCityForPlayer(Player* setPlayer); /// tworzy nowe miasto dla gracza
+	void createCity(Player* setPlayer); /// tworzy nowe miasto dla gracza
 
 	BuildingInstance* getBuilding(sf::Vector2i index) { return city->getBuilding(index); } /// funkcje zwracaj¹ konkretne budynki
-	BuildingInstance* getBuilding(std::pair <short, short> index) { return city->getBuilding(index);}
-	BuildingInstance* getBuilding(short x, short y) { return city->getBuilding(x, y);}
-
-	//void draw(sf::RenderWindow & window) override; /// rysuje kafelek na ekranie (przyjmuje okno gry)
-	//void draw(sf::RenderWindow& window, sf::View& view, float zoom) override { draw(window); }  /// rysuje kafelek na ekranie
-	//void draw(sf::RenderTexture& texture) override;
+	BuildingInstance* getBuilding(std::pair <short, short> index) { return city->getBuilding(index); }
+	BuildingInstance* getBuilding(short x, short y) { return city->getBuilding(x, y); }
 };
 
 #endif /* TILE_H */

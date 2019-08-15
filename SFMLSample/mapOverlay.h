@@ -5,13 +5,13 @@ private:
 	/// Mo¿e vertex array?
 	sf::Texture tileSetTexturePointer;
 	sf::Texture* tileSet;
-	std::vector<std::vector<sf::Vector2<char>>> generationInfo; /// 
+	std::vector<std::vector<sf::Vector2<char>>> generationInfo; 
 
 	char type;
 
 public:
 
-	mapOverlay(std::vector<std::vector<sf::Vector2<char>>>& generationInfo) : generationInfo(generationInfo) {}
+	mapOverlay(std::vector<std::vector<sf::Vector2<char>>>& generationInfo) : generationInfo(generationInfo) { tileSet = nullptr; type = 0; }
 	mapOverlay();
 	~mapOverlay();
 

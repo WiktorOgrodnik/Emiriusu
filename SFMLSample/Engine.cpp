@@ -46,7 +46,6 @@ Engine::Engine()
 
 	renderObjects.resize(100);
 
-	exitGame = false;
 	logFile.open("Engine.log", std::ios::out);
 	theGame.create(sf::VideoMode(1280, 720), "Emiriusu", sf::Style::Close | sf::Style::Titlebar | sf::Style::Resize);
 	Layers.push_back(new Layer);
@@ -200,18 +199,15 @@ void Engine::startGame()
 	setGlobalMap(&map);
 
 	///testowi gracze
-
 	createNewPlayer("Player1", 0);
 	try { data.getPlayer("Player1")->setFraction(data.getFraction("Borsuki")); }
 	catch (std::string exception) { Log::newLog("Problem z przypisaniem frakcji: " + exception); }
 
 	///testowe obiekty
-	//map.getTile(2, 2)->createCity(data.Textures().getTexture("CityTest1"));
 	try
 	{
-		map.getTile(2, 2)->createCityForPlayer(data.getPlayer("Player1"));
-		map.getTile(2, 2)->getCity()->setSpecificBuildingForPlayer(data.getPlayer("Player1"), data.getBuilding("Shop"), std::make_pair(1, 1));
-		//map.getTile(2, 2)->getCity()->setSpecificBuilding(data.getBuilding("Church"), std::make_pair(2, 2));
+		map.getTile(2, 2)->createCity(data.getPlayer("Player1"));
+		map.getTile(2, 2)->getCity()->setSpecificBuilding(data.getPlayer("Player1"), data.getBuilding("Shop"), std::make_pair(1, 1));
 	}
 	catch (std::string exception) { Log::newLog("Napotkano wyj¹tek: " + exception); }
 	
