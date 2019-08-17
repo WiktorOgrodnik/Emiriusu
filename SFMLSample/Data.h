@@ -63,11 +63,17 @@ class Data
 	std::map <std::string, Building*> buildings; /// Przechowuje gotowe budynki (pierwowzory)
 	std::map <std::string, Fraction*> fractions; /// Przechowuje frakcje
 	std::map <std::string, Player*> playersMap; /// Przechowuje graczy w mapie
+	std::map <BuildingInstance*, District*> districtMap;
+	std::set <District*> districts;
 	std::queue <Player*> players; ///Przechowuje graczy w kolejce gry
+	std::map <BuildingInstance*, City*> citiesByBuildings;
 
 	void loadData(); /// ³aduje informacje o lokalizacji plików info
 	void loadSelectData(std::string type); /// ³aduje informacje o wskazanej treœci
 	void createTypes(); ///tworzy typy danych na podstawie informacji
+
+	void addToDisMap(BuildingInstance* b, District* d);
+	void garbageCollector(bool all);
 
 public:
 
@@ -81,10 +87,19 @@ public:
 	Biome* getBiome(std::string type); /// zwraca dostêp do wskazamego biomu
 	Building* getBuilding(std::string type); /// zwraca dostep do wskazanego budynku
 	Fraction* getFraction(std::string type); /// zwraca dostêp do wskazanej frakcji
+	District* getDistrict(BuildingInstance* buildingD);
+	City* getCity(BuildingInstance* buildingC);
 
 	Player* getPlayer(std::string name); /// Pozwala u¿yskaæ dostêp do konkretnego gracza
 	void addPlayer(Player* newPlayer); /// Dodaje nowego gracza (nie mo¿na tu stworztæ gracza, trzeba go stworzyæ wczesniej)
 	bool checkIfPlayer(std::string name); /// Sprawdza, czy gracz o nicku ju¿ istnieje
+
+	void reportBuildingInstance(BuildingInstance* buildingToCity, City* newCity);
+	void reportDestructionBuildingInstance(BuildingInstance* toDestroy);
+	void addDistrict(BuildingInstance* buildingToDistrict);
+	int getNumberOfDistricts();
+	void refreshDistricts();
+	
 };
 
 #endif /* DATA_H */

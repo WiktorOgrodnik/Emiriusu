@@ -62,6 +62,7 @@ public:
 	Biome* getType() { return type; } /// zwraca typ kafelka
 	int getRand() { return rand_; } /// zwraca losowy podtyp kafelka
 	City* getCity(); /// zwraca miasto
+	bool checkIfCity(); /// Zwraca true kiedy miasto istnieje
 	void createCity(Player* setPlayer); /// tworzy nowe miasto dla gracza
 
 	BuildingInstance* getBuilding(sf::Vector2i index) { return city->getBuilding(index); } /// funkcje zwracaj¹ konkretne budynki

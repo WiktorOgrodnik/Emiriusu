@@ -29,6 +29,7 @@
 #include <stack>
 #include <string>
 #include <queue>
+#include <set>
 
 /// pliki nagłówkowe
 /// najpierw klasy wirtulane
@@ -46,13 +47,15 @@
 
 #include "Types.h"
 
+#include "District.h"
+
 #include "mapOverlay.h"
 #include "Button.h"
 #include "Unit.h"
-#include "Data.h"
 #include "Selectable.h"
-
 #include "City.h"
+#include "Data.h"
+
 
 #include "Tile.h"
 #include "Map.h"

@@ -171,6 +171,7 @@
     <ClInclude Include="Army.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="City.h" />
+    <ClInclude Include="District.h" />
     <ClInclude Include="Fraction.h" />
     <ClInclude Include="Function.h" />
     <ClInclude Include="Log.h" />
@@ -193,6 +194,7 @@
     <ClCompile Include="Army.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="City.cpp" />
+    <ClCompile Include="District.cpp" />
     <ClCompile Include="Fraction.cpp" />
     <ClCompile Include="Function.cpp" />
     <ClCompile Include="Log.cpp" />

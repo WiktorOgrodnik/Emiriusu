@@ -1,6 +1,6 @@
 1
 textures/cities/kuny/1.png
-church
+ChurchTest
 textures/buildings/kuny/church.png
-shop
+ShopTest
 textures/buildings/kuny/shop.png

@@ -11,6 +11,7 @@ class City : public Object, public Selectable
 	sf::Texture* texture; /// Przechowuje teksture miasta
 	sf::RectangleShape body; /// Przechowuje kszta³ miasta
 	sf::Vector2f position; /// pierwsza wartoœæ to indeks x, a druga to index y
+	sf::Vector2f realPos;
 
 	Player* owner; /// W³aœcicel miasta
 
@@ -31,9 +32,9 @@ public:
 	void setSetOfBuildings(std::vector <std::vector <Building*>> setOfBuildings); /// Pozwala ustawiæ gotowy zestaw budynków w mieœcie
 
 	///Funkcje pozwalaj¹ budowaæ budynki w mieœcie dla gracza
-	void setSpecificBuilding(Player* player, Building* building, sf::Vector2i index);
-	void setSpecificBuilding(Player* player, Building* building, std::pair<short, short> index);
-	void setSpecificBuilding(Player* player, Building* building, short x, short y);
+	void setSpecificBuilding(Building* building, sf::Vector2i index);
+	void setSpecificBuilding(Building* building, std::pair<short, short> index);
+	void setSpecificBuilding(Building* building, short x, short y);
 
 	///Usuwanie budynków
 	void deleteBuilding(sf::Vector2i index);
@@ -41,15 +42,25 @@ public:
 	void deleteBuilding(short x, short y);
 
 	///Zwraca dostep do konkretnego budynku
-	BuildingInstance* getBuilding(sf::Vector2i index) { return buildings[index.x][index.y]; }
-	BuildingInstance* getBuilding(std::pair<short, short> index) { return buildings[index.first][index.second]; }
-	BuildingInstance* getBuilding(short x, short y) { return buildings[x][y]; }
+	BuildingInstance* getBuilding(sf::Vector2i index); 
+	BuildingInstance* getBuilding(std::pair<short, short> index);
+	BuildingInstance* getBuilding(short x, short y);
+
+	bool existBuilding(sf::Vector2i index);
+	bool existBuilding(std::pair<short, short> index);
+	bool existBuilding(short x, short y);
 
 	///Funkcje zwi¹zne z zaznaczaniem
 	Function* onSelect() override;
 	Function* onClick() override;
 	Function* onDeselect() override;
 
+	void setOwner(Player* newPlayer);
+	Player* getOwner();
+
+	void makeClearVectorOfBuildings();
+
+	std::vector <BuildingInstance*> getFriends(std::pair <short, short> pos);
 };
 
 #endif /*CITY_H*/

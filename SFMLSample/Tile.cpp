@@ -234,19 +234,19 @@ void Tile::setAddOn(BiomeAddOn* newBiomeAddOn)
 void Tile::setSpecificBuilding(Player* player, Building* newBuilding, sf::Vector2i index)
 {
 	if (city == nullptr) city = new City(position, player, newBuilding, index);
-	else city->setSpecificBuilding(player, newBuilding, index);
+	else city->setSpecificBuilding(newBuilding, index);
 }
 
 void Tile::setSpecificBuilding(Player* player, Building* newBuilding, std::pair <short, short> index)
 {
 	if (city == nullptr) city = new City(position, player, newBuilding, index);
-	else city->setSpecificBuilding(player, newBuilding, index);
+	else city->setSpecificBuilding(newBuilding, index);
 }
 
 void Tile::setSpecificBuilding(Player* player, Building* newBuilding, short x, short y)
 {
 	if (city == nullptr) city = new City(position, player, newBuilding, x, y);
-	else city->setSpecificBuilding(player, newBuilding, x, y);
+	else city->setSpecificBuilding(newBuilding, x, y);
 }
 
 void Tile::deleteBuilding(sf::Vector2i index)
@@ -275,4 +275,10 @@ City* Tile::getCity()
 		throw exception;
 	}
 	return city;
+}
+
+bool Tile::checkIfCity()
+{
+	if (city == nullptr) return false;
+	return true;
 }

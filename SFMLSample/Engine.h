@@ -84,6 +84,7 @@ public:
 	Map* getGlobalMap(); /// zwraca mapê globaln¹
 
 	void addToRenderObjects(Object* selToObj, unsigned selectLayer); /// dodaj obiekt klasy Object do strumienia ma³ych obiektów do renderowania
+	void deleteFormRenderObjects(Object* removableObj);
 };
 
 #endif /* ENGINE_H */

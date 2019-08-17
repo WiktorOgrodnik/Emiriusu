@@ -1,6 +1,6 @@
 1
 textures/cities/jenoty/1.png
-church
+ChurchTest
 textures/buildings/jenoty/church.png
-shop
+ShopTest
 textures/buildings/jenoty/shop.png

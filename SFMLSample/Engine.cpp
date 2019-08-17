@@ -173,6 +173,25 @@ void Engine::addToRenderObjects(Object* objToRen, unsigned selectLayer)
 	renderObjects[selectLayer - 1].push_back(objToRen);
 }
 
+void Engine::deleteFormRenderObjects(Object* removalbeObj)
+{
+	Log::newLog("Usuwam objekt ze strumienia wyœwietlania ma³ych obiektów");
+
+	for (int i = 0; i < renderObjects.size(); i++)
+	{
+		if (renderObjects[i].empty()) continue;
+
+		for (auto it = renderObjects[i].begin(); it != renderObjects[i].end(); it++)
+		{
+			if (*it == removalbeObj)
+			{
+				renderObjects[i].erase(it);
+				return;
+			}
+		}
+	}
+}
+
 void Engine::createNewPlayer(std::string nickName, int AIType)
 {
 	Player* tempPlayer = new Player;
@@ -200,16 +219,43 @@ void Engine::startGame()
 
 	///testowi gracze
 	createNewPlayer("Player1", 0);
-	try { data.getPlayer("Player1")->setFraction(data.getFraction("Borsuki")); }
+	createNewPlayer("Player2", 0);
+	try 
+	{ 
+		data.getPlayer("Player1")->setFraction(data.getFraction("Borsuki")); 
+		data.getPlayer("Player2")->setFraction(data.getFraction("Kuny"));
+	}
 	catch (std::string exception) { Log::newLog("Problem z przypisaniem frakcji: " + exception); }
+
+	//std::cerr << data.getBuilding("Shop")->getDistrictType() << '\n';
 
 	///testowe obiekty
 	try
 	{
 		map.getTile(2, 2)->createCity(data.getPlayer("Player1"));
-		map.getTile(2, 2)->getCity()->setSpecificBuilding(data.getPlayer("Player1"), data.getBuilding("Shop"), std::make_pair(1, 1));
+		map.getTile(3, 2)->createCity(data.getPlayer("Player1"));
+
+		map.getTile(2, 2)->setSpecificBuilding(data.getPlayer("Player1"), data.getBuilding("Shop"), std::make_pair(1, 1));
+		map.getTile(2, 2)->getCity()->setSpecificBuilding(data.getBuilding("Shop"), std::make_pair(2, 2));
+		map.getTile(2, 2)->getCity()->setSpecificBuilding(data.getBuilding("Church"), std::make_pair(1, 2));
+		map.getTile(2, 2)->getCity()->setSpecificBuilding(data.getBuilding("Shop"), std::make_pair(0, 2));
+
+		map.getTile(3, 2)->getCity()->setSpecificBuilding(data.getBuilding("Shop"), std::make_pair(0, 2));
+		map.getTile(3, 2)->getCity()->setSpecificBuilding(data.getBuilding("Shop"), std::make_pair(1, 2));
+
+		map.getTile(3, 2)->deleteBuilding(0, 2);
+
+		map.getTile(3, 2)->getCity()->setSpecificBuilding(data.getBuilding("Church"), std::make_pair(0, 2));
 	}
 	catch (std::string exception) { Log::newLog("Napotkano wyj¹tek: " + exception); }
+
+	try
+	{
+		
+	}
+	catch (std::string exception) { Log::newLog("Napotkano wyj¹tek: " + exception); }
+
+	std::cerr << data.getNumberOfDistricts() << std::endl;
 	
 	Army* testArmy = new Army(sf::Vector2i(map.test1.first, map.test1.second), map, data.Textures().getTexture("TokenBeatle"));
 	Army* testArmy2 = new Army(sf::Vector2i(map.test2.first, map.test2.second), map, data.Textures().getTexture("TokenLion"));

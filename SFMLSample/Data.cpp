@@ -335,6 +335,21 @@ Fraction* Data::getFraction(std::string type)
 	return it->second;
 }
 
+District* Data::getDistrict(BuildingInstance* buildingD)
+{
+	auto it = districtMap.find(buildingD);
+	if (it == districtMap.end()) throw "Nie znaleziono dzielnicy dla budynku. B³¹d krytyczny dzielnic!";
+	Log::newLog("Znaleziono dzielnicê dla budynku! To dzia³a!");
+	return it->second;
+}
+
+City* Data::getCity(BuildingInstance* buildingC)
+{
+	auto it = citiesByBuildings.find(buildingC);
+	if (it == citiesByBuildings.end()) return NULL;
+	return it->second;
+}
+
 void Data::addPlayer(Player* newPlayer)
 {
 	players.push(newPlayer);
@@ -357,4 +372,103 @@ bool Data::checkIfPlayer(std::string name)
 	auto it = playersMap.find(name);
 	if (it == playersMap.end()) return false;
 	return true;
+}
+
+void Data::addToDisMap(BuildingInstance* b, District* d)
+{
+	districts.emplace(d);
+	
+	auto it = districtMap.find(b);
+	if (it == districtMap.end()) districtMap.emplace(std::make_pair(b, d));
+	else
+	{
+		it->second = d;
+	}
+
+}
+
+void Data::addDistrict(BuildingInstance* buildingToDistrict)
+{
+	District* newDistrict = new District(buildingToDistrict);
+	addToDisMap(buildingToDistrict, newDistrict);
+	Log::newLog("Dodano dzielnicê do DisMap");
+	newDistrict->addBuilding(buildingToDistrict);
+
+	std::vector <BuildingInstance*> friends = buildingToDistrict->getFriends();
+	std::set <BuildingInstance*> friendsExtended;
+
+	for (int i = 0; i < friends.size(); i++)
+	{
+		try
+		{
+			District* tempPointer;
+			if (!friends[i]->getLock()) tempPointer = getDistrict(friends[i]);
+			else tempPointer = nullptr;
+			std::set <BuildingInstance*> temp = tempPointer->exportData();
+			friendsExtended.insert(temp.begin(), temp.end());
+		}
+		catch (std::string exception) { Log::newLog("Natrafiono na wyj¹tek podczas tworzenia dzielnicy: " + exception); }
+	}
+
+	for (auto it = friendsExtended.begin(); it != friendsExtended.end(); it++)
+	{
+		newDistrict->addBuilding(*it);
+		addToDisMap(*it, newDistrict);
+	}
+
+	garbageCollector(false);
+}
+
+int Data::getNumberOfDistricts()
+{
+	return districts.size();
+}
+
+void Data::garbageCollector(bool all)
+{
+	for (auto it = districts.begin(); it != districts.end(); it++)
+	{
+		District* garbage = *it;
+
+		if (all || garbage->getNumberOfBuildings() == 0)
+		{
+			districts.erase(it);
+			delete garbage;
+		}
+	}
+}
+
+void Data::reportBuildingInstance(BuildingInstance* buildingToCity, City* newCity)
+{
+	Log::newLog ("Zg³oszono budynek!");
+	citiesByBuildings.emplace(std::make_pair(buildingToCity, newCity));
+}
+
+void Data::reportDestructionBuildingInstance(BuildingInstance* toDestroy)
+{
+	Log::newLog("Usuwam budynek");
+	citiesByBuildings.erase(toDestroy);
+}
+
+void Data::refreshDistricts()
+{
+	garbageCollector(true);
+	Log::newLog("Garbage Collector niszczy wszystkie dzielnice!");
+	districts.clear();
+	districtMap.clear();
+
+	for (auto d : citiesByBuildings)
+	{
+		d.first->lock();
+	}
+
+	for (auto d : citiesByBuildings)
+	{
+		try
+		{
+			d.first->unlock();
+			d.first->addToDistrict();
+		}
+		catch (std::string exception) { Log::newLog("Napotkano wyj¹tek podczas odœwie¿ania dzielnic: " + exception); }
+	}
 }
