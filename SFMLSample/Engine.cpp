@@ -192,14 +192,21 @@ void Engine::deleteFormRenderObjects(Object* removalbeObj)
 	}
 }
 
-void Engine::createNewPlayer(std::string nickName, int AIType)
+Player* Engine::createNewPlayer(std::string nickName, int AIType, std::string fraction)
 {
 	Player* tempPlayer = new Player;
 	
 	tempPlayer->setNickName(nickName);
 	tempPlayer->setAIType(AIType);
+	try
+	{
+		tempPlayer->setFraction(data.getFraction(fraction));
+	}
+	catch (std::string exception) { Log::newLog("Problem z przypisaniem frakcji: " + exception); }
 
 	data.addPlayer(tempPlayer);
+
+	return tempPlayer;
 }
 
 void Engine::startGame()
@@ -218,37 +225,34 @@ void Engine::startGame()
 	setGlobalMap(&map);
 
 	///testowi gracze
-	createNewPlayer("Player1", 0);
-	createNewPlayer("Player2", 0);
-	try 
-	{ 
-		data.getPlayer("Player1")->setFraction(data.getFraction("Borsuki")); 
-		data.getPlayer("Player2")->setFraction(data.getFraction("Kuny"));
-	}
-	catch (std::string exception) { Log::newLog("Problem z przypisaniem frakcji: " + exception); }
+	Player* currentPlayer = createNewPlayer("Player1", 0, "Borsuki");
+	Player* otherPlayer = createNewPlayer("Player2", 0, "Kuny");
 
 	///testowe obiekty
 	try
 	{
-		map.getTile(2, 2)->createCity(data.getPlayer("Player1"));
-		map.getTile(3, 2)->createCity(data.getPlayer("Player1"));
+		currentPlayer->createCity(2, 2);
+		currentPlayer->createCity(3, 2);
 
-		map.getTile(2, 2)->setSpecificBuilding(data.getPlayer("Player1"), data.getBuilding("Shop"), std::make_pair(1, 1));
-		map.getTile(2, 2)->getCity()->setSpecificBuilding(data.getBuilding("Shop"), std::make_pair(2, 2));
-		map.getTile(2, 2)->getCity()->setSpecificBuilding(data.getBuilding("Church"), std::make_pair(1, 2));
-		map.getTile(2, 2)->getCity()->setSpecificBuilding(data.getBuilding("Shop"), std::make_pair(0, 2));
+		currentPlayer->getCity(2, 2)->setSpecificBuilding(data.getBuilding("Shop"), 1, 1);
+		currentPlayer->getCity(2, 2)->setSpecificBuilding(data.getBuilding("Shop"), 2, 2);
+		currentPlayer->getCity(2, 2)->setSpecificBuilding(data.getBuilding("Shop"), 1, 2);
+		currentPlayer->getCity(2, 2)->setSpecificBuilding(data.getBuilding("Shop"), 0, 2);
 
-		map.getTile(3, 2)->getCity()->setSpecificBuilding(data.getBuilding("Shop"), std::make_pair(0, 2));
-		map.getTile(3, 2)->getCity()->setSpecificBuilding(data.getBuilding("Shop"), std::make_pair(1, 2));
+		currentPlayer->getCity(3, 2)->setSpecificBuilding(data.getBuilding("Shop"), 0, 2);
+		currentPlayer->getCity(3, 2)->setSpecificBuilding(data.getBuilding("Shop"), 1, 2);
 
-		map.getTile(3, 2)->deleteBuilding(0, 2);
+		currentPlayer->getCity(3, 2)->deleteBuilding(0, 2);
 
-		map.getTile(3, 2)->getCity()->setSpecificBuilding(data.getBuilding("Church"), std::make_pair(0, 2));
+		currentPlayer->getCity(3, 2)->setSpecificBuilding(data.getBuilding("Church"), 0, 2);
+
+		currentPlayer->createArmy(sf::Vector2i(map.test1.first, map.test1.second), "Army1");
+		otherPlayer->createArmy(sf::Vector2i(map.test2.first, map.test2.second), "Army1");
 	}
 	catch (std::string exception) { Log::newLog("Napotkano wyj¹tek: " + exception); }
 	
-	Army* testArmy = new Army(sf::Vector2i(map.test1.first, map.test1.second), map, data.Textures().getTexture("TokenBeatle"));
-	Army* testArmy2 = new Army(sf::Vector2i(map.test2.first, map.test2.second), map, data.Textures().getTexture("TokenLion"));
+	//Army* testArmy = new Army(sf::Vector2i(map.test1.first, map.test1.second), map, data.Textures().getTexture("TokenBeatle"));
+	//Army* testArmy2 = new Army(sf::Vector2i(map.test2.first, map.test2.second), map, data.Textures().getTexture("TokenLion"));
 
 	mapOverlay world;
 	world.setTileSet(data.Textures().getTileSet("biomes"));

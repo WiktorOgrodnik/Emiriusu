@@ -4,3 +4,5 @@ ChurchTest
 textures/buildings/jenoty/church.png
 ShopTest
 textures/buildings/jenoty/shop.png
+ArmyTest
+textures/armies/jenoty/ArmyTest.png

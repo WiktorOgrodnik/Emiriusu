@@ -20,7 +20,6 @@ void Player::setNickName(std::string _nickName)
 		std::string exception = "Gracz o nicku " + _nickName + " ju¿ istnieje";
 		throw exception;
 	}
-
 }
 
 void Player::setAIType(int _AIType)
@@ -36,6 +35,98 @@ void Player::setFraction(Fraction* newFraction)
 void Player::setPlayerAdvanceLevel(int newValue)
 {
 	playerAdvanceLevel = newValue;
+}
+
+void Player::createCity(sf::Vector2i index)
+{
+	if (Engine::getInstance().getGlobalMap()->getTile(index)->checkIfCity()) throw "To miejsce jest ju¿ zajête przez inne miasto!";
+	Engine::getInstance().getGlobalMap()->getTile(index)->createCity(this);
+}
+
+void Player::createCity(std::pair <short, short> index)
+{
+	if (Engine::getInstance().getGlobalMap()->getTile(index)->checkIfCity()) throw "To miejsce jest ju¿ zajête przez inne miasto!";
+	Engine::getInstance().getGlobalMap()->getTile(index)->createCity(this);
+}
+
+void Player::createCity(short x, short y)
+{
+	if (Engine::getInstance().getGlobalMap()->getTile(x, y)->checkIfCity()) throw "To miejsce jest ju¿ zajête przez inne miasto!";
+	Engine::getInstance().getGlobalMap()->getTile(x, y)->createCity(this);
+}
+
+City* Player::getCity(sf::Vector2i index)
+{
+	if (Engine::getInstance().getGlobalMap()->getTile(index)->checkIfCity())
+	{
+		if (Engine::getInstance().getGlobalMap()->getTile(index)->getCity()->getOwner() == this)
+		{
+			return Engine::getInstance().getGlobalMap()->getTile(index)->getCity();
+		}
+		else throw "Miasto nie nale¿y do gracza!";
+	}
+	else throw "Na ¿¹danym przez gracza polu nie ma miasta";
+}
+
+City* Player::getCity(std::pair<short, short> index)
+{
+	if (Engine::getInstance().getGlobalMap()->getTile(index)->checkIfCity())
+	{
+		if (Engine::getInstance().getGlobalMap()->getTile(index)->getCity()->getOwner() == this)
+		{
+			return Engine::getInstance().getGlobalMap()->getTile(index)->getCity();
+		}
+		else throw "Miasto nie nale¿y do gracza!";
+	}
+	else throw "Na ¿¹danym przez gracza polu nie ma miasta";
+}
+
+City* Player::getCity(short x, short y)
+{
+	if (Engine::getInstance().getGlobalMap()->getTile(x, y)->checkIfCity())
+	{
+		if (Engine::getInstance().getGlobalMap()->getTile(x, y)->getCity()->getOwner() == this)
+		{
+			return Engine::getInstance().getGlobalMap()->getTile(x, y)->getCity();
+		}
+		else throw "Miasto nie nale¿y do gracza!";
+	}
+	else throw "Na ¿¹danym przez gracza polu nie ma miasta";
+}
+
+Army* Player::createArmy(sf::Vector2i index, std::string type)
+{
+	Army* tempArmy = new Army(index, Engine::getInstance().getData().getArmyPrototype(type), this);
+	armies.emplace(tempArmy);
+	return tempArmy;
+}
+
+Army* Player::createArmy(std::pair <short, short> index, std::string type)
+{
+	Army* tempArmy = new Army(index, Engine::getInstance().getData().getArmyPrototype(type), this);
+	armies.emplace(tempArmy);
+	return tempArmy;
+}
+
+Army* Player::createArmy(short x, short y, std::string type)
+{
+	Army* tempArmy = new Army(x, y, Engine::getInstance().getData().getArmyPrototype(type), this);
+	armies.emplace(tempArmy);
+	return tempArmy;
+}
+
+Army* Player::getArmy(Army* army)
+{
+	auto it = armies.find(army);
+	if (it == armies.end()) throw "Nie znaleziono takiej armii w klasie gracza!";
+	return *it;
+}
+
+bool Player::checkIfArmy(Army* army)
+{
+	auto it = armies.find(army);
+	if (it == armies.end()) return false;
+	return true;
 }
 
 std::string Player::getNickName()

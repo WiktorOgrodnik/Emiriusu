@@ -171,7 +171,7 @@ int Map::getSize()
 
 Tile* Map::getTile(unsigned x, unsigned y)
 {
-	if (x > mapSize || y > mapSize)
+	if (x >= mapSize || y >= mapSize)
 	{
 		//Log::newLog("Map::getTile: x (" + std::to_string(x) + ") i y (" + std::to_string(y) + ") wykroczyły poza dostęp. Błąd krytyczny.");
 		throw "Map::getTile: x (" + std::to_string(x) + ") i y (" + std::to_string(y) + ") wykroczyły poza dostęp. Błąd krytyczny.";
@@ -180,9 +180,21 @@ Tile* Map::getTile(unsigned x, unsigned y)
 	return Tiles[x][y];
 }
 
+Tile* Map::getTile(std::pair<short, short> index)
+{
+	if (index.first >= mapSize || index.second >= mapSize)
+	{
+		//Log::newLog("Map::getTile: x (" + std::to_string(position.x) + ") i y (" + std::to_string(position.y) + ") wykroczyły poza dostęp. Błąd krytyczny.");
+		throw "Map::getTile: x (" + std::to_string(index.first) + ") i y (" + std::to_string(index.second) + ") wykroczyły poza dostęp. Błąd krytyczny.";
+	}
+
+	return Tiles[index.first][index.second];
+}
+
+
 Tile* Map::getTile(sf::Vector2i position) 
 { 
-	if (position.x > mapSize || position.y > mapSize)
+	if (position.x >= mapSize || position.y >= mapSize)
 	{
 		//Log::newLog("Map::getTile: x (" + std::to_string(position.x) + ") i y (" + std::to_string(position.y) + ") wykroczyły poza dostęp. Błąd krytyczny.");
 		throw "Map::getTile: x (" + std::to_string(position.x) + ") i y (" + std::to_string(position.y) + ") wykroczyły poza dostęp. Błąd krytyczny.";

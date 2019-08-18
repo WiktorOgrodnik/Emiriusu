@@ -57,7 +57,7 @@ private:
 	void refreshWindow(); /// funkcja odœwie¿aj¹ca ekran 
 	void setGlobalMap(Map* newGlobalMap); /// setter mapy globalnej
 
-	void createNewPlayer(std::string nickName, int AIType); /// tworzy nowego gracza
+	Player* createNewPlayer(std::string nickName, int AIType, std::string fraction); /// tworzy nowego gracza
 
 	///Zablokowanie mo¿liwoœci kopiowania
 	Engine operator= (const Engine& other) {}

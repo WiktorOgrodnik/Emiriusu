@@ -20,6 +20,7 @@ public:
 	
 	/// Zwraca okreœlony kafelek
 	Tile* getTile(unsigned x, unsigned y); 
+	Tile* getTile(std::pair <short, short> index);
 	Tile* getTile(sf::Vector2i position);
 
 	char getMapOverlayData(unsigned x, unsigned y, char level, char type);

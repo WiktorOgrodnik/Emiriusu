@@ -4,3 +4,5 @@ ChurchTest
 textures/buildings/borsuki/church.png
 ShopTest
 textures/buildings/borsuki/shop.png
+ArmyTest
+textures/armies/borsuki/ArmyTest.png

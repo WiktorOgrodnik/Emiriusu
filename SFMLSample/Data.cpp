@@ -329,6 +329,11 @@ void Data::createTypes()
 				Fraction* tempType = new Fraction(path);
 				fractions.emplace(std::make_pair(typeName, tempType));
 			}
+			else if (type == "armies")
+			{
+				ArmyPrototype* tempType = new ArmyPrototype(path);
+				armies.emplace(std::make_pair(typeName, tempType));
+			}
 		}
 	}
 }
@@ -352,6 +357,13 @@ Fraction* Data::getFraction(std::string type)
 {
 	auto it = fractions.find(type);
 	if (it == fractions.end()) throw "Nie znaleziono frakcji o nazwie " + type;
+	return it->second;
+}
+
+ArmyPrototype* Data::getArmyPrototype(std::string type)
+{
+	auto it = armies.find(type);
+	if (it == armies.end()) throw "Nie mo¿na znaleŸæ prototypu armii o nazwie " + type;
 	return it->second;
 }
 
@@ -400,7 +412,6 @@ void Data::addToDisMap(BuildingInstance* b, District* d)
 	{
 		it->second = d;
 	}
-
 }
 
 void Data::addDistrict(BuildingInstance* buildingToDistrict)

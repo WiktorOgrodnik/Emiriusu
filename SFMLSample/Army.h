@@ -2,10 +2,31 @@
 
 #include "pch.h"
 
+class Map;
+
+class ArmyPrototype
+{
+private:
+	std::string name;
+	std::string texture;
+public:
+
+	ArmyPrototype(std::string fileName);
+
+	std::string getName();
+	std::string getTexture();
+
+	void setName(std::string newName);
+	void setTexture(std::string newTexture);
+};
+
 class Army : public Object, public Selectable
 {
-
 private:
+
+	Player* owner;
+	ArmyPrototype* type;
+
 	std::vector<Unit*>units;
 	float amountOfMovement;
 	unsigned unitCount;
@@ -19,6 +40,11 @@ private:
 public:
 
 	Army(sf::Vector2i newPosition, Map& map, sf::Texture* newTexture);
+
+	Army(sf::Vector2i newPosition, ArmyPrototype* newType, Player* player);
+	Army(std::pair<short, short> newPosition, ArmyPrototype* newType, Player* player);
+	Army(short x, short y, ArmyPrototype* newType, Player* player);
+
 	~Army();
 	void draw(sf::RenderWindow& window) override; /// wirtualna funkcja rysowania
 	void draw(sf::RenderWindow& window, sf::View& view, float zoom) override; /// wirtualna funkcja rysowania (tylko mapa u¿ywa tej funkcji!)
@@ -42,5 +68,12 @@ public:
 	Function* onSelect() override;
 	Function* onClick() override;
 	Function* onDeselect() override;
+
+	void setOwner(Player* player);
+	Player* getOwner();
+
+	void setType(ArmyPrototype*);
+	ArmyPrototype* getType();
+
 };
 

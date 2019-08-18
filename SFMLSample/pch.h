@@ -45,22 +45,23 @@
 #include "Fraction.h"
 #include "Player.h"
 
+#include "Selectable.h"
 #include "Types.h"
+#include "Unit.h"
+#include "Army.h"
 
 #include "District.h"
 
 #include "mapOverlay.h"
 #include "Button.h"
-#include "Unit.h"
-#include "Selectable.h"
+
+
 #include "City.h"
 #include "Data.h"
-
 
 #include "Tile.h"
 #include "Map.h"
 
-#include "Army.h"
 #include "Engine.h"
 
 // TODO: add headers that you want to pre-compile here

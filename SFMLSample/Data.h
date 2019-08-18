@@ -74,6 +74,7 @@ class Data
 	std::map <std::string, Biome*> biomes; /// Przechowuje gotowe biomy
 	std::map <std::string, Building*> buildings; /// Przechowuje gotowe budynki (pierwowzory)
 	std::map <std::string, Fraction*> fractions; /// Przechowuje frakcje
+	std::map <std::string, ArmyPrototype*> armies; /// Przechowuje prototypy armii
 	std::map <std::string, Player*> playersMap; /// Przechowuje graczy w mapie
 	std::map <BuildingInstance*, District*> districtMap; /// Przechowuje budynki i przypisane do nich dzielnice
 	std::set <District*> districts; /// Przechowuje dzielnice (dla Garbage Collectora)
@@ -103,6 +104,7 @@ public:
 	Biome* getBiome(std::string type); /// zwraca dostêp do wskazamego biomu
 	Building* getBuilding(std::string type); /// zwraca dostep do wskazanego budynku
 	Fraction* getFraction(std::string type); /// zwraca dostêp do wskazanej frakcji
+	ArmyPrototype* getArmyPrototype(std::string type); /// zwraca dostêp do wskazanego prototypu armii
 	District* getDistrict(BuildingInstance* buildingD); /// zwraca dostep do wskazanej dzielnicy
 	City* getCity(BuildingInstance* buildingC); /// zwraca dostep do wskazanego miasta
 
