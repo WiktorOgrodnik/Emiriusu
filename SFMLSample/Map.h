@@ -18,7 +18,8 @@ public:
 	Map(int size); /// konstruktor (przyjmuje rozmiar mapy)
 	void newMap(); /// tworzy now¹ mapê
 	
-	Tile* getTile(unsigned x, unsigned y);
+	/// Zwraca okreœlony kafelek
+	Tile* getTile(unsigned x, unsigned y); 
 	Tile* getTile(sf::Vector2i position);
 
 	char getMapOverlayData(unsigned x, unsigned y, char level, char type);

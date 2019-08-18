@@ -183,6 +183,16 @@ void Tile::setRiver(char riverType_)
 	else riverExtra = 0;
 }
 
+char Tile::getRiver()
+{
+	return riverType;
+}
+
+char Tile::getRiverExtra()
+{
+	return riverExtra;
+}
+
 void Tile::addSelectable(Selectable* newSelectable)
 {
 	clickableObjects.push_back(newSelectable);
@@ -281,4 +291,58 @@ bool Tile::checkIfCity()
 {
 	if (city == nullptr) return false;
 	return true;
+}
+
+sf::Vector2f Tile::getPosition()
+{
+	return position;
+}
+
+Biome* Tile::getType()
+{
+	return type;
+}
+
+int Tile::getRand()
+{
+	return rand_;
+}
+
+bool Tile::existBuilding(sf::Vector2i index)
+{
+	if (!checkIfCity()) return false;
+	if (!city->existBuilding(index)) return false;
+	return true;
+}
+
+bool Tile::existBuilding(std::pair <short, short> index)
+{
+	if (!checkIfCity()) return false;
+	if (!city->existBuilding(index)) return false;
+	return true;
+}
+
+bool Tile::existBuilding(short x, short y)
+{
+	if (!checkIfCity()) return false;
+	if (!city->existBuilding(x, y)) return false;
+	return true;
+}
+
+BuildingInstance* Tile::getBuilding(sf::Vector2i index)
+{
+	if (!existBuilding(index)) throw "Nie ma takiego budynku!";
+	return city->getBuilding(index);
+}
+
+BuildingInstance* Tile::getBuilding(std::pair <short, short> index)
+{
+	if (!existBuilding(index)) throw "Nie ma takiego budynku!";
+	return city->getBuilding(index);
+}
+
+BuildingInstance* Tile::getBuilding(short x, short y)
+{
+	if (!existBuilding(x, y)) throw "Nie ma takiego budynku!";
+	return city->getBuilding(x, y);
 }

@@ -4,6 +4,12 @@
 District::District(BuildingInstance* moderator)
 {
 	addBuilding(moderator);
+	setOwner(moderator->getOwner());
+}
+
+void District::setOwner(Player* newOwner)
+{
+	owner = newOwner;
 }
 
 std::set <BuildingInstance*> District::exportData()
@@ -21,4 +27,9 @@ void District::addBuilding(BuildingInstance* newBuilding)
 int District::getNumberOfBuildings()
 {
 	return buildings.size();
+}
+
+Player* District::getOwner()
+{
+	return owner;
 }

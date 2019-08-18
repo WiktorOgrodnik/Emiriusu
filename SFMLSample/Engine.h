@@ -62,7 +62,7 @@ private:
 public:
 
 	static Engine & getInstance(); /// funkcja przekazuj¹ca referencjê na instancjê silnika
-	void* mapPointer;
+	void* mapPointer; /// wskaŸnik na mapê (funckjonalnoœæ przestarza³a)
 	void draw() const; /// rysuje wszytkie warstwy po kolei
 	void addLayer(Layer* newLayer); /// dodaje warstwe (przyjmuje wskaŸnik na warstwê)
 	void addLayer(Layer& newLayer); /// dodaje warstwê (przyjmuje referencjê na warstwê)
@@ -71,7 +71,7 @@ public:
 	void addToLayer(Object* newObject, unsigned index); /// dodaje obiekt do wybranej warstwy
 	void addToTopLayer(Object& newObject); /// dodaje obiekt do najwy¿szej warstwy
 	void addToTopLayer(Object* newObject); /// dodaje obiekt do najwy¿szej warstwy
-	void increaseNumberOfLayers(); /// zwiêksza liczbê warst o jedn¹
+	void increaseNumberOfLayers(); /// zwiêksza liczbê warstw o jedn¹
 	void startGame(); /// uruchamia silnik
 
 	///GameWindows access functions:
@@ -84,7 +84,7 @@ public:
 	Map* getGlobalMap(); /// zwraca mapê globaln¹
 
 	void addToRenderObjects(Object* selToObj, unsigned selectLayer); /// dodaj obiekt klasy Object do strumienia ma³ych obiektów do renderowania
-	void deleteFormRenderObjects(Object* removableObj);
+	void deleteFormRenderObjects(Object* removableObj); /// usuwa dany obiekt klasy Object ze strumienia ma³ych obiektów do renderowania
 };
 
 #endif /* ENGINE_H */

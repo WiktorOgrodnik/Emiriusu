@@ -13,7 +13,7 @@ public:
 
 	Settings(); /// konstruktor
 	void setZoom(float newZoom); /// ustawia nowe przybli¿enie mapy (przyjmuje nowe przybli¿enie)
-	float getZoom() { return zoom; } /// zwraca obecne przybli¿enie mapy
+	float getZoom(); /// zwraca obecne przybli¿enie mapy
 	void increaseZoom(float val); ///zmienia przybli¿enie mapy o podan¹ wartoœæ
 };
 
@@ -26,9 +26,9 @@ class World
 public:
 
 	World(); /// konstruktor
-	float getLandPercentage() { return landPercentage; } /// zwraca procent l¹du na mapie
-	float getMountainsPercentage() { return mountainsPercentage; } /// zwraca procent gór na mapie
-	int getMapSize() { return mapSize; } /// zwraca rozmiar mapy
+	float getLandPercentage(); /// zwraca procent l¹du na mapie
+	float getMountainsPercentage(); /// zwraca procent gór na mapie
+	int getMapSize();/// zwraca rozmiar mapy
 
 };
 
@@ -63,42 +63,42 @@ class Data
 	std::map <std::string, Building*> buildings; /// Przechowuje gotowe budynki (pierwowzory)
 	std::map <std::string, Fraction*> fractions; /// Przechowuje frakcje
 	std::map <std::string, Player*> playersMap; /// Przechowuje graczy w mapie
-	std::map <BuildingInstance*, District*> districtMap;
-	std::set <District*> districts;
+	std::map <BuildingInstance*, District*> districtMap; /// Przechowuje budynki i przypisane do nich dzielnice
+	std::set <District*> districts; /// Przechowuje dzielnice (dla Garbage Collectora)
 	std::queue <Player*> players; ///Przechowuje graczy w kolejce gry
-	std::map <BuildingInstance*, City*> citiesByBuildings;
+	std::map <BuildingInstance*, City*> citiesByBuildings; /// Przechowuje budynki i przypisane do nich miasta
 
 	void loadData(); /// ³aduje informacje o lokalizacji plików info
 	void loadSelectData(std::string type); /// ³aduje informacje o wskazanej treœci
 	void createTypes(); ///tworzy typy danych na podstawie informacji
 
-	void addToDisMap(BuildingInstance* b, District* d);
-	void garbageCollector(bool all);
+	void addToDisMap(BuildingInstance* b, District* d); /// Dodaje nowe wartoœci do mapy Dzielnic
+	void garbageCollector(); /// Usuwa niepotrzebne dzielnice
 
 public:
 
 	Data(); /// konstruktor
 	~Data() {} /// destruktor
 
-	World& World() { return world; } /// zwraca referencjê na World_
-	Textures& Textures() { return textures; } /// zwraca referencjê na Textures_
-	Settings& Settings() { return settings; } /// zwraca referencjê na Settings_
+	World& World() { return world; } /// zwraca referencjê na World
+	Textures& Textures() { return textures; } /// zwraca referencjê na Textures
+	Settings& Settings() { return settings; } /// zwraca referencjê na Settings
 
 	Biome* getBiome(std::string type); /// zwraca dostêp do wskazamego biomu
 	Building* getBuilding(std::string type); /// zwraca dostep do wskazanego budynku
 	Fraction* getFraction(std::string type); /// zwraca dostêp do wskazanej frakcji
-	District* getDistrict(BuildingInstance* buildingD);
-	City* getCity(BuildingInstance* buildingC);
+	District* getDistrict(BuildingInstance* buildingD); /// zwraca dostep do wskazanej dzielnicy
+	City* getCity(BuildingInstance* buildingC); /// zwraca dostep do wskazanego miasta
 
-	Player* getPlayer(std::string name); /// Pozwala u¿yskaæ dostêp do konkretnego gracza
-	void addPlayer(Player* newPlayer); /// Dodaje nowego gracza (nie mo¿na tu stworztæ gracza, trzeba go stworzyæ wczesniej)
+	Player* getPlayer(std::string name); /// Pozwala uzyskaæ dostêp do konkretnego gracza
+	void addPlayer(Player* newPlayer); /// Dodaje nowego gracza (nie mo¿na tu stworztæ gracza, trzeba go stworzyæ wczeœniej)
 	bool checkIfPlayer(std::string name); /// Sprawdza, czy gracz o nicku ju¿ istnieje
 
-	void reportBuildingInstance(BuildingInstance* buildingToCity, City* newCity);
-	void reportDestructionBuildingInstance(BuildingInstance* toDestroy);
-	void addDistrict(BuildingInstance* buildingToDistrict);
-	int getNumberOfDistricts();
-	void refreshDistricts();
+	void reportBuildingInstance(BuildingInstance* buildingToCity, City* newCity); /// Trzeba tu zg³oœiæ powstanie nowego budynku
+	void reportDestructionBuildingInstance(BuildingInstance* toDestroy); /// Nale¿y zg³osiæ zniszczenie budynku
+	void addDistrict(BuildingInstance* buildingToDistrict); /// Dodaje wskazany budynek do dzielnicy 
+	int getNumberOfDistricts(); /// Uzyskaj liczbê dzielnic
+	void refreshDistricts(Player* refreshPlayer); /// Zbuduj wszystkie dzielnice gracza na nowo (podczas usuwania budynku jest wywo³ywana)
 	
 };
 

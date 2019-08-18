@@ -99,7 +99,7 @@ void Engine::addLayer(std::vector<Object*> & newLayer)
 void Engine::addToLayer(Object& newObject, unsigned index)
 {
 	unsigned siz = size_tToInt(Layers.size()) - 1;
-	if (index > siz) std::cerr << "Podano nieprawid這wy indeks warstwy!\n";
+	if (index > siz) Log::newLog ("Podano nieprawid這wy indeks warstwy!");
 	index = std::min(index, siz);
 	Layers[index]->addObject(newObject);
 }
@@ -107,7 +107,7 @@ void Engine::addToLayer(Object& newObject, unsigned index)
 void Engine::addToLayer(Object* newObject, unsigned index)
 {
 	unsigned siz = size_tToInt(Layers.size()) - 1;
-	if (index > siz) std::cerr << "Podano nieprawid這wy indeks warstwy!\n";
+	if (index > siz) Log::newLog("Podano nieprawid這wy indeks warstwy!");
 	index = std::min(index, siz);
 	Layers[index]->addObject(newObject);
 }
@@ -227,8 +227,6 @@ void Engine::startGame()
 	}
 	catch (std::string exception) { Log::newLog("Problem z przypisaniem frakcji: " + exception); }
 
-	//std::cerr << data.getBuilding("Shop")->getDistrictType() << '\n';
-
 	///testowe obiekty
 	try
 	{
@@ -248,14 +246,6 @@ void Engine::startGame()
 		map.getTile(3, 2)->getCity()->setSpecificBuilding(data.getBuilding("Church"), std::make_pair(0, 2));
 	}
 	catch (std::string exception) { Log::newLog("Napotkano wyj靖ek: " + exception); }
-
-	try
-	{
-		
-	}
-	catch (std::string exception) { Log::newLog("Napotkano wyj靖ek: " + exception); }
-
-	std::cerr << data.getNumberOfDistricts() << std::endl;
 	
 	Army* testArmy = new Army(sf::Vector2i(map.test1.first, map.test1.second), map, data.Textures().getTexture("TokenBeatle"));
 	Army* testArmy2 = new Army(sf::Vector2i(map.test2.first, map.test2.second), map, data.Textures().getTexture("TokenLion"));

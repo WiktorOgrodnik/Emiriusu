@@ -5,64 +5,64 @@
 #include "pch.h"
 
 
-class Type
-{
-};
-
-class Biome : public Type 
+class Biome 
 {
 	int id; /// id kafelka
-	std::string name; 
-	sf::Color biomeColor;
-	float moveCost;
-	float opacity;
-	short food;
-	short stone;
-	short wood;
-	bool canBuildACity;
-	bool canWalkThru;
-	std::string specialStuff;
+	std::string name; /// nazwa biomu
+	sf::Color biomeColor; /// kolor biomu
+	float moveCost; /// koszt ruchu na biomie
+	float opacity; /// 
+	short food; /// jedzenie
+	short stone; /// kamieñ
+	short wood; /// drewno
+	bool canBuildACity; /// Czy mo¿na zbudowaæ miasto
+	bool canWalkThru; /// Czy mo¿na przejœæ
+	std::string specialStuff; /// Dodatkowe rzeczy
 
 public:
 
-	Biome(std::string fileName);
-	std::string getName() { return name; }
-	int getId() { return id; }
-	float getMoveCost() { return moveCost; }
-	short getFood() { return food; }
-	short getStone() { return stone; }
-	short getWood() { return wood; }
-	bool getCanBuildACity() { return canBuildACity; }
-	bool getCanWalkThru() { return canWalkThru; }
-	std::string getSpecialStuff() { return specialStuff; }
-	void setColor(char r, char g, char b, char transparency)
-	{
-		biomeColor.r = r; biomeColor.g = g; biomeColor.b = b;
-	}
-	sf::Color* getBiomeColor() { return &biomeColor; }
+	Biome(std::string fileName); /// Konstruktor - przyjmuje nazwê pliku biomu
+
+	///Gettery zmiennych
+	std::string getName();
+	int getId();
+	float getMoveCost();
+	short getFood();
+	short getStone();
+	short getWood();
+	bool getCanBuildACity();
+	bool getCanWalkThru();
+	std::string getSpecialStuff();
+	sf::Color* getBiomeColor();
+
+	void setColor(char r, char g, char b, char transparency); /// Ustawia kolor biomu
+	
 };
 
-class BiomeAddOn : public Type
+class BiomeAddOn
 {
 public:
 };
 
 class Building
 {
-	std::string name;
-	std::string texture;
-	std::string districtType;
-	bool canEdit;
+	std::string name; /// Nazwa budynku
+	std::string texture; /// Nazwa tekstury budynku
+	std::string districtType; /// Kategora budynku (do dzielnic)
+	bool canEdit; /// Czy mo¿na edytowaæ budynek
 
 public:
 
-	Building(std::string fileName);
-	void setCanEdit(bool canEdit_);
+	Building(std::string fileName); /// Konstruktor - przyjmuje nazwê pliku budynku
+
+	///Settery
+	void setCanEdit(bool canEdit_); 
 	void setDistrictType(std::string newDistrictType);
 
-	std::string getName() { return name; }
-	std::string getTextureId() { return texture; }
-	bool getCanEdit() { return canEdit; }
+	///Gettery
+	std::string getName();
+	std::string getTextureId();
+	bool getCanEdit();
 	std::string getDistrictType();
 
 };
@@ -70,42 +70,44 @@ public:
 
 class BuildingInstance : public Object
 {
-	Building* type;
-	sf::Texture* texture;
-	sf::RectangleShape body;
+	Building* type; /// Typ budynku
+	sf::Texture* texture; /// Tesktura budynku
+	sf::RectangleShape body; /// Body budynku
 	sf::Vector2f position; /// pierwsza wartoœæ to indeks x, a druga to index y
 
-	Player* owner;
+	Player* owner; /// W³aœciciel (konkretny gracz)
 
-	std::pair <short, short> cityPos;
+	std::pair <short, short> cityPos; /// Pozycja w mieœcie
 
-	bool locke;
+	bool locke; /// Zmienna blokady
+
+	void setOwner(Player* newPlayer); /// Ustawia gracza
 
 public:
 
-	~BuildingInstance();
+	~BuildingInstance(); /// Destruktor
 
 	void draw(sf::RenderWindow& window) override; /// witualna funkcja rysowania
 	void draw(sf::RenderWindow& window, sf::View& view, float zoom) override; /// wirtualna funkcja rysowania (tylko mapa u¿ywa tej funkcji!)
 	void draw(sf::RenderTexture& texture) override;
 
-	BuildingInstance(Building* newType, sf::Vector2f rootPos, std::pair<unsigned, unsigned> additionalPos, Player* player, std::pair <short, short> newCityPos);
+	BuildingInstance(Building* newType, sf::Vector2f rootPos, std::pair<unsigned, unsigned> additionalPos, Player* player, std::pair <short, short> newCityPos); /// Konstruktor
 
+	///Ustawia/zwraca typ
 	void setType(Building* newType);
-	Building* getType() { return type; }
+	Building* getType();
 
-	void setOwner(Player* newPlayer);
-	Player* getOwner();
+	Player* getOwner(); //zwraca w³aœciela
 
-	void addToDistrict();
-	std::vector <BuildingInstance*> getFriends();
+	void addToDistrict(); /// Dodaj do dzielnicy (ten budynek)
+	std::vector <BuildingInstance*> getFriends(); /// Zwraca s¹siadów budynku, które s¹ tej samej kategorii i nale¿¹ do tego samego gracza. Równie¿ na innych miastach.
 
-	void lock();
-	void unlock();
-	bool getLock();
+	void lock(); ///Zablokuj
+	void unlock(); ///Odblokuj
+	bool getLock(); ///Zwraca stan blokady
 };
 
-class Mineral : public Type
+class Mineral 
 {
 public:
 };

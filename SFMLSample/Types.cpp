@@ -2,8 +2,6 @@
 
 Biome::Biome(std::string fileName)
 {
-
-
 	std::fstream biomeData;
 	std::string tempText;
 	biomeData.open(fileName, std::ios::in | std::ios::out);
@@ -49,9 +47,63 @@ Biome::Biome(std::string fileName)
 	}
 }
 
+std::string Biome::getName()
+{
+	return name;
+}
+
+int Biome::getId() 
+{ 
+	return id; 
+}
+
+float Biome::getMoveCost() 
+{ 
+	return moveCost; 
+}
+
+short Biome::getFood() 
+{ 
+	return food; 
+}
+
+short Biome::getStone() 
+{ 
+	return stone; 
+}
+
+short Biome::getWood() 
+{ 
+	return wood; 
+}
+
+bool Biome::getCanBuildACity() 
+{ 
+	return canBuildACity; 
+}
+
+bool Biome::getCanWalkThru()
+{ 
+	return canWalkThru; 
+}
+
+std::string Biome::getSpecialStuff() 
+{ 
+	return specialStuff; 
+}
+
+sf::Color* Biome::getBiomeColor() 
+{ 
+	return &biomeColor; 
+}
+
+void Biome::setColor(char r, char g, char b, char transparency)
+{
+	biomeColor.r = r; biomeColor.g = g; biomeColor.b = b;
+}
+
 Building::Building(std::string fileName)
 {
-	districtType = "s";
 	std::fstream buildingData;
 	std::string tempText;
 	buildingData.open(fileName, std::ios::in);
@@ -90,6 +142,21 @@ void Building::setDistrictType(std::string newDistrictType)
 	districtType = newDistrictType;
 }
 
+std::string Building::getName() 
+{ 
+	return name; 
+}
+
+std::string Building::getTextureId() 
+{
+	return texture; 
+}
+
+bool Building::getCanEdit() 
+{ 
+	return canEdit; 
+}
+
 std::string Building::getDistrictType()
 {
 	return districtType;
@@ -113,12 +180,16 @@ BuildingInstance::BuildingInstance(Building* newBuilding, sf::Vector2f newPos, s
 	locke = false;
 
 	Engine::getInstance().addToRenderObjects(this, 2);
-	//addToDistrict();
 }
 
 void BuildingInstance::setType(Building* newType)
 {
 	type = newType;
+}
+
+Building* BuildingInstance::getType()
+{
+	return type;
 }
 
 void BuildingInstance::draw(sf::RenderWindow& window)
@@ -168,7 +239,7 @@ BuildingInstance::~BuildingInstance()
 
 	Engine::getInstance().deleteFormRenderObjects(this);
 
-	Engine::getInstance().getData().refreshDistricts();
+	Engine::getInstance().getData().refreshDistricts(owner);
 }
 
 void BuildingInstance::lock()

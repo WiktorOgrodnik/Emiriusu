@@ -12,6 +12,11 @@ void Settings::setZoom(float newZoom)
 	//Engine::getInstance().getGameScreen().zoom(zoom);
 }
 
+float Settings::getZoom()
+{
+	return zoom;
+}
+
 void Settings::increaseZoom(const float val)
 {
 	zoom = zoom + zoom*val;
@@ -25,6 +30,21 @@ World::World()
 	mapSize = 100;
 	landPercentage = 0.3147f;
 	mountainsPercentage = 0.08f;
+}
+
+float World::getLandPercentage() 
+{ 
+	return landPercentage; 
+} 
+
+float World::getMountainsPercentage() 
+{ 
+	return mountainsPercentage; 
+} 
+
+int World::getMapSize() 
+{ 
+	return mapSize; 
 }
 
 Textures::Textures()
@@ -346,7 +366,7 @@ District* Data::getDistrict(BuildingInstance* buildingD)
 City* Data::getCity(BuildingInstance* buildingC)
 {
 	auto it = citiesByBuildings.find(buildingC);
-	if (it == citiesByBuildings.end()) return NULL;
+	if (it == citiesByBuildings.end()) throw "Nie znaleziono tego budynku w ¿adnym mieœcie! B³¹d krytyczny!";
 	return it->second;
 }
 
@@ -359,11 +379,7 @@ void Data::addPlayer(Player* newPlayer)
 Player* Data::getPlayer(std::string name)
 {
 	auto it = playersMap.find(name);
-	if (it == playersMap.end())
-	{
-		std::string exception = "nie ma gracza o nicku: " + name;
-		throw exception;
-	}
+	if (it == playersMap.end()) throw "nie ma gracza o nicku: " + name;
 	return it->second;
 }
 
@@ -416,7 +432,7 @@ void Data::addDistrict(BuildingInstance* buildingToDistrict)
 		addToDisMap(*it, newDistrict);
 	}
 
-	garbageCollector(false);
+	garbageCollector();
 }
 
 int Data::getNumberOfDistricts()
@@ -424,13 +440,13 @@ int Data::getNumberOfDistricts()
 	return districts.size();
 }
 
-void Data::garbageCollector(bool all)
+void Data::garbageCollector()
 {
 	for (auto it = districts.begin(); it != districts.end(); it++)
 	{
 		District* garbage = *it;
 
-		if (all || garbage->getNumberOfBuildings() == 0)
+		if (garbage->getNumberOfBuildings() == 0)
 		{
 			districts.erase(it);
 			delete garbage;
@@ -450,24 +466,36 @@ void Data::reportDestructionBuildingInstance(BuildingInstance* toDestroy)
 	citiesByBuildings.erase(toDestroy);
 }
 
-void Data::refreshDistricts()
+void Data::refreshDistricts(Player* refreshPlayer)
 {
-	garbageCollector(true);
-	Log::newLog("Garbage Collector niszczy wszystkie dzielnice!");
-	districts.clear();
-	districtMap.clear();
+	for (auto dm : districtMap)
+	{
+		if (dm.second->getOwner() == refreshPlayer) districtMap.erase(dm.first);
+	}
+
+	for (auto d : districts)
+	{
+		if (d->getOwner() == refreshPlayer)
+		{
+			districts.erase(d);
+			delete d;
+		}
+	}
 
 	for (auto d : citiesByBuildings)
 	{
-		d.first->lock();
+		if (d.first->getOwner() == refreshPlayer) d.first->lock();
 	}
 
 	for (auto d : citiesByBuildings)
 	{
 		try
 		{
-			d.first->unlock();
-			d.first->addToDistrict();
+			if (d.first->getOwner() == refreshPlayer)
+			{
+				d.first->unlock();
+				d.first->addToDistrict();
+			}
 		}
 		catch (std::string exception) { Log::newLog("Napotkano wyj¹tek podczas odœwie¿ania dzielnic: " + exception); }
 	}

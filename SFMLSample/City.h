@@ -11,10 +11,10 @@ class City : public Object, public Selectable
 	sf::Texture* texture; /// Przechowuje teksture miasta
 	sf::RectangleShape body; /// Przechowuje kszta³ miasta
 	sf::Vector2f position; /// pierwsza wartoœæ to indeks x, a druga to index y
-	sf::Vector2f realPos;
 
 	Player* owner; /// W³aœcicel miasta
 
+	void makeClearVectorOfBuildings(); /// Tworzy pusty wektor budynków 3 na 3
 
 public:
 
@@ -46,6 +46,7 @@ public:
 	BuildingInstance* getBuilding(std::pair<short, short> index);
 	BuildingInstance* getBuilding(short x, short y);
 
+	///Sprawdza, czy konkretny budynek istnieje
 	bool existBuilding(sf::Vector2i index);
 	bool existBuilding(std::pair<short, short> index);
 	bool existBuilding(short x, short y);
@@ -55,12 +56,10 @@ public:
 	Function* onClick() override;
 	Function* onDeselect() override;
 
-	void setOwner(Player* newPlayer);
-	Player* getOwner();
+	void setOwner(Player* newPlayer); ///Ustawia w³aœcicela budynku
+	Player* getOwner(); ///Zwraca w³aœcicela budynku
 
-	void makeClearVectorOfBuildings();
-
-	std::vector <BuildingInstance*> getFriends(std::pair <short, short> pos);
+	std::vector <BuildingInstance*> getFriends(std::pair <short, short> pos); ///Zwraca s¹siaduj¹ce budynki tej samej kategorii i tego samego w³aœciciela (równie¿ na terenie innych miast)
 };
 
 #endif /*CITY_H*/

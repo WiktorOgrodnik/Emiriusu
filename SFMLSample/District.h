@@ -8,17 +8,20 @@ class District
 {
 private:
 
-	std::set <BuildingInstance*> buildings;
+	std::set <BuildingInstance*> buildings; /// Budynki nale¿¹ce do dzielnicy
+
+	Player* owner; /// W³aœciciel dzielnicy
+	void setOwner(Player* newOwner); /// Ustawa w³aœcicela dzielnicy
 
 public:
 
-	District(BuildingInstance* moderator);
+	District(BuildingInstance* moderator); /// Konstruktor - przyjmuje moderatora (budynek tworzacy dzielnicê, puste dzielnice s¹ usuwane)
 
-	void addBuilding(BuildingInstance* newBuilding);
-	void deleteBuilding(BuildingInstance* building);
-	std::set <BuildingInstance*> exportData();
+	void addBuilding(BuildingInstance* newBuilding); /// Dodaje nowy budynek do dzielnicy
+	std::set <BuildingInstance*> exportData(); /// Eksportuje dane w celu usuniêcia dzielnicy
 
-	int getNumberOfBuildings();
+	int getNumberOfBuildings(); /// Zwraca liczbê budynków w dzielnicy
+	Player* getOwner(); /// Zwraca w³aœciciela
 
 };
 

@@ -13,11 +13,13 @@ private:
 
 public:
 
-	Fraction(std::string path); 
+	Fraction(std::string path); ///Konstruktor - przyjmuje nazwê pliku frakcji, z którego pobiera dane
 
+	/// Gettery
 	std::string getFractionName();
 	std::string getFractionStyle();
 
+	/// Settery
 	void setFractionName(std::string newName);
 	void setFractionStyle(std::string newStyle);
 };

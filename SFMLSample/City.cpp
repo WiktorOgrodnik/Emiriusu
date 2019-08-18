@@ -4,14 +4,13 @@
 City::City(sf::Vector2f newPosition, Player* player)
 {
 	owner = player;
-	realPos = newPosition;
 
 	position.x = newPosition.x / tileResolution;
 	position.y = newPosition.y / tileResolution;
 
-	Log::newLog("Tworzê miasto na pozycji: " + std::to_string(newPosition.x / tileResolution) + " " + std::to_string(newPosition.y / tileResolution));
+	Log::newLog("Tworzê miasto na pozycji: " + std::to_string(position.x) + " " + std::to_string(position.y));
 
-	Engine::getInstance().getGlobalMap()->getTile(int(newPosition.x / tileResolution), int(newPosition.y / tileResolution))->addSelectable(this);
+	Engine::getInstance().getGlobalMap()->getTile(int(position.x), int(position.y))->addSelectable(this);
 
 	texture = Engine::getInstance().getData().Textures().getFractionTexture(owner->getFraction(), std::to_string(owner->getPlayerAdvanceLevel()));
 	body.setTexture(texture);
@@ -26,14 +25,13 @@ City::City(sf::Vector2f newPosition, Player* player)
 City::City(sf::Vector2f newPosition, Player* player, std::vector <std::vector <Building*>> setOfBuildings)
 {
 	owner = player;
-	realPos = newPosition;
 
 	position.x = newPosition.x / tileResolution;
 	position.y = newPosition.y / tileResolution;
 
-	Log::newLog("Tworzê miasto na pozycji: " + std::to_string(newPosition.x / tileResolution) + " " + std::to_string(newPosition.y / tileResolution));
+	Log::newLog("Tworzê miasto na pozycji: " + std::to_string(position.x) + " " + std::to_string(position.y));
 
-	Engine::getInstance().getGlobalMap()->getTile(int(newPosition.x / tileResolution), int(newPosition.y / tileResolution))->addSelectable(this);
+	Engine::getInstance().getGlobalMap()->getTile(int(position.x), int(position.y))->addSelectable(this);
 
 	texture = Engine::getInstance().getData().Textures().getFractionTexture(owner->getFraction(), std::to_string(owner->getPlayerAdvanceLevel()));
 	body.setTexture(texture);
@@ -56,14 +54,13 @@ City::City(sf::Vector2f newPosition, Player* player, std::vector <std::vector <B
 City::City(sf::Vector2f newPosition, Player* player, Building* building, sf::Vector2i index)
 {
 	owner = player;
-	realPos = newPosition;
 
 	position.x = newPosition.x / tileResolution;
 	position.y = newPosition.y / tileResolution;
 
-	Log::newLog("Tworzê miasto na pozycji: " + std::to_string(newPosition.x / tileResolution) + " " + std::to_string(newPosition.y / tileResolution));
+	Log::newLog("Tworzê miasto na pozycji: " + std::to_string(position.x) + " " + std::to_string(position.y));
 
-	Engine::getInstance().getGlobalMap()->getTile(int(newPosition.x / tileResolution), int(newPosition.y / tileResolution))->addSelectable(this);
+	Engine::getInstance().getGlobalMap()->getTile(int(position.x), int(position.y))->addSelectable(this);
 
 	texture = Engine::getInstance().getData().Textures().getFractionTexture(owner->getFraction(), std::to_string(owner->getPlayerAdvanceLevel()));
 	body.setTexture(texture);
@@ -80,14 +77,13 @@ City::City(sf::Vector2f newPosition, Player* player, Building* building, sf::Vec
 City::City(sf::Vector2f newPosition, Player* player, Building* building, std::pair<short, short> index)
 {
 	owner = player;
-	realPos = newPosition;
 
 	position.x = newPosition.x / tileResolution;
 	position.y = newPosition.y / tileResolution;
 
-	Log::newLog("Tworzê miasto na pozycji: " + std::to_string(newPosition.x / tileResolution) + " " + std::to_string(newPosition.y / tileResolution));
+	Log::newLog("Tworzê miasto na pozycji: " + std::to_string(position.x) + " " + std::to_string(position.y));
 
-	Engine::getInstance().getGlobalMap()->getTile(int(newPosition.x / tileResolution), int(newPosition.y / tileResolution))->addSelectable(this);
+	Engine::getInstance().getGlobalMap()->getTile(int(position.x), int(position.y))->addSelectable(this);
 
 	texture = Engine::getInstance().getData().Textures().getFractionTexture(player->getFraction(), std::to_string(player->getPlayerAdvanceLevel()));
 	body.setTexture(texture);
@@ -105,14 +101,13 @@ City::City(sf::Vector2f newPosition, Player* player, Building* building, short x
 {
 
 	owner = player;
-	realPos = newPosition;
 
 	position.x = newPosition.x / tileResolution;
 	position.y = newPosition.y / tileResolution;
 
-	Log::newLog("Tworzê miasto na pozycji: " + std::to_string(newPosition.x / tileResolution) + " " + std::to_string(newPosition.y / tileResolution));
+	Log::newLog("Tworzê miasto na pozycji: " + std::to_string(position.x) + " " + std::to_string(position.y));
 
-	Engine::getInstance().getGlobalMap()->getTile(int(newPosition.x / tileResolution), int(newPosition.y / tileResolution))->addSelectable(this);
+	Engine::getInstance().getGlobalMap()->getTile(int(position.x), int(position.y))->addSelectable(this);
 
 	texture = Engine::getInstance().getData().Textures().getFractionTexture(owner->getFraction(), std::to_string(owner->getPlayerAdvanceLevel()));
 	body.setTexture(texture);
@@ -193,14 +188,6 @@ void City::deleteBuilding(short x, short y)
 void City::draw(sf::RenderWindow& window)
 {
 	window.draw(body);
-
-	for (int i = 0; i < 3; i++)
-	{
-		for (int j = 0; j < 3; j++)
-		{
-			buildings[i][j]->draw(window);
-		}
-	}
 }
 
 void City::draw(sf::RenderWindow& window, sf::View& view, float zoom)
