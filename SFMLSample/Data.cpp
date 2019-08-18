@@ -442,15 +442,19 @@ int Data::getNumberOfDistricts()
 
 void Data::garbageCollector()
 {
-	for (auto it = districts.begin(); it != districts.end(); it++)
-	{
-		District* garbage = *it;
+	std::vector <District*> toEreaseItems;
 
-		if (garbage->getNumberOfBuildings() == 0)
-		{
-			districts.erase(it);
-			delete garbage;
-		}
+	for (auto it : districts)
+	{
+		District* garbage = it;
+
+		if (garbage->getNumberOfBuildings() == 0) toEreaseItems.push_back(it);
+	}
+
+	for (auto i : toEreaseItems)
+	{
+		districts.erase(i);
+		delete i;
 	}
 }
 
@@ -468,19 +472,30 @@ void Data::reportDestructionBuildingInstance(BuildingInstance* toDestroy)
 
 void Data::refreshDistricts(Player* refreshPlayer)
 {
+	std::vector <BuildingInstance*> toEreaseItems;
+
 	for (auto dm : districtMap)
 	{
-		if (dm.second->getOwner() == refreshPlayer) districtMap.erase(dm.first);
+		if (dm.second->getOwner() == refreshPlayer) toEreaseItems.push_back(dm.first); 
 	}
+
+	for (auto i : toEreaseItems) districtMap.erase(i);
+
+	toEreaseItems.clear();
+	std::vector <District*> toEreaseItems2;
 
 	for (auto d : districts)
 	{
-		if (d->getOwner() == refreshPlayer)
-		{
-			districts.erase(d);
-			delete d;
-		}
+		if (d->getOwner() == refreshPlayer) toEreaseItems2.push_back(d);
 	}
+
+	for (auto i : toEreaseItems2)
+	{
+		districts.erase(i);
+		delete i;
+	}
+
+	toEreaseItems2.clear();
 
 	for (auto d : citiesByBuildings)
 	{

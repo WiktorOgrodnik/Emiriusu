@@ -59,6 +59,9 @@ private:
 
 	void createNewPlayer(std::string nickName, int AIType); /// tworzy nowego gracza
 
+	///Zablokowanie mo¿liwoœci kopiowania
+	Engine operator= (const Engine& other) {}
+
 public:
 
 	static Engine & getInstance(); /// funkcja przekazuj¹ca referencjê na instancjê silnika

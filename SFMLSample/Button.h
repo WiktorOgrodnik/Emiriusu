@@ -3,6 +3,7 @@
 class Button
 {
 	Function* activationFunction;
+
 public:
 	Button();
 	~Button();

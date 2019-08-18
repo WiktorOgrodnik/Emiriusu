@@ -11,6 +11,10 @@ private:
 	std::string fractionName; ///Nazwa frakcji
 	std::string fractionStyle; ///Styl u¿ywany przez frakcjê
 
+	///Zablokowanie mo¿liwoœci kopiowania
+	Fraction operator= (const Fraction& other) {}
+	Fraction(const Fraction& other) {}
+
 public:
 
 	Fraction(std::string path); ///Konstruktor - przyjmuje nazwê pliku frakcji, z którego pobiera dane

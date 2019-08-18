@@ -19,6 +19,10 @@ class Biome
 	bool canWalkThru; /// Czy mo¿na przejœæ
 	std::string specialStuff; /// Dodatkowe rzeczy
 
+	///Zablokowanie mo¿liwoœci kopiowania
+	Biome operator= (const Biome& other) {}
+	Biome(const Biome& other) {}
+
 public:
 
 	Biome(std::string fileName); /// Konstruktor - przyjmuje nazwê pliku biomu
@@ -50,6 +54,11 @@ class Building
 	std::string texture; /// Nazwa tekstury budynku
 	std::string districtType; /// Kategora budynku (do dzielnic)
 	bool canEdit; /// Czy mo¿na edytowaæ budynek
+
+
+	///Zablokowanie mo¿liwoœci kopiowania
+	Building operator= (const Building& other) {}
+	Building(const Building& other) {}
 
 public:
 
