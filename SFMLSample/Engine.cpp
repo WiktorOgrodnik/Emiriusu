@@ -231,29 +231,28 @@ void Engine::startGame()
 	///testowe obiekty
 	try
 	{
-		currentPlayer->createCity(2, 2);
-		currentPlayer->createCity(3, 2);
+		std::pair <short, short> c1 = std::make_pair(2, 2);
+		std::pair <short, short> c2 = std::make_pair(3, 2);
+		currentPlayer->createCity(c1);
+		currentPlayer->createCity(c2);
 
-		currentPlayer->getCity(2, 2)->setSpecificBuilding(data.getBuilding("Shop"), 1, 1);
-		currentPlayer->getCity(2, 2)->setSpecificBuilding(data.getBuilding("Shop"), 2, 2);
-		currentPlayer->getCity(2, 2)->setSpecificBuilding(data.getBuilding("Shop"), 1, 2);
-		currentPlayer->getCity(2, 2)->setSpecificBuilding(data.getBuilding("Shop"), 0, 2);
+		currentPlayer->createBuilding(c1, std::make_pair(1, 1), std::string("Shop"));
+		currentPlayer->createBuilding(c1, std::make_pair(2, 2), "Shop");
+		currentPlayer->createBuilding(c1, std::make_pair(1, 2), "Shop");
+		currentPlayer->createBuilding(c1, std::make_pair(0, 2), "Shop");
 
-		currentPlayer->getCity(3, 2)->setSpecificBuilding(data.getBuilding("Shop"), 0, 2);
-		currentPlayer->getCity(3, 2)->setSpecificBuilding(data.getBuilding("Shop"), 1, 2);
+		currentPlayer->createBuilding(c2, std::make_pair(0, 2), "Shop");
+		currentPlayer->createBuilding(c2, std::make_pair(1, 2), "Shop");
 
-		currentPlayer->getCity(3, 2)->deleteBuilding(0, 2);
+		currentPlayer->deleteBuilding(c2, std::make_pair(0, 2));
 
-		currentPlayer->getCity(3, 2)->setSpecificBuilding(data.getBuilding("Church"), 0, 2);
+		currentPlayer->createBuilding(c2, std::make_pair(0, 2), "Church");
 
 		currentPlayer->createArmy(sf::Vector2i(map.test1.first, map.test1.second), "Army1");
 		otherPlayer->createArmy(sf::Vector2i(map.test2.first, map.test2.second), "Army1");
 	}
 	catch (std::string exception) { Log::newLog("Napotkano wyj¹tek: " + exception); }
 	
-	//Army* testArmy = new Army(sf::Vector2i(map.test1.first, map.test1.second), map, data.Textures().getTexture("TokenBeatle"));
-	//Army* testArmy2 = new Army(sf::Vector2i(map.test2.first, map.test2.second), map, data.Textures().getTexture("TokenLion"));
-
 	mapOverlay world;
 	world.setTileSet(data.Textures().getTileSet("biomes"));
 	world.setType(0);

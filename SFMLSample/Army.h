@@ -9,15 +9,19 @@ class ArmyPrototype
 private:
 	std::string name;
 	std::string texture;
+	int defaultAmmountOfMovement;
+
 public:
 
 	ArmyPrototype(std::string fileName);
 
 	std::string getName();
 	std::string getTexture();
+	int getAmmountOfMovement();
 
 	void setName(std::string newName);
 	void setTexture(std::string newTexture);
+	void setAmmountOfMovement(int newValue);
 };
 
 class Army : public Object, public Selectable

@@ -13,6 +13,8 @@ ArmyPrototype::ArmyPrototype(std::string fileName)
 		setName(tempText);
 		std::getline(ArmyPrototypeData, tempText);
 		setTexture(tempText);
+		std::getline(ArmyPrototypeData, tempText);
+		setAmmountOfMovement(stringToInt(tempText));
 
 		ArmyPrototypeData.close();
 	}
@@ -28,6 +30,11 @@ void ArmyPrototype::setTexture(std::string newTexture)
 	texture = newTexture;
 }
 
+void ArmyPrototype::setAmmountOfMovement(int newValue)
+{
+	defaultAmmountOfMovement = newValue;
+}
+
 std::string ArmyPrototype::getName()
 {
 	return name;
@@ -38,26 +45,9 @@ std::string ArmyPrototype::getTexture()
 	return texture;
 }
 
-Army::Army(sf::Vector2i newPosition, Map& map, sf::Texture* newTexture)
+int ArmyPrototype::getAmmountOfMovement()
 {
-	Log::newLog("tworzê now¹ armiê na pozycji: " + std::to_string(newPosition.x) + " " + std::to_string(newPosition.y));
-
-	position = newPosition;
-	map.getTile(newPosition.x, newPosition.y)->addSelectable(this);
-
-	texture = newTexture;
-	body.setTexture(newTexture);
-	body.setSize(sf::Vector2f(tileResolution, tileResolution));
-	body.setPosition(float(position.x) * tileResolution, float(position.y) * tileResolution);
-
-	armyType = 0;
-	armyExtra = 0;
-	amountOfMovement = 10;
-	unitCount = 0;
-
-	onSelectFunction = new Dijkstra; /// powinno zostaæ zast¹piona globalnym wskaŸnikiem
-
-	Engine::getInstance().addToRenderObjects(this, 3);
+	return defaultAmmountOfMovement;
 }
 
 Army::Army(sf::Vector2i newPosition, ArmyPrototype* newType, Player* player)
@@ -78,7 +68,7 @@ Army::Army(sf::Vector2i newPosition, ArmyPrototype* newType, Player* player)
 
 	armyType = 0;
 	armyExtra = 0;
-	amountOfMovement = 10;
+	amountOfMovement = type->getAmmountOfMovement();
 	unitCount = 0;
 
 	onSelectFunction = new Dijkstra; /// powinno zostaæ zast¹piona globalnym wskaŸnikiem

@@ -10,8 +10,8 @@ class Settings
 	float zoom; /// przybli¿enie mapy
 
 	///Zablokowanie mo¿liwoœci kopiowania
-	Settings operator= (const Settings& other) {}
-	Settings (const Settings& other) {}
+	Settings operator= (const Settings& other);
+	Settings(const Settings& other);
 
 public:
 
@@ -28,8 +28,8 @@ class World
 	float mountainsPercentage; /// iloœæ gór - u³amek
 
 	///Zablokowanie mo¿liwoœci kopiowania
-	World operator= (const World& other) {}
-	World(const World& other) {}
+	World operator= (const World& other);
+	World(const World& other);
 
 public:
 
@@ -51,8 +51,8 @@ class Textures
 	void loadFractionTextures(); /// ³aduje tekstury dla stylów frakcji do pamiêci
 
 	///Zablokowanie mo¿liwoœci kopiowania
-	Textures operator= (const Textures& other) {}
-	Textures(const Textures& other) {}
+	Textures operator= (const Textures& other);
+	Textures(const Textures& other);
 
 public:
 
@@ -89,8 +89,8 @@ class Data
 	void garbageCollector(); /// Usuwa niepotrzebne dzielnice
 
 	///Zablokowanie mo¿liwoœci kopiowania
-	Data operator= (const Data& other) {}
-	Data(const Data& other) {}
+	Data operator= (const Data& other);
+	Data(const Data& other);
 
 public:
 

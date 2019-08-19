@@ -20,8 +20,8 @@ class Biome
 	std::string specialStuff; /// Dodatkowe rzeczy
 
 	///Zablokowanie mo¿liwoœci kopiowania
-	Biome operator= (const Biome& other) {}
-	Biome(const Biome& other) {}
+	Biome operator= (const Biome& other);
+	Biome(const Biome& other);
 
 public:
 
