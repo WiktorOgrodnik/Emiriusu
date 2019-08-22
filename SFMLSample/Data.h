@@ -44,11 +44,9 @@ class Textures
 {
 	std::map <std::string, sf::Texture*> textures; /// wszystkie tekstury
 	std::map <std::string, sf::Texture*> tileSets; /// wszystkie zestawy tekstur
-	std::map <std::string, std::map <std::string, sf::Texture*>> fractionTextures; /// wszystkie tekstury dla stylów frakcji
 
 	void loadTileSets(); /// ³aduje zestawy tekstur do pamiêci
 	void loadOtherTextures(); /// ³aduje tekstury do pamiêci
-	void loadFractionTextures(); /// ³aduje tekstury dla stylów frakcji do pamiêci
 
 	///Zablokowanie mo¿liwoœci kopiowania
 	Textures operator= (const Textures& other);

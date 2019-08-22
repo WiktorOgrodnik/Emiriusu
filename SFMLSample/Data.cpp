@@ -51,7 +51,6 @@ Textures::Textures()
 {
 	loadTileSets();
 	loadOtherTextures();
-	loadFractionTextures();
 }
 
 void Textures::loadOtherTextures()
@@ -73,52 +72,6 @@ void Textures::loadOtherTextures()
 			tempTexture->loadFromFile(tempText2);
 			textures.insert(std::make_pair(tempText, tempTexture));
 		}
-	}
-}
-
-void Textures::loadFractionTextures()
-{
-	Log::newLog("Rozpoczynam ³adowanie tekstur stylów");
-
-	std::fstream fractionInfoFile;
-	std::string fractionInfoFileName = "textures/style.txt";
-	std::string tempText, tempText2;
-
-	fractionInfoFile.open(fractionInfoFileName, std::ios::in);
-	if (!fractionInfoFile.good()) Log::newLog("Nie uda³o siê otworzyæ pliku: " + fractionInfoFileName);
-	else
-	{
-		while (!fractionInfoFile.eof())
-		{
-			std::getline(fractionInfoFile, tempText);
-			std::getline(fractionInfoFile, tempText2);
-
-			std::fstream styleInfoFile;
-			std::string styleInfoFileName = tempText2;
-			std::string tempText3, tempText4;
-
-			std::map<std::string, sf::Texture*> tempMap;
-
-			styleInfoFile.open(styleInfoFileName, std::ios::in);
-			if (!styleInfoFile.good()) Log::newLog("Nie uda³o siê otworzyæ pliku: " + styleInfoFileName);
-			else
-			{
-				while (!styleInfoFile.eof())
-				{
-					std::getline(styleInfoFile, tempText3);
-					std::getline(styleInfoFile, tempText4);
-
-					sf::Texture* tempTexture = new sf::Texture;
-					tempTexture->loadFromFile(tempText4);
-					tempMap.emplace(std::make_pair(tempText3, tempTexture));
-				}
-
-				styleInfoFile.close();
-			}
-
-			fractionTextures.emplace(std::make_pair(tempText, tempMap));
-		}
-		fractionInfoFile.close();
 	}
 }
 
@@ -226,18 +179,13 @@ sf::Texture* Textures::getTexture(std::string name)
 
 sf::Texture* Textures::getFractionTexture(Fraction* fraction, std::string name)
 {
-	auto it = fractionTextures.find(fraction->getFractionStyle());
-	if (it == fractionTextures.end()) throw "nie znaleziono ¿adnych tekstur dla stylu: " + fraction->getFractionStyle();
-	auto jt = it->second.find(name);
-	if (jt == it->second.end()) throw "nie znaleziono tekstury: " + name;
-	return jt->second;
+	return getTexture(fraction->getFractionStyle() + "_" + name);
 }
 
 void Textures::clearTextures()
 {
 	textures.clear();
 	tileSets.clear();
-	fractionTextures.clear();
 }
 
 Data::Data()

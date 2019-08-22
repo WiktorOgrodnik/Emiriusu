@@ -57,8 +57,8 @@ class Building
 
 
 	///Zablokowanie mo¿liwoœci kopiowania
-	Building operator= (const Building& other) {}
-	Building(const Building& other) {}
+	Building operator= (const Building& other);
+	Building(const Building& other);
 
 public:
 

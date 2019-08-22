@@ -1,8 +1,0 @@
-1
-textures/cities/kuny/1.png
-ChurchTest
-textures/buildings/kuny/church.png
-ShopTest
-textures/buildings/kuny/shop.png
-ArmyTest
-textures/armies/kuny/ArmyTest.png

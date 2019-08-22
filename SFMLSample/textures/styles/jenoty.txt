@@ -1,8 +1,0 @@
-1
-textures/cities/jenoty/1.png
-ChurchTest
-textures/buildings/jenoty/church.png
-ShopTest
-textures/buildings/jenoty/shop.png
-ArmyTest
-textures/armies/jenoty/ArmyTest.png

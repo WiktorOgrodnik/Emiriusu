@@ -14,8 +14,8 @@ private:
 	void setOwner(Player* newOwner); /// Ustawa w³aœcicela dzielnicy
 
 	///Zablokowanie mo¿liwoœci kopiowania
-	District operator= (const District& other) {}
-	District(const District& other) {}
+	District operator= (const District& other);
+	District(const District& other);
 
 public:
 
