@@ -46,12 +46,14 @@
 #include "Player.h"
 
 #include "Selectable.h"
+#include "InterfaceSelectable.h"
 #include "Types.h"
 #include "Unit.h"
 #include "Army.h"
 
 #include "District.h"
 
+#include "Interface.h"
 #include "mapOverlay.h"
 #include "Button.h"
 
