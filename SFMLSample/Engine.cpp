@@ -264,6 +264,9 @@ void Engine::startGame()
 	riverOverlay.setType(1);
 	addToLayer(riverOverlay, 1);
 
+	//Button* guzik;
+	//guzik=new Button(400,400,200,150,,,,);
+
 	renderRenderObjects();
 
 	int x = 0, y = 0;

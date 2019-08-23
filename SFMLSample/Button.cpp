@@ -2,7 +2,7 @@
 #include "Button.h"
 
 
-Button::Button(float x, float y, float width, float height, sf::RectangleShape shape, sf::Font font, sf::Text text, sf::Color idlecolor, sf::Color activecolor)
+Button::Button(float x, float y, float width, float height, sf::RectangleShape shape, sf::Font font, sf::Text text, sf::Color idlecolor, sf::Color hovercolor, sf::Color activecolor)
 {
 	shape.setPosition(sf::Vector2f(x, y));
 	shape.setSize(sf::Vector2f(width, height));
@@ -18,19 +18,25 @@ Button::~Button()
 {
 }
 
-Function* Button::onSelect()
+Function* Button::Active()
 {
 	shape.setFillColor(sf::Color(activecolor));
 	return nullptr;
 }
 
-Function* Button::onClick()
+Function* Button::Hover()
 {
+	shape.setFillColor(sf::Color(hovercolor));
 	return nullptr;
 }
 
-Function* Button::onDeselect()
+Function* Button::Inactive()
 {
 	shape.setFillColor(sf::Color(idlecolor));
 	return nullptr;
+}
+
+void Button::render(sf::RenderTarget* target)
+{
+	target->draw(this->shape);
 }
