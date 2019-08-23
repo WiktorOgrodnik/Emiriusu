@@ -84,6 +84,9 @@
     <ClInclude Include="InterfaceSelectable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="InterfaceLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -156,6 +159,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="InterfaceSelectable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InterfaceLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

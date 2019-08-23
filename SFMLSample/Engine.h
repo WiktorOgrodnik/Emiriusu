@@ -39,9 +39,13 @@ private:
 	sf::RenderWindow& theGameR = theGame; /// referencja na okno g³ówne gry
 	sf::RenderWindow* theGameP = &theGame; /// wskaŸnik na okno g³ówne gry
 	sf::View gameScreen; /// obecnie wyœwietlana czêœæ mapy
+	sf::View gameInterface;
 	sf::View& gameScreenR = gameScreen; /// referencja na obecnie wyœwietlan¹ czêœæ mapy
 	sf::Clock clock; /// zegar gry
+
 	std::vector<Layer*> Layers; /// wszystkie warstwy
+	std::vector<InterfaceLayer*> interfaceLayers;
+
 	sf::Event event; /// event okna
 
 	Map* globalMap; /// Mapa globalna
@@ -51,22 +55,29 @@ private:
 	
 	Data data; /// wiêkszoœæ danych, u¿ywanych przez program
 	Selectable* currentlySelectedObject; /// obecnie wybrana jednostka
+	Interface* currentlySelectedInterface;
+
 
 	float deltaTime; /// czas który up³yn¹³ od poprzedniej klatki
 
 	void refreshWindow(); /// funkcja odœwie¿aj¹ca ekran 
 	void setGlobalMap(Map* newGlobalMap); /// setter mapy globalnej
+	
+	Interface* searchInterfaceLayers(sf::Vector2f mousePos);
 
 	Player* createNewPlayer(std::string nickName, int AIType, std::string fraction); /// tworzy nowego gracza
 
 	///Zablokowanie mo¿liwoœci kopiowania
-	Engine operator= (const Engine& other) {}
+	Engine operator= (const Engine& other);
 
 public:
 
 	static Engine & getInstance(); /// funkcja przekazuj¹ca referencjê na instancjê silnika
 	void* mapPointer; /// wskaŸnik na mapê (funckjonalnoœæ przestarza³a)
+
 	void draw() const; /// rysuje wszytkie warstwy po kolei
+	void drawInterface() const;
+
 	void addLayer(Layer* newLayer); /// dodaje warstwe (przyjmuje wskaŸnik na warstwê)
 	void addLayer(Layer& newLayer); /// dodaje warstwê (przyjmuje referencjê na warstwê)
 	void addLayer(std::vector<Object*> & newLayer); /// dodaje warstwê (przyjmuje referncjê na wektor obiektów)
@@ -75,6 +86,16 @@ public:
 	void addToTopLayer(Object& newObject); /// dodaje obiekt do najwy¿szej warstwy
 	void addToTopLayer(Object* newObject); /// dodaje obiekt do najwy¿szej warstwy
 	void increaseNumberOfLayers(); /// zwiêksza liczbê warstw o jedn¹
+
+	void addInterfaceLayer(InterfaceLayer* newLayer); /// dodaje warstwe interfejsu (przyjmuje wskaŸnik na warstwê)
+	void addInterfaceLayer(InterfaceLayer& newLayer); /// dodaje warstwê interfejsu (przyjmuje referencjê na warstwê)
+	void addInterfaceLayer(std::vector<Interface*>& newLayer); /// dodaje warstwê interfejsu (przyjmuje referncjê na wektor obiektów)
+	void addToInterfaceLayer(Interface& newObject, unsigned index); /// dodaje obiekt do wybranej warstwy interfejsu
+	void addToInterfaceLayer(Interface* newObject, unsigned index); /// dodaje obiekt do wybranej warstwy interfejsu
+	void addToTopInterfaceLayer(Interface& newObject); /// dodaje obiekt do najwy¿szej warstwy interfejsu
+	void addToTopInterfaceLayer(Interface* newObject); /// dodaje obiekt do najwy¿szej warstwy interfejsu
+	void increaseNumberOfInterfaceLayers(); /// zwiêksza liczbê warstw interfejsu o jedn¹
+
 	void startGame(); /// uruchamia silnik
 
 	///GameWindows access functions:
@@ -82,6 +103,7 @@ public:
 	sf::View& getGameScreen(); /// funkcja zwraca referencjê na obecnie wyœwietlan¹ czêœæ mapy
 	
 	unsigned getNumberOfLayers() const; /// zwraca iloœæ warstw
+	unsigned getNumberOfInterfaceLayers() const; /// zwraca iloœæ warstw interfejsu
 
 	Data& getData(); /// zwraca referencjê na klasê data
 	Map* getGlobalMap(); /// zwraca mapê globaln¹

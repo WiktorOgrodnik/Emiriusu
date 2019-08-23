@@ -39,6 +39,7 @@ unsigned Layer::getSize() const
 Engine::Engine()
 {
 	currentlySelectedObject = nullptr;
+	currentlySelectedInterface = nullptr;
 	globalMap = nullptr;
 	deltaTime = 0;
 	mapPointer = nullptr;
@@ -47,9 +48,11 @@ Engine::Engine()
 	renderObjects.resize(100);
 
 	logFile.open("Engine.log", std::ios::out);
-	theGame.create(sf::VideoMode(1280, 720), "Emiriusu", sf::Style::Close | sf::Style::Titlebar | sf::Style::Resize);
+	theGame.create(sf::VideoMode(1280U, 720U), "Emiriusu", sf::Style::Close | sf::Style::Titlebar | sf::Style::Resize);
 	Layers.push_back(new Layer);
-	gameScreen.setSize(1280, 720);
+	interfaceLayers.push_back(new InterfaceLayer);
+	gameScreen.setSize(1280.0f, 720.0f);
+	gameInterface.setSize(1280.0f, 720.0f);
 	theGame.setView(gameScreen);
 	gameScreen.zoom(data.Settings().getZoom());
 }
@@ -70,6 +73,7 @@ void Engine::refreshWindow()
 {
 	sf::Vector2u size = theGame.getSize();
 	gameScreen.setSize(float(size.x), float(size.y));
+	gameInterface.setSize(float(size.x), float(size.y));
 }
 
 void Engine::draw() const
@@ -77,6 +81,14 @@ void Engine::draw() const
 	for (const auto& i : Layers)
 	{
 		i->draw(theGameR, gameScreenR, Engine::getInstance().getData().Settings().getZoom()); /// ???
+	}
+}
+
+void Engine::drawInterface() const
+{
+	for (const auto& i : interfaceLayers)
+	{
+		i->render(theGameP);
 	}
 }
 
@@ -127,6 +139,53 @@ void Engine::increaseNumberOfLayers()
 	Layers.push_back(new Layer);
 }
 
+void Engine::addInterfaceLayer(InterfaceLayer* newLayer)
+{
+	interfaceLayers.push_back(newLayer);
+}
+
+void Engine::addInterfaceLayer(InterfaceLayer& newLayer)
+{
+	interfaceLayers.push_back(&newLayer);
+}
+
+void Engine::addInterfaceLayer(std::vector<Interface*>& newInterfaceLayer)
+{
+	InterfaceLayer* temp = new InterfaceLayer(newInterfaceLayer);
+	interfaceLayers.push_back(temp);
+}
+
+void Engine::addToInterfaceLayer(Interface& newObject, unsigned index)
+{
+	unsigned siz = static_cast<unsigned>(interfaceLayers.size()) - 1;
+	if (index > siz) Log::newLog("Podano nieprawid³owy indeks warstwy!");
+	index = std::min(index, siz);
+	interfaceLayers[index]->addElement(newObject);
+}
+
+void Engine::addToInterfaceLayer(Interface* newObject, unsigned index)
+{
+	unsigned siz = static_cast<unsigned>(Layers.size()) - 1;
+	if (index > siz) Log::newLog("Podano nieprawid³owy indeks warstwy!");
+	index = std::min(index, siz);
+	interfaceLayers[index]->addElement(newObject);
+}
+
+void Engine::addToTopInterfaceLayer(Interface& newObject)
+{
+	if (!interfaceLayers.empty()) interfaceLayers.back()->addElement(newObject);
+}
+
+void Engine::addToTopInterfaceLayer(Interface* newObject)
+{
+	if (!interfaceLayers.empty()) interfaceLayers.back()->addElement(newObject);
+}
+
+void Engine::increaseNumberOfInterfaceLayers()
+{
+	interfaceLayers.push_back(new InterfaceLayer);
+}
+
 sf::RenderWindow & Engine::getGameWindow()
 {
 	return theGame;
@@ -137,6 +196,8 @@ sf::View& Engine::getGameScreen()
 }
 
 unsigned Engine::getNumberOfLayers() const { return size_tToInt(Layers.size()); }
+
+unsigned Engine::getNumberOfInterfaceLayers() const { return static_cast<unsigned>(interfaceLayers.size()); }
 
 Data& Engine::getData()
 {
@@ -190,6 +251,24 @@ void Engine::deleteFormRenderObjects(Object* removalbeObj)
 			}
 		}
 	}
+}
+
+Interface* Engine::searchInterfaceLayers(sf::Vector2f mousePos)
+{
+	size_t t = interfaceLayers.size() - 1;
+
+	do
+	{
+		std::vector <Interface*> temp = interfaceLayers[t]->getUIElements();
+		for (int i = 0; i < temp.size(); i++)
+		{
+			if (temp.at(i)->checkMousePoints(mousePos)) return temp.at(i);
+		}
+
+		if (t != 0) t--;
+	} while (t > 0);
+
+	return nullptr;
 }
 
 Player* Engine::createNewPlayer(std::string nickName, int AIType, std::string fraction)
@@ -269,10 +348,33 @@ void Engine::startGame()
 
 	renderRenderObjects();
 
+	Button* button1;
+	button1 = new Button(400.0f, 400.0f, 200.0f, 150.0f, "napis");
+
 	int x = 0, y = 0;
 
 	while (theGame.isOpen())
 	{
+		sf::Vector2f mousePos = theGame.mapPixelToCoords(sf::Mouse::getPosition(theGame));
+
+		if (currentlySelectedInterface == nullptr)
+		{
+			currentlySelectedInterface = searchInterfaceLayers(mousePos);
+			if (currentlySelectedInterface != nullptr)
+			{
+				currentlySelectedInterface->Hover();
+			}
+		}
+		else
+		{
+			Interface* temp = searchInterfaceLayers(mousePos);
+			if (temp == nullptr || temp != currentlySelectedInterface)
+			{
+				currentlySelectedInterface->Inactive();
+				currentlySelectedInterface = temp;
+			}
+		}
+
 		deltaTime = clock.restart().asSeconds();
 		//std::cerr << 1 / deltaTime << "\n";
 		while (theGame.pollEvent(event))
@@ -320,6 +422,13 @@ void Engine::startGame()
 			gameScreen.move(1000.0f * deltaTime * data.Settings().getZoom(), 0);
 		}
 		//test sterowania
+		if (event.type == sf::Event::MouseButtonPressed)
+		{
+			if (currentlySelectedInterface != nullptr)
+			{
+				currentlySelectedInterface->Active();
+			}
+		}
 		if (event.type == sf::Event::MouseButtonReleased)
 		{
 			sf::Vector2f position = theGame.mapPixelToCoords(sf::Mouse::getPosition(theGame));
@@ -340,7 +449,11 @@ void Engine::startGame()
 			}
 			else if (event.mouseButton.button == sf::Mouse::Left)
 			{
-				if (currentlySelectedObject != map.getTile(x, y)->getSelectable())
+				if (currentlySelectedInterface != nullptr)
+				{
+					currentlySelectedInterface->Hover();
+				}
+				else if (currentlySelectedObject != map.getTile(x, y)->getSelectable())
 				{
 					if (currentlySelectedObject != nullptr)
 						currentlySelectedObject->onDeselect();
@@ -400,6 +513,8 @@ void Engine::startGame()
 		theGame.clear();
 		theGame.setView(getGameScreen());
 		draw();
+		theGame.setView(gameInterface);
+		drawInterface();
 		theGame.display();
 	}
 }

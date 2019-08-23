@@ -1,6 +1,6 @@
 #include "pch.h"
 
-ArmyPrototype::ArmyPrototype(std::string fileName)
+ArmyPrototype::ArmyPrototype(std::string fileName) : defaultAmmountOfMovement(0.0f)
 {
 	std::fstream ArmyPrototypeData;
 	std::string tempText;
@@ -14,7 +14,7 @@ ArmyPrototype::ArmyPrototype(std::string fileName)
 		std::getline(ArmyPrototypeData, tempText);
 		setTexture(tempText);
 		std::getline(ArmyPrototypeData, tempText);
-		setAmmountOfMovement(stringToInt(tempText));
+		setAmmountOfMovement(stringToFloat(tempText));
 
 		ArmyPrototypeData.close();
 	}
@@ -45,7 +45,7 @@ std::string ArmyPrototype::getTexture()
 	return texture;
 }
 
-int ArmyPrototype::getAmmountOfMovement()
+float ArmyPrototype::getAmmountOfMovement()
 {
 	return defaultAmmountOfMovement;
 }

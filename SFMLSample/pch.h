@@ -64,6 +64,7 @@
 #include "Tile.h"
 #include "Map.h"
 
+#include "InterfaceLayer.h"
 #include "Engine.h"
 
 // TODO: add headers that you want to pre-compile here

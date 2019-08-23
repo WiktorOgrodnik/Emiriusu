@@ -9,7 +9,7 @@ class ArmyPrototype
 private:
 	std::string name;
 	std::string texture;
-	int defaultAmmountOfMovement;
+	float defaultAmmountOfMovement;
 
 public:
 
@@ -17,7 +17,7 @@ public:
 
 	std::string getName();
 	std::string getTexture();
-	int getAmmountOfMovement();
+	float getAmmountOfMovement();
 
 	void setName(std::string newName);
 	void setTexture(std::string newTexture);
