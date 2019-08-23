@@ -132,6 +132,7 @@ Army::Army(short x, short y, ArmyPrototype* newType, Player* player)
 
 Army::~Army()
 {
+	Engine::getInstance().deleteFormRenderObjects(this);
 }
 
 void Army::draw(sf::RenderWindow & window)

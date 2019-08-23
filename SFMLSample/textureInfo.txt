@@ -2,5 +2,3 @@ biomes
 textures/biomes.txt
 rivers
 textures/rivers.txt
-tokens
-textures/tokens.txt

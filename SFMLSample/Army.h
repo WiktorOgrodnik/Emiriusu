@@ -43,8 +43,6 @@ private:
 
 public:
 
-	Army(sf::Vector2i newPosition, Map& map, sf::Texture* newTexture);
-
 	Army(sf::Vector2i newPosition, ArmyPrototype* newType, Player* player);
 	Army(std::pair<short, short> newPosition, ArmyPrototype* newType, Player* player);
 	Army(short x, short y, ArmyPrototype* newType, Player* player);
