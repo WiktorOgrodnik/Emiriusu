@@ -176,7 +176,6 @@
     <ClInclude Include="Function.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="InterfaceLayer.h" />
-    <ClInclude Include="InterfaceSelectable.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="mapOverlay.h" />
     <ClInclude Include="Player.h" />
@@ -202,7 +201,6 @@
     <ClCompile Include="Function.cpp" />
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="InterfaceLayer.cpp" />
-    <ClCompile Include="InterfaceSelectable.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="mapOverlay.cpp" />
     <ClCompile Include="Player.cpp" />

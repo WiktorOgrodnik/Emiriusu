@@ -46,7 +46,6 @@ Button::~Button()
 
 Function* Button::Active()
 {
-	shape.setFillColor(sf::Color(activecolor));
 	return nullptr;
 }
 
@@ -59,6 +58,12 @@ Function* Button::Hover()
 Function* Button::Inactive()
 {
 	shape.setFillColor(sf::Color(idlecolor));
+	return nullptr;
+}
+
+Function* Button::Click()
+{
+	shape.setFillColor(sf::Color(activecolor));
 	return nullptr;
 }
 

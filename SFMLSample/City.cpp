@@ -12,7 +12,7 @@ City::City(sf::Vector2f newPosition, Player* player)
 
 	Engine::getInstance().getGlobalMap()->getTile(int(position.x), int(position.y))->addSelectable(this);
 
-	texture = Engine::getInstance().getData().Textures().getFractionTexture(owner->getFraction(), std::to_string(owner->getPlayerAdvanceLevel()));
+	texture = Engine::getInstance().getData().Textures().getFractionTexture(owner->getFraction(), "city" + std::to_string(owner->getPlayerAdvanceLevel()));
 	body.setTexture(texture);
 	body.setSize(sf::Vector2f(tileResolution, tileResolution));
 	body.setPosition(float(position.x) * tileResolution, float(position.y) * tileResolution);
@@ -33,7 +33,7 @@ City::City(sf::Vector2f newPosition, Player* player, std::vector <std::vector <B
 
 	Engine::getInstance().getGlobalMap()->getTile(int(position.x), int(position.y))->addSelectable(this);
 
-	texture = Engine::getInstance().getData().Textures().getFractionTexture(owner->getFraction(), std::to_string(owner->getPlayerAdvanceLevel()));
+	texture = Engine::getInstance().getData().Textures().getFractionTexture(owner->getFraction(), "city" + std::to_string(owner->getPlayerAdvanceLevel()));
 	body.setTexture(texture);
 	body.setSize(sf::Vector2f(tileResolution, tileResolution));
 	body.setPosition(float(position.x) * tileResolution, float(position.y) * tileResolution);
@@ -62,7 +62,7 @@ City::City(sf::Vector2f newPosition, Player* player, Building* building, sf::Vec
 
 	Engine::getInstance().getGlobalMap()->getTile(int(position.x), int(position.y))->addSelectable(this);
 
-	texture = Engine::getInstance().getData().Textures().getFractionTexture(owner->getFraction(), std::to_string(owner->getPlayerAdvanceLevel()));
+	texture = Engine::getInstance().getData().Textures().getFractionTexture(owner->getFraction(), "city" + std::to_string(owner->getPlayerAdvanceLevel()));
 	body.setTexture(texture);
 	body.setSize(sf::Vector2f(tileResolution, tileResolution));
 	body.setPosition(float(position.x) * tileResolution, float(position.y) * tileResolution);
@@ -85,7 +85,7 @@ City::City(sf::Vector2f newPosition, Player* player, Building* building, std::pa
 
 	Engine::getInstance().getGlobalMap()->getTile(int(position.x), int(position.y))->addSelectable(this);
 
-	texture = Engine::getInstance().getData().Textures().getFractionTexture(player->getFraction(), std::to_string(player->getPlayerAdvanceLevel()));
+	texture = Engine::getInstance().getData().Textures().getFractionTexture(player->getFraction(), "city" + std::to_string(player->getPlayerAdvanceLevel()));
 	body.setTexture(texture);
 	body.setSize(sf::Vector2f(tileResolution, tileResolution));
 	body.setPosition(float(position.x) * tileResolution, float(position.y) * tileResolution);
@@ -109,7 +109,7 @@ City::City(sf::Vector2f newPosition, Player* player, Building* building, short x
 
 	Engine::getInstance().getGlobalMap()->getTile(int(position.x), int(position.y))->addSelectable(this);
 
-	texture = Engine::getInstance().getData().Textures().getFractionTexture(owner->getFraction(), std::to_string(owner->getPlayerAdvanceLevel()));
+	texture = Engine::getInstance().getData().Textures().getFractionTexture(owner->getFraction(), "city" + std::to_string(owner->getPlayerAdvanceLevel()));
 	body.setTexture(texture);
 	body.setSize(sf::Vector2f(tileResolution, tileResolution));
 	body.setPosition(float(position.x) * tileResolution, float(position.y) * tileResolution);

@@ -426,7 +426,7 @@ void Engine::startGame()
 		{
 			if (currentlySelectedInterface != nullptr)
 			{
-				currentlySelectedInterface->Active();
+				currentlySelectedInterface->Click();
 			}
 		}
 		if (event.type == sf::Event::MouseButtonReleased)
@@ -451,6 +451,7 @@ void Engine::startGame()
 			{
 				if (currentlySelectedInterface != nullptr)
 				{
+					currentlySelectedInterface->Active();
 					currentlySelectedInterface->Hover();
 				}
 				else if (currentlySelectedObject != map.getTile(x, y)->getSelectable())

@@ -20,10 +20,14 @@ public:
 
 	~Button();
 	void setActivationFunction(Function* newActivationFunction) { activationFunction = newActivationFunction; }
+
 	Function* getActivationFunction() { return activationFunction; }
+
 	Function* Active() override;
 	Function* Hover() override;
 	Function* Inactive() override;
+	Function* Click() override;
+
 	void render(sf::RenderTarget* target) override;
 	void render(sf::RenderWindow* window) override;
 

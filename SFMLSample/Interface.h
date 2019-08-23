@@ -15,6 +15,7 @@ public:
 	virtual Function* Inactive() = 0;
 	virtual Function* Hover() = 0;
 	virtual Function* Active() = 0;
+	virtual Function* Click() = 0;
 
 	Interface(); /// konstruktor
 	virtual ~Interface() {} /// destruktor
