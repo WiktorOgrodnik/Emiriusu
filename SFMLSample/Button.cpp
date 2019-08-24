@@ -7,11 +7,6 @@ Button::Button(float x, float y, float width, float height, sf::RectangleShape s
 	shape.setPosition(sf::Vector2f(x, y));
 	shape.setSize(sf::Vector2f(width, height));
 	shape.setFillColor(sf::Color(idlecolor));
-	//to do tekstu w guzikach
-	//text.setCharacterSize(14);
-	//text.setString(text);
-	//text.setPosition();
-	//text.setFillColor(sf::Color::White);
 }
 
 Button::Button(float x, float y, float width, float height, std::string text_) : X(x), Y(y), WIDTH(width), HEIGHT(height)
@@ -24,7 +19,7 @@ Button::Button(float x, float y, float width, float height, std::string text_) :
 	textContainer.setString(text_);
 	textContainer.setFont(font);
 	textContainer.setCharacterSize(14);
-	textContainer.setPosition(x + width/2, y + height/2);
+	textContainer.setPosition(x + (width/2)-textContainer.getGlobalBounds().width/2, y + (height/2)- textContainer.getGlobalBounds().height/2);
 	textContainer.setFillColor(sf::Color::White);
 
 	sf::FloatRect textBounds = textContainer.getLocalBounds();
