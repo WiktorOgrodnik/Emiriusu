@@ -286,7 +286,7 @@ Function* Army::onClick()
 
 Function* Army::onDeselect()
 {
-	movesData.clear();
+	Clear(movesData);
 	return nullptr;
 }
 
@@ -315,4 +315,10 @@ ArmyPrototype* Army::getType()
 {
 	return type;
 }
+
+void Army::Clear(std::vector<std::vector<float>>& arr)
+{
+	arr.clear();
+}
+
 

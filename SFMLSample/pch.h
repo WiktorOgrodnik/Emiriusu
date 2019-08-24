@@ -46,7 +46,6 @@
 #include "Player.h"
 
 #include "Selectable.h"
-#include "InterfaceSelectable.h"
 #include "Types.h"
 #include "Unit.h"
 #include "Army.h"

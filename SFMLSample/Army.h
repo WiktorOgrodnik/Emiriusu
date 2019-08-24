@@ -41,6 +41,8 @@ private:
 	char armyType;
 	char armyExtra;
 
+	void Clear(std::vector<std::vector<float>>& arr);
+
 public:
 
 	Army(sf::Vector2i newPosition, ArmyPrototype* newType, Player* player);
