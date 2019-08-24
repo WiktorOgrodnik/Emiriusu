@@ -424,9 +424,12 @@ void Engine::startGame()
 		//test sterowania
 		if (event.type == sf::Event::MouseButtonPressed)
 		{
-			if (currentlySelectedInterface != nullptr)
+			if (event.mouseButton.button == sf::Mouse::Left)
 			{
-				currentlySelectedInterface->Click();
+				if (currentlySelectedInterface != nullptr)
+				{
+					currentlySelectedInterface->Click();
+				}
 			}
 		}
 		if (event.type == sf::Event::MouseButtonReleased)
