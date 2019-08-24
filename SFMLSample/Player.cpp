@@ -12,7 +12,8 @@ void Player::setNickName(std::string _nickName)
 {
 	if (!Engine::getInstance().getData().checkIfPlayer(_nickName))
 	{
-		Log::newLog("Zmienono nick gracza " + nickName + " na " + _nickName);
+		if (nickName != "") Log::newLog("Zmienono nick gracza " + nickName + " na " + _nickName);
+		else Log::newLog("Utworzono gracza o nicku " + _nickName);
 		nickName = _nickName;
 	}
 	else

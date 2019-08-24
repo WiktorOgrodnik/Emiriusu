@@ -28,9 +28,10 @@ public:
 
 	unsigned short getSize() const;
 
-	virtual Function* Active() override;
-	virtual Function* Hover() override;
-	virtual Function* Inactive() override;
+	Function* Active() override;
+	Function* Hover() override;
+	Function* Inactive() override;
+	Function* Click() override;
 
 	bool checkMousePoints(sf::Vector2f pos) override { return false; }
 };

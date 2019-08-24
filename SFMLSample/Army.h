@@ -41,9 +41,9 @@ private:
 	char armyType;
 	char armyExtra;
 
-public:
+	void Clear(std::vector<std::vector<float>>& arr);
 
-	Army(sf::Vector2i newPosition, Map& map, sf::Texture* newTexture);
+public:
 
 	Army(sf::Vector2i newPosition, ArmyPrototype* newType, Player* player);
 	Army(std::pair<short, short> newPosition, ArmyPrototype* newType, Player* player);

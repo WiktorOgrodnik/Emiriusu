@@ -35,6 +35,10 @@ private:
 	Engine(); /// konstruktor
 	Engine(const Engine&); /// konstruktor
 	~Engine(); /// destruktor
+
+	Data data; /// wiêkszoœæ danych, u¿ywanych przez program
+	Map* globalMap; /// Mapa globalna
+
 	sf::RenderWindow theGame; /// okno g³owne gry
 	sf::RenderWindow& theGameR = theGame; /// referencja na okno g³ówne gry
 	sf::RenderWindow* theGameP = &theGame; /// wskaŸnik na okno g³ówne gry
@@ -42,29 +46,22 @@ private:
 	sf::View gameInterface;
 	sf::View& gameScreenR = gameScreen; /// referencja na obecnie wyœwietlan¹ czêœæ mapy
 	sf::Clock clock; /// zegar gry
-
-	std::vector<Layer*> Layers; /// wszystkie warstwy
-	std::vector<InterfaceLayer*> interfaceLayers;
-
 	sf::Event event; /// event okna
-
-	Map* globalMap; /// Mapa globalna
-
-	std::vector <std::vector <Object*>> renderObjects; /// strumieñ ma³ych obiektów do renderowania
-	void renderRenderObjects(); /// funkcja renderuje strumieñ ma³e obiekty
-	
-	Data data; /// wiêkszoœæ danych, u¿ywanych przez program
-	Selectable* currentlySelectedObject; /// obecnie wybrana jednostka
-	Interface* currentlySelectedInterface;
-
 
 	float deltaTime; /// czas który up³yn¹³ od poprzedniej klatki
 
+	Selectable* currentlySelectedObject; /// obecnie wybrana jednostka
+	Interface* currentlySelectedInterface; /// obecnie wybrany element interfejsu
+
+	std::vector<Layer*> Layers; /// wszystkie warstwy
+	std::vector<InterfaceLayer*> interfaceLayers; /// wszytkie warstwy interfejsu
+	std::vector <std::vector <Object*>> renderObjects; /// strumieñ ma³ych obiektów do renderowania
+
+	void renderRenderObjects(); /// funkcja renderuje strumieñ ma³e obiekty
 	void refreshWindow(); /// funkcja odœwie¿aj¹ca ekran 
 	void setGlobalMap(Map* newGlobalMap); /// setter mapy globalnej
 	
-	Interface* searchInterfaceLayers(sf::Vector2f mousePos);
-
+	Interface* searchInterfaceLayers(sf::Vector2f mousePos); /// Znajduje element interfejsu na który wskazuje myszka
 	Player* createNewPlayer(std::string nickName, int AIType, std::string fraction); /// tworzy nowego gracza
 
 	///Zablokowanie mo¿liwoœci kopiowania
@@ -76,7 +73,7 @@ public:
 	void* mapPointer; /// wskaŸnik na mapê (funckjonalnoœæ przestarza³a)
 
 	void draw() const; /// rysuje wszytkie warstwy po kolei
-	void drawInterface() const;
+	void drawInterface() const; /// rysuje wszystkie warstwy interfejsu
 
 	void addLayer(Layer* newLayer); /// dodaje warstwe (przyjmuje wskaŸnik na warstwê)
 	void addLayer(Layer& newLayer); /// dodaje warstwê (przyjmuje referencjê na warstwê)

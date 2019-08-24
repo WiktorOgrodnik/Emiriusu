@@ -56,6 +56,11 @@ Function* InterfaceLayer::Inactive()
 	return nullptr;
 }
 
+Function* InterfaceLayer::Click()
+{
+	return nullptr;
+}
+
 std::vector <Interface*> InterfaceLayer::getUIElements()
 {
 	return UIElements;
