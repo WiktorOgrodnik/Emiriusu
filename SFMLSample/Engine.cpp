@@ -434,7 +434,8 @@ void Engine::startGame()
 		}
 		if (event.type == sf::Event::MouseButtonReleased)
 		{
-			sf::Vector2f position = theGame.mapPixelToCoords(sf::Mouse::getPosition(theGame));
+			mousePosition = theGame.mapPixelToCoords(sf::Mouse::getPosition(theGame)); /// Tymczasowo
+			sf::Vector2f position = mousePosition;
 			x = int(position.x) / tileResolution;
 			y = int(position.y) / tileResolution;
 			if (event.mouseButton.button == sf::Mouse::Right)

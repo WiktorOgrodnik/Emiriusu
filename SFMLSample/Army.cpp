@@ -268,6 +268,7 @@ void Army::setArmyType(char newArmyType)
 
 Function* Army::onSelect()
 {
+	isSelected = true;
 	std::vector<void*> data;
 	data.push_back((void*) &position);
 	data.push_back((void*) &amountOfMovement);
@@ -280,13 +281,25 @@ Function* Army::onSelect()
 Function* Army::onClick()
 {
 	/// do stuff
+
+	sf::Vector2f mousePosition = Engine::getInstance().getMousePosition();
+	int x = mousePosition.x / tileResolution;
+	int y = mousePosition.y / tileResolution;
+	int relativeX = x - position.x;
+	int relativeY = y - position.y;
+	int N = 2 * amountOfMovement + 1;
+	if (abs(relativeX) + abs(relativeY) > amountOfMovement) return nullptr;
+	else if (movesData[(relativeX + N) % N][(relativeY + N) % N] <= amountOfMovement)
+		this->setPosition(sf::Vector2i(x, y));
+	else return nullptr;
 	this->onSelect();
 	return nullptr;
 }
 
 Function* Army::onDeselect()
 {
-	Clear(movesData);
+	isSelected = false;
+	movesData.clear();
 	return nullptr;
 }
 

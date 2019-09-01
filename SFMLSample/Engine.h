@@ -63,6 +63,7 @@ private:
 	
 	Interface* searchInterfaceLayers(sf::Vector2f mousePos); /// Znajduje element interfejsu na który wskazuje myszka
 	Player* createNewPlayer(std::string nickName, int AIType, std::string fraction); /// tworzy nowego gracza
+	sf::Vector2f mousePosition;
 
 	///Zablokowanie mo¿liwoœci kopiowania
 	Engine operator= (const Engine& other);
@@ -107,6 +108,8 @@ public:
 
 	void addToRenderObjects(Object* selToObj, unsigned selectLayer); /// dodaj obiekt klasy Object do strumienia ma³ych obiektów do renderowania
 	void deleteFormRenderObjects(Object* removableObj); /// usuwa dany obiekt klasy Object ze strumienia ma³ych obiektów do renderowania
+
+	sf::Vector2f getMousePosition() { return mousePosition; }
 };
 
 #endif /* ENGINE_H */
