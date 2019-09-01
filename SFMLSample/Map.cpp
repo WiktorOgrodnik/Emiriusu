@@ -91,7 +91,6 @@ void Map::newMap()
 					//else if (r == 17) tempRiverType |= (1 << 7);
 
 					Tiles[i][j]->setRiver(tempRiverType);
-					//std::cerr << "Kafelek: " << i << ", " << j << " ma river type: " << tempRiverType << "\n";
 				}
 			}
 			else
@@ -143,7 +142,7 @@ void Map::newMap()
 		}
 	}
 
-	QuadTree quadTree(mapSize, mapInfo, c + 1);
+	//QuadTree quadTree(mapSize, mapInfo, c + 1);
 }
 
 char Map::getMapOverlayData(unsigned x, unsigned y, char level, char type)
@@ -158,23 +157,6 @@ char Map::getMapOverlayData(unsigned x, unsigned y, char level, char type)
 		if (level) return Tiles[x][y]->getRiverExtra();
 		return Tiles[x][y]->getRiver();
 	}
-	else if (type == 2)
-	{
-		if (Tiles[x][y]->getArmy() == nullptr) return 0;
-		else
-		{
-			//if (level) return Tiles[x][y]->getArmy()->getArmyExtra();
-			//return Tiles[x][y]->getArmy()->getArmyType();
-		}
-	}
-	else if (type == 3)
-	{
-		if (Tiles[x][y]->getCity() != nullptr)
-		{
-			if (level) return 0; // tymczasowo
-			return 0; // tymczasowo
-		}
-	}
 }
 
 void Map::setSize(int newSize)
@@ -185,4 +167,38 @@ void Map::setSize(int newSize)
 int Map::getSize()
 {
 	return mapSize;
+}
+
+Tile* Map::getTile(unsigned x, unsigned y)
+{
+	if (x >= mapSize || y >= mapSize)
+	{
+		//Log::newLog("Map::getTile: x (" + std::to_string(x) + ") i y (" + std::to_string(y) + ") wykroczyły poza dostęp. Błąd krytyczny.");
+		throw "Map::getTile: x (" + std::to_string(x) + ") i y (" + std::to_string(y) + ") wykroczyły poza dostęp. Błąd krytyczny.";
+	}
+
+	return Tiles[x][y];
+}
+
+Tile* Map::getTile(std::pair<short, short> index)
+{
+	if (index.first >= mapSize || index.second >= mapSize)
+	{
+		//Log::newLog("Map::getTile: x (" + std::to_string(position.x) + ") i y (" + std::to_string(position.y) + ") wykroczyły poza dostęp. Błąd krytyczny.");
+		throw "Map::getTile: x (" + std::to_string(index.first) + ") i y (" + std::to_string(index.second) + ") wykroczyły poza dostęp. Błąd krytyczny.";
+	}
+
+	return Tiles[index.first][index.second];
+}
+
+
+Tile* Map::getTile(sf::Vector2i position) 
+{ 
+	if (position.x >= mapSize || position.y >= mapSize)
+	{
+		//Log::newLog("Map::getTile: x (" + std::to_string(position.x) + ") i y (" + std::to_string(position.y) + ") wykroczyły poza dostęp. Błąd krytyczny.");
+		throw "Map::getTile: x (" + std::to_string(position.x) + ") i y (" + std::to_string(position.y) + ") wykroczyły poza dostęp. Błąd krytyczny.";
+	}
+
+	return Tiles[position.x][position.y]; 
 }

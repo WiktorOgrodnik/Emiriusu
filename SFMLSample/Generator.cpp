@@ -43,7 +43,7 @@ bool PerlinNoise::isThereEnoughLand(const int proc, std::vector <std::vector <in
 			if (map[i][j] != 0) counter++; // jesli cos nie jest woda to zwieksz counter
 		}
 	}
-	std::cerr << "Wygenerowalem mape z: " << counter << " polami" << " szukam: min. " << required << std::endl;
+	//std::cerr << "Wygenerowalem mape z: " << counter << " polami" << " szukam: min. " << required << std::endl;
 	if (counter >= required) return true;
 	return false;
 }
@@ -88,7 +88,7 @@ void CelluralAutomata::makeBiomesMap(std::vector <std::vector <int>> & mapInfo, 
 	while (!filled_up(map))
 	{
 		for (int i = 0; i < 200; i++) expand(mapInfo, map, a, b);
-		std::cerr << "200 expandow no niezle" << std::endl;
+		//std::cerr << "200 expandow no niezle" << std::endl;
 	}
 }
 
@@ -162,7 +162,7 @@ void CelluralAutomata::makeRiversMap(std::vector <std::vector <int>> & mapInfo, 
 	for (int i = 1; i <= numberOfContinents; i++)
 	{
 		avarage[i] = computeAverageHeight(mapInfo, protoMap, continents, i);
-		std::cout << "AVARAGE: " << i << ": " << avarage[i] << std::endl;
+		//std::cout << "AVARAGE: " << i << ": " << avarage[i] << std::endl;
 	}
 	//float avarage = computeAverageHeight(mapInfo, protoMap, continents, );
 	int UberCounter = 0; // wszystkie pola rzek w sumie
@@ -173,13 +173,13 @@ void CelluralAutomata::makeRiversMap(std::vector <std::vector <int>> & mapInfo, 
 		if (z == 4)z = 0;
 		int x = rng::uid(rng::mt);
 		int y = rng::uid2(rng::mt);
-		std::cout << "WYLOSOWALEM SB: " << protoMap[x][y] << std::endl;
+		//std::cout << "WYLOSOWALEM SB: " << protoMap[x][y] << std::endl;
 		while (protoMap[x][y] < avarage[continents[x][y]] - 20.0f || mapInfo[x][y] == 0 || x < 5 || y < 5 || x > map.size() - 5 || y > map[0].size() - 5)//&& x > 0 && y > 0 && x < map.size()-1 && y < map[0].size()-1 && !map[x+1][y] && !map[x][y+1] && !map[x-1][y] && !map[x][y-1]
 		{
 
 			x = rng::uid(rng::mt);
 			y = rng::uid2(rng::mt);
-			std::cout << "WYLOSOWALEM SB: " << protoMap[x][y] << std::endl;
+			//std::cout << "WYLOSOWALEM SB: " << protoMap[x][y] << std::endl;
 		}
 		if (x > 0 && y > 0 && map[x - 1ll][y - 1ll]) continue;
 		if (x > 0 && y < map[0].size() - 1 && map[x - 1ll][y + 1ll]) continue;
@@ -253,12 +253,12 @@ void CelluralAutomata::makeRiversMap(std::vector <std::vector <int>> & mapInfo, 
 		}
 		if (counter < 12)
 		{
-			std::cout << "Znalazlem rzeke krotsza niz 12. ZOSTALA ZDEZINTEGROWANA" << std::endl;
+			//std::cout << "Znalazlem rzeke krotsza niz 12. ZOSTALA ZDEZINTEGROWANA" << std::endl;
 		}
 		else
 		{
 			UberCounter += counter;
-			std::cout << "Dobra rzeka jak chleb" << std::endl;
+			//std::cout << "Dobra rzeka jak chleb" << std::endl;
 			while (!S.empty())
 			{
 				map[S.top().first][S.top().second] = true;
@@ -638,7 +638,7 @@ void CelluralAutomata::sow_seeds(std::vector <std::vector <int>> & mapInfo, std:
 				map[x][y] = i;
 				B[i]--;
 			}
-			std::cerr << "Sieje ziarno biomu " << i << " na: " << x << " " << y << std::endl;
+			//std::cerr << "Sieje ziarno biomu " << i << " na: " << x << " " << y << std::endl;
 			if (B[i] == 0)
 			{
 				i++;
@@ -734,6 +734,7 @@ float PerlinNoise::noise_perlin(float p, std::vector<std::vector<float> > &V)
 
 	return (1.0f - fade_t)*g0*(p - p0) + fade_t * g1*(p - p1);
 }
+
 void Random::generateStartingPositions(int numberOfPlayers, std::vector <std::vector <int>> & mapInfo, std::vector <std::vector <bool>> & Mountains, std::vector <std::vector <bool>> & Rivers, std::vector <std::vector <int>> & Players)
 {
 	std::vector< std::pair<int, int> > list;
@@ -763,7 +764,7 @@ void Random::generateStartingPositions(int numberOfPlayers, std::vector <std::ve
 
 }
 
-bool QTN::quadLeaf()
+/* bool QTN::quadLeaf()
 {
 	if (first->getValue() == second->getValue() && first->getValue() == third->getValue() && first->getValue() == fourth->getValue() && first->getValue() != -1)
 	{
@@ -816,6 +817,6 @@ QTN::~QTN()
 QuadTree::QuadTree(const int & n, const std::vector <std::vector <int>> & map, int lvl)
 {
 	root = new QTN(map, std::make_pair(0, 0), std::make_pair(n - 1, n - 1), lvl);
-}
+}*/
 
 

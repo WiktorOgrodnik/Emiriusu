@@ -52,7 +52,7 @@ class Random
 	static void generateStartingPositions(int numberOfPlayers, std::vector <std::vector <int>> & mapInfo, std::vector <std::vector <bool>> & Mountains, std::vector <std::vector <bool>> & Rivers, std::vector <std::vector <int>> & Players);
 };
 
-class QTN
+/* class QTN
 {
 	int lvl;
 	int v;
@@ -77,7 +77,7 @@ class QuadTree
 public:
 
 	QuadTree(const int & n, const std::vector <std::vector <int>> & map, int lvl);
-};
+}; */
 
 #endif /* GENERATOR_H */
 

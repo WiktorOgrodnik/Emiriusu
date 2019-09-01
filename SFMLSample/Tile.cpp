@@ -27,7 +27,7 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition)
 	riverType = 0;
 	mineral = nullptr;
 	biomeAddOn = nullptr;
-	army = nullptr;
+	selectable = -1;
 	riverExtra = 0;
 	city = nullptr;
 }
@@ -42,7 +42,7 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, char riverType_)
 	riverType = riverType_;
 	mineral = nullptr;
 	biomeAddOn = nullptr;
-	army = nullptr;
+	selectable = -1;
 	riverExtra = 0;
 	city = nullptr;
 }
@@ -57,39 +57,9 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral)
 	mineral = newMineral;
 	riverType = 0;
 	biomeAddOn = nullptr;
-	army = nullptr;
+	selectable = -1;
 	riverExtra = 0;
 	city = nullptr;
-}
-
-Tile::Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Building*>> newBuildings)
-{
-	rand_ = 0;
-	setRand();
-
-	type = newType;
-	position = newPosition;
-	mineral = nullptr;
-	riverType = 0;
-	biomeAddOn = nullptr;
-	army = nullptr;
-	riverExtra = 0;
-	city = new City(newBuildings);
-}
-
-Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::vector <std::vector<Building*>> newBuildings)
-{
-	rand_ = 0;
-	setRand();
-
-	type = newType;
-	position = newPosition;
-	mineral = newMineral;
-	riverType = 0;
-	biomeAddOn = nullptr;
-	army = nullptr;
-	riverExtra = 0;
-	city = new City(newBuildings);
 }
 
 Tile::Tile(Biome* newType, sf::Vector2f newPosition, BiomeAddOn* newBiomeAddOn)
@@ -102,7 +72,7 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, BiomeAddOn* newBiomeAddOn)
 	mineral = nullptr;
 	riverType = 0;
 	biomeAddOn = newBiomeAddOn;
-	army = nullptr;
+	selectable = -1;
 	riverExtra = 0;
 	city = nullptr;
 }
@@ -117,12 +87,42 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, BiomeA
 	mineral = newMineral;
 	riverType = 0;
 	biomeAddOn = newBiomeAddOn;
-	army = nullptr;
+	selectable = -1;
 	riverExtra = 0;
 	city = nullptr;
 }
 
-Tile::Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Building*>> newBuildings, BiomeAddOn* newBiomeAddOn)
+Tile::Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Building*>> newBuildings, Player* player)
+{
+	rand_ = 0;
+	setRand();
+
+	type = newType;
+	position = newPosition;
+	mineral = nullptr;
+	riverType = 0;
+	biomeAddOn = nullptr;
+	selectable = -1;
+	riverExtra = 0;
+	createCity(player);
+}
+
+Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::vector <std::vector<Building*>> newBuildings, Player* player)
+{
+	rand_ = 0;
+	setRand();
+
+	type = newType;
+	position = newPosition;
+	mineral = newMineral;
+	riverType = 0;
+	biomeAddOn = nullptr;
+	selectable = -1;
+	riverExtra = 0;
+	createCity(player);
+}
+
+Tile::Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Building*>> newBuildings, BiomeAddOn* newBiomeAddOn, Player* player)
 {
 	rand_ = 0;
 	setRand();
@@ -132,12 +132,12 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, std::vector <std::vector<Bu
 	mineral = nullptr;
 	riverType = 0;
 	biomeAddOn = newBiomeAddOn;
-	army = nullptr;
+	selectable = -1;
 	riverExtra = 0;
-	city = new City(newBuildings);
+	createCity(player);
 }
 
-Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::vector <std::vector<Building*>> newBuildings, BiomeAddOn* newBiomeAddOn)
+Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::vector <std::vector<Building*>> newBuildings, BiomeAddOn* newBiomeAddOn, Player* player)
 {
 	rand_ = 0;
 	setRand();
@@ -147,9 +147,22 @@ Tile::Tile(Biome* newType, sf::Vector2f newPosition, Mineral* newMineral, std::v
 	mineral = newMineral;
 	riverType = 0;
 	biomeAddOn = newBiomeAddOn;
-	army = nullptr;
+	selectable = -1;
 	riverExtra = 0;
-	city = new City(newBuildings);
+	createCity(player);
+}
+
+void Tile::createCity(Player* player)
+{
+	if (city != nullptr)
+	{
+		std::string exception = "miasto na kafelku ju¿ istnieje";
+		throw exception;
+	}
+
+	Log::newLog("Tworzê miasto dla gracza " + player->getNickName());
+
+	city = new City(position, player);
 }
 
 void Tile::setCity(City* newCity)
@@ -170,9 +183,41 @@ void Tile::setRiver(char riverType_)
 	else riverExtra = 0;
 }
 
-void Tile::setArmy(Selectable* newArmy)
+char Tile::getRiver()
 {
-	army = newArmy;
+	return riverType;
+}
+
+char Tile::getRiverExtra()
+{
+	return riverExtra;
+}
+
+void Tile::addSelectable(Selectable* newSelectable)
+{
+	clickableObjects.push_back(newSelectable);
+	selectable = clickableObjects.size() - 1;
+}
+
+Selectable* Tile::getSelectable()
+{
+	if (selectable == -1) return nullptr;
+	Selectable* temp = clickableObjects.at(selectable);
+	selectable--;
+	if (selectable == -1) selectable = clickableObjects.size() - 1;
+	return temp;
+}
+
+void Tile::ereaseSelectable()
+{
+	clickableObjects[selectable] = nullptr;
+	clickableObjects.erase(clickableObjects.begin() + selectable);
+}
+
+void Tile::skipSelectable()
+{
+	selectable--;
+	if (selectable == -1) selectable = clickableObjects.size() - 1;
 }
 
 void Tile::setType(Biome* newType)
@@ -185,9 +230,9 @@ void Tile::setMineral(Mineral* newMineral)
 	mineral = newMineral;
 }
 
-void Tile::setSetOfBuildings(std::vector <std::vector<Building*>> newBuildings)
+void Tile::setSetOfBuildings(Player* player, std::vector <std::vector<Building*>> newBuildings)
 {
-	if (city == nullptr) city = new City(newBuildings);
+	if (city == nullptr) city = new City(position, player, newBuildings);
 	else city->setSetOfBuildings(newBuildings);
 }
 
@@ -196,48 +241,108 @@ void Tile::setAddOn(BiomeAddOn* newBiomeAddOn)
 	biomeAddOn = newBiomeAddOn;
 }
 
-void Tile::setSpecificBuilding(Building* newBuilding, sf::Vector2i index)
+void Tile::setSpecificBuilding(Player* player, Building* newBuilding, sf::Vector2i index)
 {
-	if (city == nullptr) city = new City(newBuilding, index);
+	if (city == nullptr) city = new City(position, player, newBuilding, index);
 	else city->setSpecificBuilding(newBuilding, index);
 }
 
-void Tile::setSpecificBuilding(Building* newBuilding, std::pair <short, short> index)
+void Tile::setSpecificBuilding(Player* player, Building* newBuilding, std::pair <short, short> index)
 {
-	if (city == nullptr) city = new City(newBuilding, index);
+	if (city == nullptr) city = new City(position, player, newBuilding, index);
 	else city->setSpecificBuilding(newBuilding, index);
 }
 
-void Tile::setSpecificBuilding(Building* newBuilding, short x, short y)
+void Tile::setSpecificBuilding(Player* player, Building* newBuilding, short x, short y)
 {
-	if (city == nullptr) city = new City(newBuilding, x, y);
+	if (city == nullptr) city = new City(position, player, newBuilding, x, y);
 	else city->setSpecificBuilding(newBuilding, x, y);
 }
 
 void Tile::deleteBuilding(sf::Vector2i index)
 {
-	if (city == nullptr) std::cerr << "Nie ma nic do usuniêcia!\n";
+	if (city == nullptr) Log::newLog("Nie ma nic do usuniêcia!");
 	else city->deleteBuilding(index);
 }
 
 void Tile::deleteBuilding(std::pair <short, short> index)
 {
-	if (city == nullptr) std::cerr << "Nie ma nic do usuniêcia!\n";
+	if (city == nullptr) Log::newLog("Nie ma nic do usuniêcia!");
 	else city->deleteBuilding(index);
 }
 
 void Tile::deleteBuilding(short x, short y)
 {
-	if (city == nullptr) std::cerr << "Nie ma nic do usuniêcia!\n";
+	if (city == nullptr) Log::newLog("Nie ma nic do usuniêcia!");
 	else city->deleteBuilding(x, y);
 }
-/*
-void Tile::draw(sf::RenderWindow& window) //override
+
+City* Tile::getCity()
 {
-	type->draw(window, position);
+	if (city == nullptr)
+	{
+		std::string exception = "miasto nie istnieje";
+		throw exception;
+	}
+	return city;
 }
 
-void Tile::draw(sf::RenderTexture& texture)
+bool Tile::checkIfCity()
 {
-	type->draw(texture, position);
-}*/
+	if (city == nullptr) return false;
+	return true;
+}
+
+sf::Vector2f Tile::getPosition()
+{
+	return position;
+}
+
+Biome* Tile::getType()
+{
+	return type;
+}
+
+int Tile::getRand()
+{
+	return rand_;
+}
+
+bool Tile::existBuilding(sf::Vector2i index)
+{
+	if (!checkIfCity()) return false;
+	if (!city->existBuilding(index)) return false;
+	return true;
+}
+
+bool Tile::existBuilding(std::pair <short, short> index)
+{
+	if (!checkIfCity()) return false;
+	if (!city->existBuilding(index)) return false;
+	return true;
+}
+
+bool Tile::existBuilding(short x, short y)
+{
+	if (!checkIfCity()) return false;
+	if (!city->existBuilding(x, y)) return false;
+	return true;
+}
+
+BuildingInstance* Tile::getBuilding(sf::Vector2i index)
+{
+	if (!existBuilding(index)) throw "Nie ma takiego budynku!";
+	return city->getBuilding(index);
+}
+
+BuildingInstance* Tile::getBuilding(std::pair <short, short> index)
+{
+	if (!existBuilding(index)) throw "Nie ma takiego budynku!";
+	return city->getBuilding(index);
+}
+
+BuildingInstance* Tile::getBuilding(short x, short y)
+{
+	if (!existBuilding(x, y)) throw "Nie ma takiego budynku!";
+	return city->getBuilding(x, y);
+}

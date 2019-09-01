@@ -5,8 +5,9 @@
 #include "pch.h"
 
 extern const char tileResolution = 96;
+extern const char miniTileResolution = 32;
 
-unsigned convertXAndYToIndex(const unsigned x, const unsigned y); /// konwertuje X i Y na index (dla miniTile) (funkcja nieu¿ywana)
+//unsigned convertXAndYToIndex(const unsigned x, const unsigned y); /// konwertuje X i Y na index (dla miniTile) (funkcja nieu¿ywana)
 
 template<typename T1, typename T2> /// template
 constexpr auto MOD(T1 a, T2  b) { return (a < 0 ? (((a % b) + b) % b) : (a % b)); } /// matematyczne modulo (przyjmuje dwie dowolne liczby)

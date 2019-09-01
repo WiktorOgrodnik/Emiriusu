@@ -1,6 +1,0 @@
-3
-1
-textures/tokens/token1.png
-textures/tokens/token2.png
-textures/tokens/token3.png
-variants

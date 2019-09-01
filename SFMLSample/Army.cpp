@@ -1,12 +1,95 @@
 #include "pch.h"
 
-Army::Army(sf::Vector2i newPosition, Map& map, sf::Texture* newTexture)
+ArmyPrototype::ArmyPrototype(std::string fileName) : defaultAmmountOfMovement(0.0f)
+{
+	std::fstream ArmyPrototypeData;
+	std::string tempText;
+	ArmyPrototypeData.open(fileName, std::ios::in);
+
+	if (!ArmyPrototypeData.good()) Log::newLog("Nie uda³o siê za³adowac pliku " + fileName);
+	else
+	{
+		std::getline(ArmyPrototypeData, tempText);
+		setName(tempText);
+		std::getline(ArmyPrototypeData, tempText);
+		setTexture(tempText);
+		std::getline(ArmyPrototypeData, tempText);
+		setAmmountOfMovement(stringToFloat(tempText));
+
+		ArmyPrototypeData.close();
+	}
+}
+
+void ArmyPrototype::setName(std::string newName)
+{
+	name = newName;
+}
+
+void ArmyPrototype::setTexture(std::string newTexture)
+{
+	texture = newTexture;
+}
+
+void ArmyPrototype::setAmmountOfMovement(int newValue)
+{
+	defaultAmmountOfMovement = newValue;
+}
+
+std::string ArmyPrototype::getName()
+{
+	return name;
+}
+
+std::string ArmyPrototype::getTexture()
+{
+	return texture;
+}
+
+float ArmyPrototype::getAmmountOfMovement()
+{
+	return defaultAmmountOfMovement;
+}
+
+Army::Army(sf::Vector2i newPosition, ArmyPrototype* newType, Player* player)
 {
 	position = newPosition;
-	map.getTile(newPosition.x, newPosition.y)->setArmy(this);
 
-	texture = newTexture;
-	body.setTexture(newTexture);
+	Log::newLog("tworzê now¹ armiê na pozycji: " + std::to_string(position.x) + " " + std::to_string(position.y));
+
+	Engine::getInstance().getGlobalMap()->getTile(position.x, position.y)->addSelectable(this);
+
+	owner = player;
+	type = newType;
+
+	texture = Engine::getInstance().getData().Textures().getFractionTexture(owner->getFraction(), type->getTexture());
+	body.setTexture(texture);
+	body.setSize(sf::Vector2f(tileResolution, tileResolution));
+	body.setPosition(float(position.x) * tileResolution, float(position.y) * tileResolution);
+
+	armyType = 0;
+	armyExtra = 0;
+	amountOfMovement = type->getAmmountOfMovement();
+	unitCount = 0;
+
+	onSelectFunction = new Dijkstra; /// powinno zostaæ zast¹piona globalnym wskaŸnikiem
+
+	Engine::getInstance().addToRenderObjects(this, 3);
+}
+
+Army::Army(std::pair<short, short> newPosition, ArmyPrototype* newType, Player* player)
+{
+	position.x = newPosition.first;
+	position.y = newPosition.second;
+
+	Log::newLog("tworzê now¹ armiê na pozycji: " + std::to_string(position.x) + " " + std::to_string(position.y));
+
+	Engine::getInstance().getGlobalMap()->getTile(position.x, position.y)->addSelectable(this);
+
+	owner = player;
+	type = newType;
+
+	texture = Engine::getInstance().getData().Textures().getFractionTexture(owner->getFraction(), type->getTexture());
+	body.setTexture(texture);
 	body.setSize(sf::Vector2f(tileResolution, tileResolution));
 	body.setPosition(float(position.x) * tileResolution, float(position.y) * tileResolution);
 
@@ -16,10 +99,40 @@ Army::Army(sf::Vector2i newPosition, Map& map, sf::Texture* newTexture)
 	unitCount = 0;
 
 	onSelectFunction = new Dijkstra; /// powinno zostaæ zast¹piona globalnym wskaŸnikiem
+
+	Engine::getInstance().addToRenderObjects(this, 3);
+}
+
+Army::Army(short x, short y, ArmyPrototype* newType, Player* player)
+{
+	position.x = x;
+	position.y = y;
+
+	Log::newLog("tworzê now¹ armiê na pozycji: " + std::to_string(position.x) + " " + std::to_string(position.y));
+
+	Engine::getInstance().getGlobalMap()->getTile(position.x, position.y)->addSelectable(this);
+
+	owner = player;
+	type = newType;
+
+	texture = Engine::getInstance().getData().Textures().getFractionTexture(owner->getFraction(), type->getTexture());
+	body.setTexture(texture);
+	body.setSize(sf::Vector2f(tileResolution, tileResolution));
+	body.setPosition(float(position.x) * tileResolution, float(position.y) * tileResolution);
+
+	armyType = 0;
+	armyExtra = 0;
+	amountOfMovement = 10;
+	unitCount = 0;
+
+	onSelectFunction = new Dijkstra; /// powinno zostaæ zast¹piona globalnym wskaŸnikiem
+
+	Engine::getInstance().addToRenderObjects(this, 3);
 }
 
 Army::~Army()
 {
+	Engine::getInstance().deleteFormRenderObjects(this);
 }
 
 void Army::draw(sf::RenderWindow & window)
@@ -155,7 +268,6 @@ void Army::setArmyType(char newArmyType)
 
 Function* Army::onSelect()
 {
-	isSelected = true;
 	std::vector<void*> data;
 	data.push_back((void*) &position);
 	data.push_back((void*) &amountOfMovement);
@@ -174,8 +286,7 @@ Function* Army::onClick()
 
 Function* Army::onDeselect()
 {
-	isSelected = false;
-	movesData.clear();
+	Clear(movesData);
 	return nullptr;
 }
 
@@ -184,4 +295,30 @@ void Army::setTexture(sf::Texture* newTexture)
 	body.setTexture(newTexture);
 	body.setSize(sf::Vector2f(tileResolution, tileResolution));
 }
+
+void Army::setType(ArmyPrototype* newType)
+{
+	type = newType;
+}
+
+void Army::setOwner(Player* player)
+{
+	owner = player;
+}
+
+Player* Army::getOwner()
+{
+	return owner;
+}
+
+ArmyPrototype* Army::getType()
+{
+	return type;
+}
+
+void Army::Clear(std::vector<std::vector<float>>& arr)
+{
+	arr.clear();
+}
+
 

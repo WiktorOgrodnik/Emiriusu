@@ -1,9 +1,9 @@
 #include "pch.h"
 
-unsigned convertXAndYToIndex(const unsigned x, const unsigned y)
+/*unsigned convertXAndYToIndex(const unsigned x, const unsigned y)
 {
 	return 3 * y + x;
-}
+}*/
 
 int stringToInt(const std::string a) 
 {

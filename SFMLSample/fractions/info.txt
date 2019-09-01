@@ -1,0 +1,6 @@
+Borsuki
+fractions/borsuki.txt
+Kuny
+fractions/kuny.txt
+Jenoty
+fractions/jenoty.txt
