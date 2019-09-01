@@ -15,6 +15,7 @@ private:
 	std::vector<std::vector<float>> movesData;
 	char armyType;
 	char armyExtra;
+	bool isSelected;
 
 public:
 

@@ -155,6 +155,7 @@ void Army::setArmyType(char newArmyType)
 
 Function* Army::onSelect()
 {
+	isSelected = true;
 	std::vector<void*> data;
 	data.push_back((void*) &position);
 	data.push_back((void*) &amountOfMovement);
@@ -173,6 +174,7 @@ Function* Army::onClick()
 
 Function* Army::onDeselect()
 {
+	isSelected = false;
 	movesData.clear();
 	return nullptr;
 }
