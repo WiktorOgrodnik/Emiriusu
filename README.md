@@ -1,3 +1,6 @@
+#ATTENTION!
+This project has been suspended! You can fork it if you want.
+
 # Emiriusu Engine
 The Emiriusu Engine is an old school Windows and Linux 2D game engine for strategic games written in C++ with SFML libraries. The Engine (and the example game we are making) will provides displaying graphics and animations, generating a random world, playing music and sounds, old school interface, many typical strategic mechanics, artificial intelligence and online multiplayer.
 
